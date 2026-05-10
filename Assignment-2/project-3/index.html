@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASTRO UI</title>
+
+    <!-- Remix Icon -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- NAVBAR -->
+
+      <nav>
+        <h1 class="logo">ASTRO<span>.</span></h1>
+
+        <ul>
+          <li>PRODUCTS</li>
+          <li>CATEGORY</li>
+          <li>ABOUT US</li>
+          <li>CONTACT</li>
+        </ul>
+
+        <div class="nav-icons">
+          <i class="ri-search-line"></i>
+          <i class="ri-shopping-cart-line"></i>
+          <i class="ri-user-line"></i>
+        </div>
+      </nav>
+
+      <!-- HERO SECTION -->
+
+      <section class="hero">
+        <!-- LEFT -->
+
+        <div class="left">
+          <h5>NEW</h5>
+
+          <h1>
+            ASTRO <br />
+            WINTER <br />
+            ARMOR<span>II</span>
+          </h1>
+
+          <h2>$560</h2>
+
+          <hr />
+
+          <h3>DESCRIPTION</h3>
+
+          <p>
+            A next-gen cold war jacket. The <br />
+            essence of retro style and the <br />
+            resilience you need for extreme winter <br />conditions. Engineered
+            to provide <br />versatile function for your winter.
+          </p>
+          <button class="read_more">READ MORE <span class="r_arrow"><i class="ri-arrow-right-s-line"></i></span></button>
+
+          <!-- ACCORDION 1 -->
+
+          <details>
+            <summary>
+              MATERIAL & CARE
+              <i class="ri-arrow-down-s-line"></i>
+            </summary>
+
+            <p class="drop-text">
+              Premium waterproof polyester fabric. Dry clean recommended for
+              long durability.
+            </p>
+          </details>
+
+          <!-- ACCORDION 2 -->
+
+          <details>
+            <summary>
+              SHIPPING & RETURNS
+              <i class="ri-arrow-down-s-line"></i>
+            </summary>
+
+            <p class="drop-text">
+              Free worldwide shipping available. 7 days easy return and exchange
+              policy.
+            </p>
+          </details>
+        </div>
+
+        <!-- CENTER -->
+
+        <div class="center">
+          <img src="./Images/jacket.png" alt="jacket" class="jacket-img" />
+
+          <div class="badges">
+            <div>
+              <i class="ri-snowflake-line"></i>
+              <span>EXTREME WARMTH</span>
+            </div>
+
+            <div>
+              <i class="ri-shield-check-line"></i>
+              <span>WIND RESISTANT</span>
+            </div>
+
+            <div>
+              <i class="ri-leaf-line"></i>
+              <span>LIGHTWEIGHT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="right">
+          <h3>SIZE</h3>
+
+          <div class="sizes">
+            <button>S</button>
+            <button class="active">M</button>
+            <button>L</button>
+            <button>XL</button>
+          </div>
+
+          <p class="guide">
+            SIZE GUIDE
+            <i class="ri-arrow-right-line"></i>
+          </p>
+
+          <hr />
+
+          <h3>COLOR</h3>
+
+          <div class="colors">
+            <div class="color-card active-card">
+              <img src="./Images/jacket.png" />
+              <span>BEIGE</span>
+            </div>
+
+            <div class="color-card">
+              <img src="./Images/red_jacket.png" />
+              <span>RED</span>
+            </div>
+
+            <div class="color-card">
+              <img src="./Images/black_jacket.png" />
+              <span>BLACK</span>
+            </div>
+
+            <div class="color-card">
+              <img src="./Images/white_jacket.png" />
+              <span>WHITE</span>
+            </div>
+          </div>
+
+          <button class="wishlist">
+            <i class="ri-heart-line"></i>
+            ADD TO WISHLIST
+          </button>
+
+          <button class="bag">
+            ADD TO BAG
+            <i class="ri-shopping-bag-line"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- FEATURES -->
+
+      <section class="features">
+        <div class="card">
+          <img src="./Images/detail1.png" />
+
+          <div>
+            <h4>WATER-REPELLENT</h4>
+
+            <p>Premium fabric protects from rain and snow.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="./Images/detail2.png" />
+
+          <div>
+            <h4>3D PUFFER</h4>
+
+            <p>Strategically padded for maximum insulation.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="./Images/detail3.png" />
+
+          <div>
+            <h4>THERMAL LOCK</h4>
+
+            <p>Keeps body warm in extreme cold conditions.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="./Images/detail4.png" />
+
+          <div>
+            <h4>UTILITY POCKETS</h4>
+
+            <p>Multi-functional pockets for extra storage.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOTTOM INFO -->
+
+      <section class="bottom-info">
+        <div class="info-box">
+          <i class="ri-flower-line"></i>
+
+          <div>
+            <h4>PREMIUM FABRICS</h4>
+            <p>Durable, high-performance materials.</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <i class="ri-shield-check-line"></i>
+
+          <div>
+            <h4>THERMAL PROTECTION</h4>
+            <p>Built for extreme winter climates.</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <i class="ri-focus-2-line"></i>
+
+          <div>
+            <h4>DESIGNED FOR FUNCTION</h4>
+            <p>Every detail serves a purpose.</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <i class="ri-star-line"></i>
+
+          <div>
+            <h4>LIMITED EDITION</h4>
+            <p>Exclusive drops, limited quantities.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

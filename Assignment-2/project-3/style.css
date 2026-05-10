@@ -1,0 +1,347 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#eb7b23;
+    padding:15px;
+}
+
+::-webkit-scrollbar{
+    display:none;
+}
+.container{
+    width:100%;
+    min-height:100vh;
+    background:#f7f3ef;
+    border-radius:30px;
+    padding:50px;
+}
+
+/* NAVBAR */
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:20px;
+    border-bottom:1px solid #ddd;
+}
+
+.logo{
+    font-size:45px;
+}
+
+.logo span{
+    color:orange;
+}
+
+nav ul{
+    display:flex;
+    gap:50px;
+    list-style:none;
+}
+
+nav ul li{
+    font-size:15px;
+    cursor:pointer;
+    font-weight:500;
+}
+
+.nav-icons{
+    display:flex;
+    gap:25px;
+    font-size:25px;
+}
+
+/* HERO */
+
+.hero{
+    display:grid;
+    grid-template-columns:1fr 2fr 1fr;
+    gap:30px;
+    padding:30px 0;
+}
+
+/* LEFT */
+
+.left h5{
+    color:orange;
+    margin-bottom:10px;
+}
+
+.left h1{
+    font-size:80px;
+    font-weight: 500;
+    line-height:1;
+    margin-bottom:10px;
+}
+
+.left h1 span{
+    color:orange;
+}
+
+.left h2{
+    font-size:45px;
+    font-weight:400;
+    margin-bottom:10px;
+}
+
+.left hr{
+    margin:5px 0;
+    border:none;
+    border-top:1px solid #ddd;
+}
+
+.left h3{
+    margin-bottom:10px;
+}
+
+.left p{
+    color:#555;
+    line-height:1.8;
+    margin-bottom:10px;
+}
+
+.read_more{
+    border:none;
+    font-size:15px;
+    font-weight:600;
+    margin-bottom: 5px;
+}
+
+/* ACCORDION */
+
+details{
+    border-top:1px solid #ddd;
+    padding:18px 0;
+}
+
+summary{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    list-style:none;
+    font-weight:600;
+}
+
+.drop-text{
+    margin-top:15px;
+    color:#666;
+    line-height:1.7;
+}
+
+/* CENTER */
+
+.center{
+    text-align:center;
+}
+
+.center img{
+    width:100%;
+    max-width:700px;
+}
+
+/* BADGES */
+
+.badges{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    margin-top:20px;
+}
+
+.badges div{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#555;
+    font-size:14px;
+}
+
+.badges i{
+    font-size:22px;
+}
+
+.jacket-img{
+    width:100%;
+    object-fit:cover;
+    border-radius:30px;
+    filter:drop-shadow(0 25px 35px rgba(0,0,0,0.40));
+
+}
+
+/* RIGHT */
+
+.right h3{
+    margin-bottom:20px;
+}
+
+.sizes{
+    display:flex;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.sizes button{
+    width:60px;
+    height:60px;
+    border:none;
+    border-radius:18px;
+    background:#eee;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+}
+
+.sizes .active{
+    background:orange;
+    color:white;
+}
+
+.guide{
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:25px;
+    cursor:pointer;
+}
+
+.right hr{
+    margin-bottom:25px;
+    border:none;
+    border-top:1px solid #ddd;
+}
+
+/* COLORS */
+
+.colors{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.color-card{
+    background:#eee;
+    border-radius:20px;
+    padding:10px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.active-card{
+    border:2px solid orange;
+}
+
+.color-card img{
+    width:100%;
+    height:120px;
+    object-fit:contain;
+}
+
+.color-card span{
+    font-size:14px;
+    font-weight:600;
+}
+
+/* BUTTONS */
+
+.wishlist,
+.bag{
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:50px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+}
+
+.wishlist{
+    background:white;
+    border:1px solid #ddd;
+    margin-bottom:15px;
+}
+
+.bag{
+    background:orange;
+    color:white;
+}
+
+/* FEATURES */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border-radius:25px;
+    padding:15px;
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.card img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:18px;
+}
+
+.card h4{
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#666;
+    line-height:1.7;
+    font-size:14px;
+}
+
+/* BOTTOM INFO */
+
+.bottom-info{
+    margin-top:25px;
+    background:#f5f1ec;
+    border:1px solid #e3ddd7;
+    border-radius:25px;
+    padding:30px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.info-box{
+    display:flex;
+    align-items:flex-start;
+    gap:15px;
+    padding:0 20px;
+    border-right:1px solid #ddd;
+}
+
+.info-box:last-child{
+    border:none;
+}
+
+.info-box i{
+    font-size:35px;
+    color:#ff6b00;
+}
+
+.info-box h4{
+    font-size:18px;
+    margin-bottom:5px;
+}
+
+.info-box p{
+    color:#666;
+    line-height:1.6;
+    font-size:14px;
+}
