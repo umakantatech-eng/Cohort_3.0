@@ -1,0 +1,131 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#eee;
+}
+
+.container{
+    width:95%;
+    height:95vh;
+    display:flex;
+    border-radius:20px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* LEFT */
+.left{
+    width:60%;
+    background:#fac60a;
+    padding:40px 50px;
+    position:relative;
+}
+
+/* RIGHT */
+.right{
+    width:40%;
+    background:#fae8b4;
+    position:relative;
+}
+
+.logo{
+    position: absolute;
+    width:150px;
+    top:30px;
+    left:40px;
+}
+
+h4{
+    letter-spacing:8px;
+    font-size:15px;
+    margin: 140px 0 10px 50px;
+}
+
+h1{
+    font-size:140px;
+    font-weight:700;
+    margin: 0 0 0 40px;
+}
+
+p{
+    letter-spacing:2px;
+    word-spacing: 2px;
+    line-height:1.8;
+    font-size:14px;
+    margin-left: 50px;
+}
+
+/* line */
+.hr-line{
+    width:60px;
+    height:2px;
+    background:black;
+    display:inline-block;
+    margin-right: 15px;
+}
+
+/* count */
+.count{
+    display:inline-block;
+    font-size:16px;
+    font-weight:bold;
+    margin: 15px 0 40px 50px;
+}
+
+/* menu */
+.menu{
+    position:absolute;
+    top:40px;
+    right:40px;
+    font-size:50px;
+    cursor:pointer;
+}
+
+/* pikachu */
+.pikachu{
+    position:absolute;
+    width:500px;
+    right:270px;
+    top:120px;
+    z-index:10;
+}
+
+/* pokeball */
+.pokeball{
+    position:absolute;
+    width:300px;
+    left: 2px;
+    bottom:-117px;
+    opacity:0.1;
+}
+
+/* dots */
+.dots{
+    position:absolute;
+    right:30px;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.dots span{
+    display:block;
+    width:15px;
+    height:15px;
+    border-radius:50%;
+    background:gold;
+    margin:15px 0;
+}
+
+.dots span:nth-child(1){
+    background:black;
+}
