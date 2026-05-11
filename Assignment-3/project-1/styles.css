@@ -1,0 +1,513 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fdfaf6;
+    color: #1E1E1E;
+    overflow-x: hidden;
+}
+
+.main-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 30px 50px;
+    position: relative;
+}
+
+/* Navigation */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-text {
+    font-family: 'Caveat', cursive;
+    font-size: 36px;
+    font-weight: 700;
+    color: #1E1E1E;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #1E1E1E;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.nav-links li.active a {
+    color: #1A5336;
+    position: relative;
+}
+
+.nav-links li.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    background-color: #1A5336;
+    border-radius: 2px;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: 1px solid #dcdcdc;
+    border-radius: 30px;
+    padding: 8px 15px;
+    width: 200px;
+}
+
+.search-bar input {
+    border: none;
+    background: transparent;
+    outline: none;
+    margin-left: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    width: 100%;
+}
+
+.cart-icon-wrapper {
+    position: relative;
+    background: #1E1E1E;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #E03535;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+/* Hero Section */
+.hero-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+    position: relative;
+}
+
+/* Left Content */
+.left-content {
+    width: 40%;
+    position: relative;
+    z-index: 2;
+}
+
+.badge-wrapper {
+    display: inline-flex;
+    align-items: center;
+    background-color: #eaf1e8;
+    color: #427A45;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #a8cfa8;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.star-icon {
+    margin-right: 5px;
+}
+
+.main-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 100px;
+    line-height: 0.9;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.green-text {
+    color: #1A5336;
+}
+
+.description {
+    color: #6B6B6B;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.action-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 50px;
+}
+
+.add-to-cart-btn {
+    display: flex;
+    align-items: center;
+    background: #1E1E1E;
+    color: white;
+    border: none;
+    padding: 10px 30px 10px 10px;
+    border-radius: 40px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-icon-circle {
+    background: #f3c25b;
+    color: black;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 30px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #6B6B6B;
+}
+
+.qty-btn.plus { color: #1A5336; font-weight: bold; }
+
+.qty-value {
+    margin: 0 20px;
+    font-weight: bold;
+    color: #E03535;
+    font-size: 18px;
+}
+
+.features-row {
+    display: flex;
+    gap: 30px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.feature-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.feature-text strong {
+    font-size: 12px;
+    color: #1E1E1E;
+}
+
+.feature-text span {
+    font-size: 10px;
+    color: #6B6B6B;
+}
+
+/* Center Image Container */
+.center-image-container {
+    position: absolute;
+    left: 55%;
+    top: 55%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.main-bag-img {
+    width: 500px;
+    mix-blend-mode: darken;
+}
+
+.floating-sticker {
+    position: absolute;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    border: 3px solid #1E1E1E;
+    border-radius: 12px;
+    padding: 5px 25px;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.8);
+    font-size: 40px;
+    letter-spacing: 2px;
+    z-index: 11;
+}
+
+.crispy-sticker {
+    background-color: #f3c25b;
+    top: 40%;
+    left: 0%;
+    transform: rotate(-10deg);
+}
+
+.tasty-sticker {
+    background-color: #e54d4d;
+    color: white;
+    top: 55%;
+    left: 10%;
+    transform: rotate(5deg);
+    z-index: 12;
+}
+
+/* Right Content */
+.right-content {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+    margin-top: 40px;
+}
+
+.flavor-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    position: relative;
+}
+
+/* Optional connecting line */
+.flavor-info-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 25px;
+    top: 50px;
+    height: 40px;
+    border-left: 2px dashed #ccc;
+    z-index: -1;
+}
+
+.flavor-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.chili-icon { background: #1A5336; }
+.beef-icon { background: #e54d4d; }
+.smokey-icon { background: #f3c25b; }
+
+.flavor-details strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #1E1E1E;
+}
+
+.flavor-details p {
+    font-size: 12px;
+    color: #6B6B6B;
+    line-height: 1.4;
+}
+
+/* Bottom Banner */
+.bottom-banner {
+    background: #1A5336;
+    border-radius: 40px;
+    padding: 40px;
+    margin-top: 250px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.banner-title-section {
+    width: 20%;
+    color: white;
+    padding-right: 20px;
+}
+
+.banner-title-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 50px;
+    line-height: 1;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.banner-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.8);
+    color: #1A5336;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.products-carousel {
+    display: flex;
+    gap: 20px;
+    width: 80%;
+    justify-content: space-between;
+}
+
+.product-card {
+    background: white;
+    border-radius: 25px;
+    padding: 20px;
+    width: 32%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: -120px; /* Pull it up to overlap the green banner */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+}
+
+.product-img-wrapper {
+    width: 150px;
+    height: 200px;
+    margin-bottom: 20px;
+    mix-blend-mode: darken;
+}
+
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.product-info {
+    text-align: center;
+    width: 100%;
+}
+
+.product-info h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.stars {
+    color: #f3c25b;
+    font-size: 14px;
+}
+
+.rating-val {
+    font-size: 12px;
+    color: #6B6B6B;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.order-btn {
+    background: #e54d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+.order-btn:hover {
+    background: #cc4242;
+}
+
+/* Small adjustments for background elements */
+.flying-elements {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* You could add more CSS for confetti/shapes here if desired */
