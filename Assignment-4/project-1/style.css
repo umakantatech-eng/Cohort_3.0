@@ -1,0 +1,442 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+    --bg-main: #0d0d16;
+    --card-bg: #1a1a2e;
+    --yellow: #facc15;
+    --pink: #eabfb9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: var(--bg-main);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    height: 90vh;
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 1.3fr 1fr 1fr;
+    grid-template-areas:
+        "c1 c2 c3 c4"
+        "c1 c5 c5 c4"
+        "c6 c5 c5 c7"
+        "c8 c8 c9 c7";
+}
+
+/* === Base Card Styles === */
+.card {
+    background: #fff;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    color: var(--card-bg);
+}
+
+.bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.card>*:not(.bg-img) {
+    position: relative;
+    z-index: 1;
+}
+
+/* === C1: Top Left Man === */
+.c1 {
+    grid-area: c1;
+    background: var(--card-bg);
+    justify-content: space-between;
+    color: #fff;
+}
+
+.c1-top {
+    background: #000;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+}
+
+.c1-bottom {
+    display: flex;
+    gap: 8px;
+}
+
+.stat {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 12px;
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    align-items: center;
+    font-size: 10px;
+}
+
+.stat i {
+    color: var(--yellow);
+    font-size: 18px;
+}
+
+/* === C2: Yellow App Card === */
+.c2 {
+    grid-area: c2;
+    background: var(--yellow);
+    justify-content: center;
+    gap: 5px;
+}
+
+.c2 h2 {
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.store {
+    display: flex;
+    gap: 8px;
+}
+
+.store button {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 8px;
+    border-radius: 12px;
+    display: flex;
+    gap: 5px;
+    text-align: left;
+    font-weight: 600;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.small {
+    font-size: 8px;
+}
+
+/* === C3: White Font Card === */
+.c3 {
+    grid-area: c3;
+    justify-content: center;
+    gap: 1px;
+    padding: 17px;
+}
+
+.c3 p {
+    font-size: 11px;
+    font-weight: 600;
+    color: #666;
+    margin-top: 5px;
+}
+
+.c3 h1 {
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.colors {
+    display: flex;
+    height: 12px;
+    margin-top: auto;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.colors span {
+    flex: 1;
+}
+
+.colors span:nth-child(1) {
+    background: #d99a9a;
+}
+
+.colors span:nth-child(2) {
+    background: var(--yellow);
+}
+
+.colors span:nth-child(3) {
+    background: #eee;
+}
+
+.colors span:nth-child(4) {
+    background: #000;
+}
+
+/* === C4: Address Card === */
+.c4 {
+    grid-area: c4;
+    justify-content: space-between;
+}
+
+.c4-top {
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.c4-top .box {
+    width: 14px;
+    height: 14px;
+    background: #000;
+    border-left: 7px solid var(--yellow);
+}
+
+.c4 h1 {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.1;
+}
+
+.location {
+    background: var(--pink);
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.loc-text {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.loc-text i {
+    background: #000;
+    color: var(--yellow);
+    padding: 6px;
+    border-radius: 50%;
+}
+
+/* === C5: Center Logo === */
+.c5 {
+    background-color: #FDF7E3;
+    grid-area: c5;
+    justify-content: center;
+    align-items: center;
+    font-size: 55px;
+    font-weight: 900;
+}
+
+.logo {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.logo i {
+    background: #000;
+    color: #fff;
+    padding: 5px 20px;
+    border-radius: 12px;
+    font-style: italic;
+    font-size: 45px;
+    transform: skewX(-10deg);
+}
+
+/* === C6: Redefine Limits === */
+.c6 {
+    grid-area: c6;
+    justify-content: space-between;
+    padding: 17px;
+}
+
+.c6 h1 {
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.lux {
+    display: flex;
+    gap: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    align-items: center;
+}
+
+.lux i {
+    background: #000;
+    color: var(--yellow);
+    padding: 8px 12px;
+    border-radius: 50%;
+    font-style: italic;
+}
+
+/* === C7: Mobile Phone Mockup === */
+.c7 {
+    grid-area: c7;
+    background: var(--pink);
+    padding: 20px;
+}
+
+.phone-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.phone-top .logo i {
+    font-size: 14px;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.phone-screen {
+    flex: 1;
+    border-radius: 35px;
+    border: 6px solid var(--card-bg);
+    background: #000;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    padding: 20px;
+    align-items: flex-end;
+    color: #fff;
+}
+
+.phone-screen h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+
+.action {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.action button {
+    background: var(--yellow);
+    color: #000;
+    border: none;
+    padding: 12px;
+    border-radius: 20px;
+    flex: 1;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+/* === C8: Trainers Card === */
+.c8 {
+    grid-area: c8;
+    background: var(--pink);
+    flex-direction: row;
+    padding: 0;
+}
+
+.visit {
+    width: 35%;
+    padding: 15px;
+    margin: 15px;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.visit button {
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 15px;
+    border-radius: 10px;
+    z-index: 1;
+    backdrop-filter: blur(5px);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    gap: 8px;
+}
+
+.info {
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info h1 {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.stats h2 {
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.avatars {
+    display: flex;
+}
+
+.avatars img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid var(--pink);
+    margin-left: -12px;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.avatars img:first-child {
+    margin-left: 0;
+    z-index: 3;
+}
+
+.avatars img:nth-child(2) {
+    z-index: 2;
+}
+
+/* === C9: Woman Rope === */
+.c9 {
+    grid-area: c9;
+    background: var(--yellow);
+}

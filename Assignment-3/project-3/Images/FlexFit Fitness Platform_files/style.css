@@ -1,0 +1,112 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+html, body{
+    height: 100%;
+    width: 100%;
+    background: #0d0d16;
+    padding: 5px;
+}
+.container{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1.3fr 1fr 1fr;
+    grid-template-areas: 
+    "c1 c2 c3 c4"
+    "c1 c5 c5 c4"
+    "c6 c5 c5 c7"
+    "c8 c8 c9 c7";
+}
+.card{
+    background: #1a1a2e;
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+.card img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+.c1{
+      grid-area:c1;
+    }
+
+    /* CARD 2 */
+
+    .c2{
+      grid-area:c2;
+      
+    }
+
+    /* CARD 3 */
+
+    .c3{
+      grid-area:c3;
+      background:white;
+    }
+
+    /* CARD 4 */
+
+    .c4{
+      grid-area:c4;
+      background:white;
+    }
+     /* CENTER CARD */
+
+    .c5{
+      grid-area:c5;
+      background: white;
+    color: black;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      font-size:70px;
+      font-weight:bold;
+    }
+
+    /* CARD 6 */
+
+    .c6{
+      grid-area:c6;
+      background:white;
+    }
+
+    /* RIGHT MOBILE */
+
+    .c7{
+      grid-area:c7;
+    }
+
+    /* TRAINER */
+
+    .c8{
+      grid-area:c8;
+      background:#f7cfc8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .left-img{
+        width: 100px;
+        height: 100px;
+        border-radius: 20px;
+    }
+
+    /* WOMAN IMAGE */
+
+    .c9{
+      grid-area:c9;
+    }

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A4 Project 2 - Dashboard Grid</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="grid-container">
+        
+        <!-- 1. Brand -->
+        <div class="card card-brand pink-bg">
+            <div class="header">
+                <h3>Brand of<br>Designing</h3>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <div class="circle-progress">
+                <div class="circle">
+                    <svg viewBox="0 0 36 36" class="circular-chart pink">
+                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle-path" stroke-dasharray="75, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <div class="circle-text">
+                        <h2>75%</h2>
+                        <p>Progress</p>
+                    </div>
+                </div>
+            </div>
+            <div class="stats">
+                <h1>2.5K</h1>
+                <p>263 contributions in<br>the last year</p>
+                <button class="view-btn">View report <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <!-- 2. Agency -->
+        <div class="card card-agency dark-bg">
+            <div class="agency-header">
+                <h2>Smart Digital<br>Agency For Your<br><span>Business</span></h2>
+                <div class="icon-arrow"><i class="fa-solid fa-arrow-up-right"></i></div>
+            </div>
+            <div class="agency-images">
+                <div class="img-box img1"></div>
+                <div class="img-box img2"></div>
+            </div>
+            <div class="avatars-small">
+                <div class="av"></div><div class="av"></div><div class="av"></div>
+                <div class="add-btn">+</div>
+            </div>
+        </div>
+
+        <!-- 3. Views -->
+        <div class="card card-views white-bg">
+            <div class="top-row">
+                <h1>4.875</h1>
+                <div class="heart-icon"><i class="fa-solid fa-heart"></i></div>
+            </div>
+            <p class="subtitle">Project Views<br>last year</p>
+            <div class="growth-stats">
+                <span class="up"><i class="fa-solid fa-arrow-trend-up"></i> +15%</span>
+                <span class="period">vs last year</span>
+            </div>
+        </div>
+
+        <!-- 4. Users -->
+        <div class="card card-users white-bg">
+            <div class="users-content">
+                <p class="subtitle">New Users</p>
+                <h1>57K</h1>
+                <div class="growth-stats">
+                    <span class="up-green">+10% <i class="fa-solid fa-arrow-up-right"></i></span>
+                    <span class="period">vs last month</span>
+                </div>
+            </div>
+            <div class="users-icon">
+                <i class="fa-solid fa-user-group"></i>
+            </div>
+        </div>
+
+        <!-- 5. Center Hero -->
+        <div class="card card-center">
+            <div class="hero-image"></div>
+            
+            <!-- Absolute Overlays -->
+            <div class="overlay-card project-growth">
+                <div class="oc-header">
+                    <p>Project Growth</p>
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </div>
+                <div class="chart-line">
+                    <svg viewBox="0 0 100 40">
+                        <path fill="none" stroke="#FF4B5C" stroke-width="3" d="M0 30 L20 20 L40 35 L60 10 L80 20 L100 5"/>
+                        <circle cx="100" cy="5" r="4" fill="#FF4B5C" />
+                    </svg>
+                    <div class="chart-bars-bg">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overlay-card total-plays">
+                <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                <div class="play-text">
+                    <h4>26.807</h4>
+                    <p>Total Plays</p>
+                </div>
+            </div>
+
+            <div class="overlay-card right-panel">
+                <div class="conversion-age">
+                    <div class="oc-header">
+                        <p>Conversion Age</p>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                    <div class="bar-chart">
+                        <div class="bar-group"><div class="bar tall pink"></div><div class="bar short yellow"></div><span>18-24</span></div>
+                        <div class="bar-group"><div class="bar tall yellow"></div><div class="bar short pink"></div><span>25-34</span></div>
+                        <div class="bar-group"><div class="bar tall pink"></div><div class="bar short yellow"></div><span>35-44</span></div>
+                        <div class="bar-group"><div class="bar short yellow"></div><div class="bar tall pink"></div><span>45+</span></div>
+                    </div>
+                </div>
+
+                <div class="engagement-rate">
+                    <div class="oc-header right">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                    <div class="heart-icon-small"><i class="fa-solid fa-heart"></i></div>
+                    <h2>19,46%</h2>
+                    <p>Engagement Rate</p>
+                    <span class="up-green"><i class="fa-solid fa-arrow-up-right"></i> +102,48%</span>
+                </div>
+            </div>
+            
+            <div class="decorative-circle"></div>
+            <div class="decorative-dots"></div>
+        </div>
+
+        <!-- 6. Font -->
+        <div class="card card-font white-bg">
+            <div class="font-header">
+                <div>
+                    <h2>Font</h2>
+                    <p>Sk- Modernist</p>
+                </div>
+                <div class="font-icon">Aa</div>
+            </div>
+            <div class="color-swatches">
+                <div class="swatch black"></div>
+                <div class="swatch gray"></div>
+                <div class="swatch pink-dark"></div>
+                <div class="swatch pink-light"></div>
+            </div>
+            <div class="view-all">
+                <p>View all fonts</p>
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <!-- 7. Build -->
+        <div class="card card-build white-bg">
+            <div class="build-content">
+                <h2>We Build Future of<br>Design Industry</h2>
+                <p>Crafting Meaningful UX/UI Design</p>
+                <button class="explore-btn">Explore more <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="shape-image"></div>
+            <div class="decorative-dots-small"></div>
+        </div>
+
+        <!-- 8. Team -->
+        <div class="card card-team white-bg">
+            <h3>Team of passionate<br>designers and<br>developers</h3>
+            <div class="avatars-large">
+                <div class="av"></div><div class="av"></div><div class="av"></div><div class="av"></div>
+                <div class="add-count">+2</div>
+            </div>
+        </div>
+
+        <!-- 9. Clients -->
+        <div class="card card-clients white-bg">
+            <p class="subtitle">Daily<br>New clients</p>
+            <div class="clients-stats">
+                <div class="stats-left">
+                    <h1>54</h1>
+                    <span class="up-pink">+40% <i class="fa-solid fa-arrow-up-right"></i></span>
+                    <span class="period">vs yesterday</span>
+                </div>
+                <div class="client-icon">
+                    <i class="fa-regular fa-user"></i><span class="plus">+</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. Cubo -->
+        <div class="card card-cubo white-bg">
+            <div class="cubo-logo">
+                <div class="rings">
+                    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+                </div>
+                <h1>CUBO</h1>
+                <p>Digital Studio</p>
+            </div>
+            <button class="discover-btn">Discover more <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+        
+    </div>
+</body>
+</html>

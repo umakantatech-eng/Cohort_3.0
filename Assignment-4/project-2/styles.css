@@ -1,0 +1,868 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #111111;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    overflow: hidden;
+}
+
+:root {
+    --bg-dark: #111111;
+    --card-pink: #FFE8E8;
+    --card-white: #FFFFFF;
+    --card-dark: #1D1D1F;
+    --text-dark: #1A1A1A;
+    --text-light: #FFFFFF;
+    --text-gray: #8A8A8E;
+    --accent-red: #FF4B5C;
+    --accent-green: #34C759;
+    --accent-yellow: #FFB340;
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 8px;
+}
+
+/* Grid Layout */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1.2fr 1fr;
+    grid-template-rows: 1.5fr 1.5fr 2.5fr 1.5fr;
+    grid-template-areas:
+        "brand views users team"
+        "brand center center clients"
+        "agency center center cubo"
+        "agency font build cubo";
+    gap: 12px;
+    width: 100%;
+    max-width: 1600px;
+    height: 100%;
+}
+
+.card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.pink-bg {
+    background-color: var(--card-pink);
+    color: var(--text-dark);
+}
+
+.white-bg {
+    background-color: var(--card-white);
+    color: var(--text-dark);
+}
+
+.dark-bg {
+    background-color: var(--card-dark);
+    color: var(--text-light);
+}
+
+.subtitle {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-gray);
+    margin-bottom: 5px;
+}
+
+h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.growth-stats {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: auto;
+}
+
+.up {
+    color: var(--accent-red);
+}
+
+.up-green {
+    color: var(--accent-green);
+}
+
+.up-pink {
+    color: var(--accent-red);
+}
+
+.period {
+    color: var(--text-gray);
+    font-weight: 500;
+}
+
+/* 1. Brand */
+.card-brand {
+    grid-area: brand;
+    justify-content: space-between;
+}
+
+.card-brand .header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.circle-progress {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.circle {
+    position: relative;
+    width: 110px;
+    height: 110px;
+}
+
+.circular-chart {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 250px;
+}
+
+.circle-bg {
+    fill: none;
+    stroke: rgba(255, 75, 92, 0.2);
+    stroke-width: 2.5;
+}
+
+.circle-path {
+    fill: none;
+    stroke: var(--accent-red);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+}
+
+.circle-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.circle-text h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+}
+
+.circle-text p {
+    font-size: 0.7rem;
+    color: var(--text-gray);
+}
+
+.card-brand .stats p {
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+}
+
+.view-btn {
+    background-color: var(--card-white);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 2. Agency */
+.card-agency {
+    grid-area: agency;
+    justify-content: space-between;
+}
+
+.agency-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.agency-header h2 {
+    font-size: 1.3rem;
+}
+
+.agency-header span {
+    color: #FFB8B8;
+}
+
+.icon-arrow {
+    width: 32px;
+    height: 32px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.agency-images {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    min-height: 80px;
+    margin-bottom: 10px;
+}
+
+.img-box {
+    flex: 1;
+    border-radius: var(--radius-md);
+    background-size: cover;
+    background-position: center;
+}
+
+.img1 {
+    background-image: url('images/agency-1.png');
+}
+
+.img2 {
+    background-image: url('images/agency-2.png');
+}
+
+.avatars-small {
+    display: flex;
+    align-items: center;
+}
+
+.avatars-small .av {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--card-dark);
+    margin-left: -10px;
+    background-size: cover;
+    background-position: center;
+}
+
+.avatars-small .av:first-child {
+    margin-left: 0;
+    background-image: url('images/woman-visit.png');
+}
+
+.avatars-small .av:nth-child(2) {
+    background-image: url('images/man-hoodie.png');
+}
+
+.avatars-small .av:nth-child(3) {
+    background-image: url('images/woman-rope.png');
+}
+
+.add-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--accent-red);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    margin-left: -10px;
+    z-index: 1;
+}
+
+/* 3. Views */
+.card-views {
+    grid-area: views;
+}
+
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 5px;
+}
+
+.heart-icon {
+    width: 36px;
+    height: 36px;
+    background-color: var(--card-pink);
+    color: var(--accent-red);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 4. Users */
+.card-users {
+    grid-area: users;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.users-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.users-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--card-pink);
+    border-radius: var(--radius-md);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+/* 5. Center */
+.card-center {
+    grid-area: center;
+    padding: 0;
+    background-color: var(--card-pink);
+    position: relative;
+}
+
+.hero-image {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 100%;
+    background-image: url('images/center-woman.png');
+    background-position: top center;
+    background-repeat: no-repeat;
+    z-index: 2;
+}
+
+/* Overlays in Center Card */
+.overlay-card {
+    position: absolute;
+    background-color: var(--card-white);
+    border-radius: var(--radius-md);
+    padding: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    z-index: 3;
+}
+
+.oc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.oc-header.right {
+    justify-content: flex-end;
+    margin-bottom: 5px;
+}
+
+.project-growth {
+    top: 15%;
+    left: 0;
+    width: 140px;
+    transform: scale(0.85);
+    transform-origin: left center;
+}
+
+.chart-line {
+    position: relative;
+    height: 50px;
+}
+
+.chart-line svg {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.chart-bars-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.chart-bars-bg span {
+    width: 15%;
+    background-color: var(--card-pink);
+    border-radius: 5px 5px 0 0;
+}
+
+.chart-bars-bg span:nth-child(1) {
+    height: 40%;
+}
+
+.chart-bars-bg span:nth-child(2) {
+    height: 60%;
+}
+
+.chart-bars-bg span:nth-child(3) {
+    height: 30%;
+}
+
+.chart-bars-bg span:nth-child(4) {
+    height: 80%;
+}
+
+.chart-bars-bg span:nth-child(5) {
+    height: 100%;
+}
+
+.right-panel {
+    top: 50%;
+    right: -5px;
+    width: 160px;
+    transform: translateY(-50%) scale(0.85);
+    transform-origin: right center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.conversion-age {
+    width: 100%;
+}
+
+.bar-chart {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 60px;
+}
+
+.bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.bar-group span {
+    font-size: 0.5rem;
+    color: var(--text-gray);
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.bar {
+    width: 8px;
+    border-radius: 4px;
+}
+
+.bar.tall {
+    height: 40px;
+}
+
+.bar.short {
+    height: 20px;
+}
+
+.bar.pink {
+    background-color: var(--accent-red);
+}
+
+.bar.yellow {
+    background-color: var(--accent-yellow);
+}
+
+.total-plays {
+    bottom: 15%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 8px 12px;
+    border-radius: 30px;
+    transform: scale(0.85);
+    transform-origin: left center;
+}
+
+.play-btn {
+    width: 36px;
+    height: 36px;
+    background-color: var(--accent-red);
+    color: var(--card-white);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.play-text h4 {
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+}
+
+.play-text p {
+    font-size: 0.65rem;
+    color: var(--text-gray);
+}
+
+.engagement-rate {
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 15px;
+}
+
+.heart-icon-small {
+    width: 24px;
+    height: 24px;
+    background-color: var(--card-pink);
+    color: var(--accent-red);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.6rem;
+    margin-bottom: 10px;
+}
+
+.engagement-rate h2 {
+    font-size: 1.4rem;
+    margin-bottom: 2px;
+}
+
+.engagement-rate p {
+    font-size: 0.7rem;
+    color: var(--text-gray);
+    margin-bottom: 10px;
+}
+
+.engagement-rate .up-green {
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.decorative-circle {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background-color: #FFD4D7;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+/* 6. Font */
+.card-font {
+    grid-area: font;
+    justify-content: space-between;
+}
+
+.font-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.font-header p {
+    font-size: 0.8rem;
+    color: var(--text-gray);
+    margin-top: 5px;
+}
+
+.font-icon {
+    width: 36px;
+    height: 36px;
+    background-color: var(--card-pink);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+}
+
+.color-swatches {
+    display: flex;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.swatch {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-sm);
+}
+
+.swatch.black {
+    background-color: var(--card-dark);
+}
+
+.swatch.gray {
+    background-color: #E0E0E0;
+}
+
+.swatch.pink-dark {
+    background-color: var(--accent-red);
+}
+
+.swatch.pink-light {
+    background-color: var(--card-pink);
+}
+
+.view-all {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* 7. Build */
+.card-build {
+    grid-area: build;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.build-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+}
+
+.build-content p {
+    font-size: 0.7rem;
+    color: var(--text-gray);
+    margin: 5px 0 15px;
+}
+
+.explore-btn {
+    background-color: var(--card-dark);
+    color: var(--card-white);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.shape-image {
+    position: absolute;
+    right: -30px;
+    bottom: -30px;
+    width: 160px;
+    height: 160px;
+    background-image: url('images/shape.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    mix-blend-mode: multiply;
+}
+
+/* 8. Team */
+.card-team {
+    grid-area: team;
+    justify-content: space-between;
+}
+
+.card-team h3 {
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.avatars-large {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+}
+
+.avatars-large .av {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--card-white);
+    margin-left: -12px;
+    background-size: cover;
+    background-position: center;
+}
+
+.avatars-large .av:first-child {
+    margin-left: 0;
+    background-image: url('images/woman-visit.png');
+}
+
+.avatars-large .av:nth-child(2) {
+    background-image: url('images/man-red.png');
+}
+
+.avatars-large .av:nth-child(3) {
+    background-image: url('images/agency-1.png');
+}
+
+.avatars-large .av:nth-child(4) {
+    background-image: url('images/man-hoodie.png');
+}
+
+.add-count {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--card-dark);
+    color: var(--card-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: -12px;
+    z-index: 1;
+}
+
+/* 9. Clients */
+.card-clients {
+    grid-area: clients;
+    justify-content: space-between;
+}
+
+.clients-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.stats-left h1 {
+    font-size: 2.8rem;
+    margin-bottom: 5px;
+}
+
+.client-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--card-pink);
+    border-radius: var(--radius-md);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    position: relative;
+}
+
+.client-icon .plus {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+
+/* 10. Cubo */
+.card-cubo {
+    grid-area: cubo;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.cubo-logo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rings {
+    display: flex;
+    margin-bottom: 15px;
+    position: relative;
+    width: 44px;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+}
+
+.ring {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 1.5px solid var(--text-dark);
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.ring:nth-child(1) {
+    top: 0;
+    left: 10px;
+}
+
+.ring:nth-child(2) {
+    bottom: 0;
+    left: 0;
+}
+
+.ring:nth-child(3) {
+    bottom: 0;
+    right: 0;
+}
+
+.cubo-logo h1 {
+    font-size: 2rem;
+}
+
+.cubo-logo p {
+    font-size: 0.8rem;
+    color: var(--text-gray);
+}
+
+.discover-btn {
+    background-color: var(--card-pink);
+    color: var(--accent-red);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}

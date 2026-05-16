@@ -687,3 +687,6 @@ body {
 .footer a:hover {
     color: var(--neon-cyan);
 }
+::-webkit-scrollbar{
+    display: none;
+}

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oliv - Responsive Branding Agency</title>
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-left">
+                <img class="logo" src="./assets/logo.svg" alt="Oliv Logo">
+                <button class="hiring-btn">We are hiring!</button>
+            </div>
+            <div class="nav-right">
+                <a href="#" class="hover-underline">Work</a>
+                <a href="#" class="hover-underline">Services</a>
+                <a href="#" class="hover-underline">About</a>
+                <a href="#" class="hover-underline">Blog</a>
+                <a href="#" class="hover-underline nav-dropdown">Pages <i class="ri-arrow-drop-down-line"></i></a>
+                <a href="#" class="cart-link">Cart <span class="cart-count">0</span></a>
+                <button class="btn-primary-outline">Get in Touch</button>
+            </div>
+            <div class="mobile-menu-icon">
+                <i class="ri-menu-line"></i>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">
+                Building Brands, One <br> Success Story at a Time.
+            </h1>
+            <p class="hero-subtitle">
+                Create a Brand That Resonates: We Can Help You <br> Define and Communicate Your Unique Message.
+            </p>
+            <button class="btn-primary hero-btn">
+                Our Services
+            </button>
+        </section>
+
+        <!-- Brands Slider -->
+        <div class="brands-slider">
+            <div class="fade-left"></div>
+            <div class="fade-right"></div>
+            
+            <div class="slider-track">
+                <!-- Group 1 -->
+                <div class="slide-group">
+                    <img src="./assets/client-logo-03.svg" alt="Client 3">
+                    <img src="./assets/client-logo-04.svg" alt="Client 4">
+                    <img src="./assets/client-logo-07.svg" alt="Client 7">
+                    <img src="./assets/client-logo-06.svg" alt="Client 6">
+                    <img src="./assets/client-logo-01.svg" alt="Client 1">
+                    <img src="./assets/client-logo-02.svg" alt="Client 2">
+                </div>
+                <!-- Group 2 for infinite scroll -->
+                <div class="slide-group">
+                    <img src="./assets/client-logo-03.svg" alt="Client 3">
+                    <img src="./assets/client-logo-04.svg" alt="Client 4">
+                    <img src="./assets/client-logo-07.svg" alt="Client 7">
+                    <img src="./assets/client-logo-06.svg" alt="Client 6">
+                    <img src="./assets/client-logo-01.svg" alt="Client 1">
+                    <img src="./assets/client-logo-02.svg" alt="Client 2">
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Section -->
+        <section class="services-section section-border">
+            <div class="grid-4">
+                <!-- Card 1 -->
+                <div class="service-card bg-zinc-100">
+                    <h1 class="card-title">Brand Strategy</h1>
+                    <p class="card-desc">We help businesses define their unique brand message and branding positioning.</p>
+                    <div class="card-link-wrapper">
+                        <h2 class="card-link">About Strategy</h2>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="service-card bg-zinc-100">
+                    <h1 class="card-title">Visual Identity</h1>
+                    <p class="card-desc">We create visual elements such as logos, packaging, and marketing materials for your brand.</p>
+                    <div class="card-link-wrapper">
+                        <h2 class="card-link">About Identity</h2>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="service-card bg-zinc-100">
+                    <h1 class="card-title">Digital Marketing</h1>
+                    <p class="card-desc">We help businesses to promote their brand online and create engaging digital experiences.</p>
+                    <div class="card-link-wrapper">
+                        <h2 class="card-link">About Marketing</h2>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="service-card bg-zinc-100">
+                    <h1 class="card-title">Brand Manage­ment</h1>
+                    <p class="card-desc">We help businesses to implement their brand across all touchpoints and ensure consistency.</p>
+                    <div class="card-link-wrapper">
+                        <h2 class="card-link">About Management</h2>
+                    </div>
+                </div>
+            </div>
+            <h1 class="section-label">OUR WORK</h1>
+        </section>
+
+        <!-- Portfolio Header -->
+        <div class="section-header">
+            <h1 class="section-heading">Selected Work</h1>
+            <button class="btn-outline">All Work</button>
+        </div>
+
+        <!-- Portfolio Grid -->
+        <section class="portfolio-section section-border pb-large">
+            <!-- Row 1 -->
+            <div class="grid-2 gap-large mb-large">
+                <div class="project-card">
+                    <div class="img-wrapper aspect-4-3">
+                        <img src="./assets/project-01-thumb.webp" alt="Invision Studio">
+                    </div>
+                    <div class="project-info">
+                        <h1 class="project-title">Invision Studio</h1>
+                        <button class="tag-btn">Marketing</button>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="img-wrapper aspect-4-3">
+                        <img src="./assets/project-02-thumb.webp" alt="Square Media">
+                    </div>
+                    <div class="project-info">
+                        <h1 class="project-title">Square Media</h1>
+                        <button class="tag-btn">Branding</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Row 2 -->
+            <div class="grid-2 gap-large">
+                <div class="project-card">
+                    <div class="img-wrapper aspect-4-3">
+                        <img src="./assets/project-03-thumb.webp" alt="Vision Design">
+                    </div>
+                    <div class="project-info">
+                        <h1 class="project-title">Vision Design</h1>
+                        <button class="tag-btn">Social Media</button>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="img-wrapper aspect-4-3">
+                        <img src="./assets/project-04-thumb.webp" alt="Design Bros">
+                    </div>
+                    <div class="project-info">
+                        <h1 class="project-title">Design Bros</h1>
+                        <button class="tag-btn">Branding</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <div class="section-label-wrapper"><h1 class="section-label absolute-top">OUR VALUES</h1></div>
+
+        <section class="values-section pb-large">
+            <!-- Row 1 -->
+            <div class="grid-4 min-h-40vh">
+                <div class="value-block bg-blue-light group">
+                    <h4 class="block-label">Services</h4>
+                    <div class="block-bottom">
+                        <h1 class="block-title">Our Approach to <br>Branding.</h1>
+                        <button class="btn-primary block-btn">
+                            About Oliv <i class="ri-arrow-right-up-line"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="value-block bg-green-light">
+                    <h1 class="block-label">Helping Brands <br> Stand Out</h1>
+                    <h1 class="block-title-small">Bold Moves, <br> Big Impact.</h1>
+                </div>
+                <div class="value-block bg-gray-light">
+                    <h1 class="block-label">How We Work <br> with Our Client</h1>
+                    <h1 class="block-title-small">Honesty is the <br> Best Policy.</h1>
+                </div>
+                <div class="value-block bg-white desktop-only"></div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="grid-4 min-h-40vh">
+                <div class="value-block bg-white desktop-only"></div>
+                <div class="value-block bg-gray-light">
+                    <h4 class="block-label">Collaboration is Key</h4>
+                    <h1 class="block-title-small">Building Strong <br> Partnerships.</h1>
+                </div>
+                <div class="value-block bg-orange-light">
+                    <h1 class="block-label">Our Approach</h1>
+                    <h1 class="block-title-small">Achieving <br> Real Results.</h1>
+                </div>
+                <div class="value-block bg-yellow-light">
+                    <h1 class="block-label">Our Philosophy</h1>
+                    <h1 class="block-title-small">Building Trust, <br>Not Pitching.</h1>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Text Section -->
+        <section class="about-text-section section-border">
+            <div class="about-header">
+                <h1 class="about-heading">
+                    Crafting Exceptional Digital <br>Experiences Across All <br> Platforms: Our Goal at Øliv.
+                </h1>
+            </div>
+            <div class="grid-2 gap-large">
+                <div class="about-text-left">
+                    <p>
+                        At Øliv, our goal is to craft exceptional digital experiences across all platforms. In today's digitally driven world, having a strong online presence is paramount for businesses to connect with their target audience effectively. We understand the importance of delivering seamless and engaging experiences that leave a lasting impression.
+                    </p>
+                </div>
+                <div class="about-text-right">
+                    <p>
+                        Our team of skilled designers, developers, and digital strategists collaborate to create customized digital solutions tailored to your unique business needs. Whether it's designing a user-friendly website, developing a mobile application, or enhancing your e-commerce platform, we strive to provide solutions that not only meet but exceed your expectations.
+                    </p>
+                </div>
+            </div>
+            <h1 class="section-label mt-xl">OUR TEAM</h1>
+        </section>
+
+        <!-- Team Section -->
+        <section class="team-section py-large">
+            <div class="section-header">
+                <h1 class="section-heading">Our Team of Experts</h1>
+                <button class="btn-outline">About Us</button>
+            </div>
+
+            <div class="grid-4 gap-medium">
+                <!-- Join Team Block -->
+                <div class="value-block bg-green-light">
+                    <div>
+                        <h4 class="block-label">Join the Team</h4>
+                        <h1 class="team-cta-title">Want to <br> shape the <br>future of <br>branding?</h1>
+                        <h4 class="team-cta-subtitle">Join us and shape the <br>future of branding today!</h4>
+                    </div>
+                    <button class="btn-primary mt-large self-start">About Oliv</button>
+                </div>
+                
+                <!-- Team Member 1 -->
+                <div class="team-card">
+                    <div class="img-wrapper aspect-3-4 team-img">
+                        <img src="./assets/team-01-p-500.webp" alt="Annette Black">
+                        <div class="team-socials">
+                            <div class="social-icon"><i class="ri-instagram-line"></i></div>
+                            <div class="social-icon"><i class="ri-twitter-fill"></i></div>
+                            <div class="social-icon"><i class="ri-behance-line"></i></div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h1 class="project-title">Annette Black</h1>
+                        <button class="tag-btn">Branding</button>
+                    </div>
+                </div>
+
+                <!-- Team Member 2 -->
+                <div class="team-card">
+                    <div class="img-wrapper aspect-3-4 team-img">
+                        <img src="./assets/team-02-p-500.webp" alt="Devon Lane">
+                        <div class="team-socials">
+                            <div class="social-icon"><i class="ri-instagram-line"></i></div>
+                            <div class="social-icon"><i class="ri-twitter-fill"></i></div>
+                            <div class="social-icon"><i class="ri-behance-line"></i></div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h1 class="project-title">Devon Lane</h1>
+                        <button class="tag-btn">Branding</button>
+                    </div>
+                </div>
+
+                <!-- Team Member 3 -->
+                <div class="team-card">
+                    <div class="img-wrapper aspect-3-4 team-img">
+                        <img src="./assets/team-03-p-500.webp" alt="Chris Watson">
+                        <div class="team-socials">
+                            <div class="social-icon"><i class="ri-instagram-line"></i></div>
+                            <div class="social-icon"><i class="ri-twitter-fill"></i></div>
+                            <div class="social-icon"><i class="ri-behance-line"></i></div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h1 class="project-title">Chris Watson</h1>
+                        <button class="tag-btn">Branding</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section py-large">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-row section-border pb-large mb-large">
+                <div class="testimonial-logo">
+                    <img src="./assets/client-logo-02.svg" alt="Client 2">
+                </div>
+                <div class="testimonial-content">
+                    <h1 class="testimonial-heading">“We couldn't be happier with the branding strategy developed.”</h1>
+                    <p class="testimonial-text">We approached Øliv for a complete rebranding of our company and we couldn't be happier with the results. Their market research and analysis helped us define our target audience and unique brand positioning. Their team then created a visually compelling logo and consistent branding across all touchpoints.</p>
+                    <p class="testimonial-text">The new brand has helped us stand out in the market and increase sales. We highly recommend Øliv to any business looking to rebrand or refresh their brand.</p>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-row pb-large">
+                <div class="testimonial-logo">
+                    <img src="./assets/client-logo-06.svg" alt="Client 6">
+                </div>
+                <div class="testimonial-content">
+                    <h1 class="testimonial-heading">“Expert Brand Management from Øliv”</h1>
+                    <p class="testimonial-text">As a growing business, it was important for us to have a strong and consistent brand. Øliv's brand management services helped us to achieve this. They conducted a thorough brand audit and provided valuable insights and recommendations.</p>
+                    <p class="testimonial-text">Their ongoing monitoring and implementation of our brand has helped us maintain consistency and stay aligned with our business goals. We couldn't be happier with the results and highly recommend Øliv's brand management services.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact CTA Section -->
+        <section class="cta-section bg-green-light">
+            <div class="cta-left">
+                <h1 class="block-label">contact</h1>
+            </div>
+            <div class="cta-right">
+                <h1 class="cta-heading">Let's start building your <br>brand's unique story <br>together.</h1>
+                <p class="cta-subheading">Want to see what a difference a strong brand can <br>make? Request a consultation today.</p>
+                <button class="btn-primary mt-large group-hover-btn">
+                    Get In Touch <i class="ri-arrow-right-up-line"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <div class="section-label-wrapper py-medium section-border mt-medium">
+            <h1 class="section-label">BLOG</h1>
+        </div>
+        
+        <div class="section-header py-large">
+            <h1 class="section-heading">Insights on Branding</h1>
+            <button class="btn-outline">See All</button>
+        </div>
+
+        <section class="blog-section pb-large">
+            <div class="grid-4 gap-medium">
+                <!-- Blog 1 -->
+                <div class="blog-card">
+                    <div class="img-wrapper aspect-4-3">
+                        <img src="./assets/post-01-thumb-p-500.webp" alt="Blog 1">
+                    </div>
+                    <div class="blog-info">
+                        <h1 class="blog-title">The Importance of a Strong Brand Positioning</h1>
+                        <h1 class="blog-link">Read More</h1>
+                    </div>
+                </div>
+                <!-- Blog 2 -->
+                <div class="blog-card">
+                    <div class="img-wrapper aspect-4-3">
+                        <img src="./assets/post-02-thumb-p-500.webp" alt="Blog 2">
+                    </div>
+                    <div class="blog-info">
+                        <h1 class="blog-title">Creating a Consistent Brand Identity Across All Touchpoints</h1>
+                        <h1 class="blog-link">Read More</h1>
+                    </div>
+                </div>
+                <!-- Blog 3 -->
+                <div class="blog-card">
+                    <div class="img-wrapper aspect-4-3">
+                        <img src="./assets/post-03-thumb-p-500.webp" alt="Blog 3">
+                    </div>
+                    <div class="blog-info">
+                        <h1 class="blog-title">The Role of Market Research in Branding Strategy</h1>
+                        <h1 class="blog-link">Read More</h1>
+                    </div>
+                </div>
+                <!-- Blog 4 -->
+                <div class="blog-card">
+                    <div class="img-wrapper aspect-4-3">
+                        <img src="./assets/post-04-thumb-p-500.webp" alt="Blog 4">
+                    </div>
+                    <div class="blog-info">
+                        <h1 class="blog-title">The Impact of Social Media on Branding</h1>
+                        <h1 class="blog-link">Read More</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Top -->
+        <div class="footer-top py-xl section-border-top section-border">
+            <!-- Footer Col 1 -->
+            <div class="footer-col">
+                <div class="footer-logo"><img src="./assets/logo.svg" alt="Oliv Logo"></div>
+                <div class="footer-socials">
+                    <a href="#" class="social-btn"><i class="ri-instagram-line"></i></a>
+                    <a href="#" class="social-btn"><i class="ri-twitter-fill"></i></a>
+                    <a href="#" class="social-btn"><i class="ri-behance-line"></i></a>
+                </div>
+            </div>
+            
+            <!-- Footer Col 2 -->
+            <div class="footer-col">
+                <div class="footer-col-header">
+                    <h1>Pages</h1>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Home</a>
+                    <a href="#">Services</a>
+                    <a href="#">About</a>
+                    <a href="#">Jobs</a>
+                    <a href="#">Contact</a>
+                    <button class="btn-primary mt-medium">More Templates</button>
+                </div>
+            </div>
+
+            <!-- Footer Col 3 -->
+            <div class="footer-col">
+                <div class="footer-col-header">
+                    <h1>CMS</h1>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Work</a>
+                    <a href="#">Work single</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Blog single</a>
+                    <a href="#">Shop</a>
+                    <a href="#">Shop single</a>
+                </div>
+            </div>
+
+            <!-- Footer Col 4 -->
+            <div class="footer-col">
+                <div class="footer-col-header">
+                    <h1>Utility Pages</h1>
+                </div>
+                <div class="footer-links">
+                    <a href="#">404 Error Page</a>
+                    <a href="#">Password protected</a>
+                    <a href="#">Styleguide</a>
+                    <a href="#">Licencing</a>
+                    <a href="#">Changelog</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <footer class="footer-bottom">
+            <h1 class="copyright">
+                <i class="ri-copyright-line"></i> Made by <a href="#">Pawel Gola</a> - Powered by <a href="#">Webflow</a>
+            </h1>
+            <div class="footer-legal">
+                <a href="#">Privacy</a>
+                <a href="#">Imprint</a>
+            </div>
+        </footer>
+        
+    </div>
+</body>
+</html>
