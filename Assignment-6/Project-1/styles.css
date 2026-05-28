@@ -1,0 +1,1178 @@
+:root {
+    --primary: #1E1B4B;
+    --accent: #E59866;
+    --forest: #26462A;
+    --star-gold: #F4D03F;
+    --bg-cream: #FAF6EE;
+    --bg-white: #ffffff;
+    --text-dark: #1E1B4B;
+    --text-muted: #5C5885;
+    --font-headings: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', sans-serif;
+    --shadow-soft: 0 4px 20px rgba(30, 27, 75, 0.04);
+    --shadow-hover: 0 10px 30px rgba(30, 27, 75, 0.08);
+    --transition-smooth: all 0.3s ease-in-out;
+}
+
+/* Margin aur padding reset kar rahe hain sabhi tags ke liye */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+/* Body settings - poore site ka default background aur text behavior */
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-cream);
+    color: var(--text-dark);
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+/* Basic elements styling - standard links, lists, images */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Heading structures with fluid typography */
+h1 {
+    font-size: clamp(2.3rem, 5.5vw, 4.5rem);
+    font-family: var(--font-headings);
+    font-weight: 500;
+}
+
+h2 {
+    font-size: clamp(1.7rem, 3.8vw, 2.8rem);
+    font-family: var(--font-headings);
+    font-weight: 400;
+}
+
+/* Sabhi sections ka padding aur container control */
+.section-container {
+    width: 100%;
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 50px 24px;
+}
+
+/* Common transition group - animations smoothly dikhane ke liye */
+a,
+.btn,
+.product-card,
+.product-card-img,
+.add-circle-btn,
+.tea-chip,
+.wholesale-banner-img,
+.spotlight-tea-img,
+.read-more-link,
+.social-circle {
+    transition: var(--transition-smooth);
+}
+
+/* Common centering helper - items ko flex center karne ke liye */
+.scroll-down-arrow,
+.add-circle-btn,
+.journal-circle-image,
+.social-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* General button designs - rounded pills */
+.btn {
+    display: inline-block;
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary,
+.btn-navy,
+.btn-submit {
+    background-color: var(--primary);
+    color: var(--bg-white);
+}
+
+.btn-primary:hover,
+.btn-navy:hover,
+.btn-submit:hover,
+.btn-white:hover {
+    background-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.btn-white {
+    background-color: var(--bg-white);
+    color: var(--primary);
+}
+
+.btn-white:hover {
+    color: var(--bg-white);
+}
+
+/* Top promotion ribbon - scroll hone par chipka rahega (sticky) */
+.promo-bar {
+    background-color: var(--primary);
+    color: var(--bg-white);
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 10px 16px;
+    letter-spacing: 0.12em;
+    position: sticky;
+    top: 0;
+    z-index: 101;
+}
+
+/* Glassmorphic menu header bar - premium look transparency ke sath */
+.main-header {
+    margin: 10px 24px;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+    height: 72px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 45px;
+    z-index: 100;
+}
+
+.header-container {
+    width: 100%;
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-menu-left,
+.nav-menu-right {
+    display: none;
+}
+
+.nav-menu-left ul,
+.nav-menu-right ul {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.nav-link {
+    font-family: var(--font-headings);
+    font-size: 1.15rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.chevron-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 13px;
+    height: 13px;
+    border: 1.5px solid var(--primary);
+    border-radius: 50%;
+    font-size: 0.4rem;
+}
+
+/* Brand logo styling */
+.brand-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.logo-top {
+    font-family: var(--font-headings);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--primary);
+}
+
+.logo-bottom {
+    font-family: var(--font-headings);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--primary);
+    line-height: 0.9;
+}
+
+/* Header right side utility elements */
+.header-utilities {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.util-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.cart-btn {
+    position: relative;
+    color: var(--primary);
+    display: flex;
+}
+
+.cart-count {
+    background-color: var(--accent);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.6rem;
+    border-radius: 50%;
+    width: 17px;
+    height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -5px;
+    right: -7px;
+    border: 1px solid var(--primary);
+}
+
+/* Checkbox hack variables for mobile hamburger dropdown */
+.menu-toggle-checkbox {
+    display: none;
+}
+
+.menu-toggle-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 20px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.hamburger-line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary);
+}
+
+/* Hero section - beautiful organic overlay with custom banner image */
+.hero-section {
+    position: relative;
+    background: linear-gradient(rgba(30, 27, 75, 0.15), rgba(30, 27, 75, 0.25)), url('assets/hero_bg.png') no-repeat center center/cover;
+    height: 75vh;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-container {
+    width: 100%;
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.hero-content {
+    max-width: 500px;
+    color: var(--bg-white);
+    animation: fadeInUp 0.7s ease-out forwards;
+}
+
+.hero-subtitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.hero-title {
+    line-height: 1.1;
+    margin-bottom: 15px;
+}
+
+.hero-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    opacity: 0.95;
+}
+
+.scroll-down-arrow {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    background-color: var(--primary);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 5;
+}
+
+/* Brand pluck story intro */
+.pluck-intro-section {
+    background-color: var(--bg-cream);
+    padding: 50px 24px;
+}
+
+.pluck-intro-text {
+    font-family: var(--font-headings);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    text-align: center;
+    line-height: 1.3;
+    font-weight: 400;
+    color: var(--primary);
+}
+
+.pluck-intro-text em {
+    font-style: italic;
+}
+
+/* Bestsellers product rows */
+.bestsellers-section {
+    padding: 30px 0 60px;
+}
+
+.bestsellers-badge-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.badge-label {
+    border: 2px solid var(--primary);
+    border-radius: 4px;
+    background-color: #D6C2F8;
+    box-shadow: 2px 2px 0 var(--primary);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    padding: 5px 14px;
+    color: var(--primary);
+    display: inline-block;
+}
+
+.orange-badge {
+    background-color: var(--accent);
+}
+
+.green-badge {
+    background-color: #A9DFBF;
+}
+
+.purple-badge {
+    background-color: #C39BD3;
+}
+
+.product-row-wrapper,
+.reviews-scroll-container {
+    overflow-x: auto;
+    padding: 10px 24px 20px;
+    scrollbar-width: none;
+}
+
+.product-row-wrapper::-webkit-scrollbar,
+.reviews-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.product-grid,
+.reviews-row {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+}
+
+.product-card,
+.review-card,
+.journal-card {
+    background-color: var(--bg-white);
+    border: 1.5px solid var(--primary);
+    border-radius: 8px;
+}
+
+.product-card {
+    width: 270px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card-image-wrapper {
+    height: 220px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1.5px solid var(--primary);
+    overflow: hidden;
+}
+
+.card-type-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: var(--bg-white);
+    border: 1.5px solid var(--primary);
+    border-radius: 4px;
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    color: var(--primary);
+    z-index: 2;
+}
+
+.card-star-rating {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--primary);
+    z-index: 2;
+}
+
+.product-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-card:hover .product-card-img,
+.wholesale-image-panel:hover .wholesale-banner-img {
+    transform: scale(1.05);
+}
+
+.add-circle-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+    background-color: var(--bg-white);
+    border: 1.5px solid var(--primary);
+    border-radius: 4px;
+    font-weight: 700;
+    color: var(--primary);
+    cursor: pointer;
+    z-index: 2;
+}
+
+.add-circle-btn:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+.card-details {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary);
+    min-height: 40px;
+}
+
+.card-price {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--primary);
+}
+
+.card-description {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.35;
+    min-height: 50px;
+}
+
+.centered-cta-row {
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Discover Wishlist Section */
+.discover-section {
+    background-color: var(--bg-cream);
+    text-align: center;
+}
+
+.discover-section h2 {
+    margin-bottom: 30px;
+    color: var(--primary);
+}
+
+.search-bar-mockup {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto 30px;
+    border: 1.5px solid var(--primary);
+    border-radius: 8px;
+    background-color: white;
+    padding: 3px;
+    display: flex;
+}
+
+.search-input-field {
+    flex: 1;
+    border: none;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.search-icon-symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.tea-chip {
+    border: 1.5px solid var(--primary);
+    border-radius: 50px;
+    background-color: #D3E5F8;
+    padding: 6px 16px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.tea-chip:hover {
+    background-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+/* Rocky Mountain Born Colorado Origins Section */
+.origins-section {
+    position: relative;
+    padding: 80px 24px;
+    background-color: var(--forest);
+    text-align: center;
+    color: var(--bg-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.origins-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('assets/forest_bg.png') no-repeat center center/cover;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+.origins-shading-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(38, 70, 42, 0.6);
+    z-index: 2;
+}
+
+.origins-content {
+    position: relative;
+    z-index: 3;
+    max-width: 750px;
+}
+
+.origins-badge {
+    border: 2px solid var(--bg-white);
+    background-color: var(--primary);
+    color: var(--accent);
+    padding: 5px 14px;
+    border-radius: 4px;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.origins-title {
+    font-size: clamp(2.3rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+}
+
+.origins-description {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 35px;
+    opacity: 0.95;
+}
+
+.pillars-row {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.pillar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.pillar-emoji {
+    font-size: 2rem;
+}
+
+.pillar-item h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* Reviews Panel */
+.reviews-section {
+    background-color: var(--bg-white);
+    padding: 60px 0;
+}
+
+.reviews-header-wrapper {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.reviews-header-wrapper h2 {
+    margin-top: 10px;
+    color: var(--primary);
+}
+
+.review-card {
+    padding: 24px;
+    width: 290px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.review-card:hover {
+    transform: scale(1.02);
+}
+
+.review-stars {
+    color: var(--accent);
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+.review-quote {
+    font-style: italic;
+    color: var(--primary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.review-author {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 0.05em;
+}
+
+/* Grid areas banaye hain mobile ke liye taaki simple flow ho upar-niche */
+.wholesale-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "wh-image" "wh-content";
+    border-top: 1.5px solid var(--primary);
+    border-bottom: 1.5px solid var(--primary);
+}
+
+.wholesale-image-panel {
+    grid-area: wh-image;
+    overflow: hidden;
+    height: 280px;
+}
+
+.wholesale-banner-img,
+.spotlight-tea-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wholesale-content-panel {
+    grid-area: wh-content;
+    background-color: var(--primary);
+    color: var(--bg-white);
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+}
+
+.wholesale-subtitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+}
+
+.wholesale-content-panel h2 {
+    line-height: 1.25;
+}
+
+.wholesale-content-panel p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+/* Featured Spotlight Spiced Chai Section */
+.chai-spotlight-section {
+    padding: 60px 24px;
+    background-color: var(--bg-cream);
+}
+
+.spotlight-split-card {
+    max-width: 1000px;
+    margin: 30px auto 0;
+    border: 1.5px solid var(--primary);
+    border-radius: 12px;
+    background-color: var(--bg-white);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "sp-image" "sp-content";
+}
+
+.spotlight-image-side {
+    grid-area: sp-image;
+    background-color: #FCDDCF;
+    padding: 30px;
+    border-bottom: 1.5px solid var(--primary);
+}
+
+.spotlight-tea-img {
+    max-width: 260px;
+    height: auto;
+    animation: floatingPouch 3s ease-in-out infinite alternate;
+}
+
+.spotlight-content-side {
+    grid-area: sp-content;
+    padding: 30px 24px;
+    background-color: #F8E2C2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.spotlight-category {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+}
+
+.spotlight-content-side h3 {
+    font-family: var(--font-headings);
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--primary);
+}
+
+.spotlight-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+}
+
+.spotlight-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+/* Steep Logs Tea Journal Section */
+.journal-section {
+    padding: 60px 0;
+    background-color: var(--bg-white);
+    border-top: 1.5px solid var(--primary);
+}
+
+.journal-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin: 30px 24px;
+}
+
+.journal-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+}
+
+.journal-card:hover {
+    transform: translateY(-4px);
+}
+
+.journal-circle-image {
+    width: 70px;
+    height: 70px;
+    border: 1.5px solid var(--primary);
+    border-radius: 50%;
+    background-color: #D3EAD7;
+}
+
+.journal-visual-emoji {
+    font-size: 2rem;
+}
+
+.journal-card h3 {
+    font-family: var(--font-headings);
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--primary);
+    min-height: 42px;
+}
+
+.journal-card p {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--text-muted);
+    min-height: 60px;
+}
+
+.read-more-link {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary);
+    border-bottom: 1.5px solid var(--primary);
+    padding-bottom: 1px;
+}
+
+.read-more-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Newsletter subscription */
+.newsletter-section {
+    background-color: #C7DDF7;
+    padding: 60px 24px;
+    text-align: center;
+    border-top: 1.5px solid var(--primary);
+}
+
+.newsletter-container {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.newsletter-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--primary);
+    display: block;
+    margin-bottom: 12px;
+}
+
+.newsletter-container h2 {
+    font-family: var(--font-headings);
+    font-size: 1.8rem;
+    line-height: 1.3;
+    margin-bottom: 24px;
+    color: var(--primary);
+}
+
+.newsletter-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.newsletter-input {
+    width: 100%;
+    max-width: 360px;
+    padding: 12px 18px;
+    border-radius: 50px;
+    border: 1.5px solid var(--primary);
+    background-color: white;
+    font-size: 0.9rem;
+    text-align: center;
+    outline: none;
+}
+
+.social-circles {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.social-circle {
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid var(--primary);
+    border-radius: 50%;
+    font-size: 1rem;
+}
+
+.social-circle:hover {
+    background-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Footer Section - simple grid with only clean mountain graphic */
+.site-footer {
+    background-color: var(--primary);
+    color: var(--bg-white);
+    padding-top: 60px;
+}
+
+.footer-container {
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 0 24px 40px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+.footer-col h3 {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer-col a {
+    font-size: 0.72rem;
+    opacity: 0.7;
+}
+
+.footer-col a:hover {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.footer-mountain-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--primary);
+}
+
+.footer-mountain-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.footer-copyright-row {
+    background-color: var(--primary);
+    text-align: center;
+    padding: 24px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.08em;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Desktop Styles - 768px se bada screen size ke liye styling */
+@media (min-width: 768px) {
+    .nav-menu-left,
+    .nav-menu-right {
+        display: block;
+    }
+    
+    .menu-toggle-label {
+        display: none;
+    }
+    
+    .hero-section {
+        padding-left: max(24px, calc((100% - 1380px) / 2 + 32px));
+    }
+    
+    .product-row-wrapper,
+    .reviews-scroll-container {
+        overflow-x: visible;
+        padding: 0 24px;
+    }
+    
+    .product-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+    
+    .product-card,
+    .review-card {
+        width: 100%;
+    }
+    
+    .pillars-row {
+        flex-direction: row;
+        justify-content: center;
+        gap: 50px;
+    }
+    
+    .reviews-row {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    
+    /* Grid template areas directly update in media query */
+    .wholesale-section {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "wh-image wh-content";
+    }
+    
+    .wholesale-image-panel {
+        height: auto;
+    }
+    
+    .spotlight-split-card {
+        grid-template-columns: 1.2fr 1fr;
+        grid-template-areas: "sp-image sp-content";
+    }
+    
+    .spotlight-image-side {
+        border-bottom: none;
+        border-right: 1.5px solid var(--primary);
+    }
+    
+    .journal-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .newsletter-form {
+        flex-direction: row;
+        justify-content: center;
+        background-color: white;
+        padding: 5px;
+        border-radius: 50px;
+        border: 1.5px solid var(--primary);
+        max-width: 480px;
+        margin: 0 auto 24px;
+    }
+    
+    .newsletter-input {
+        border: none;
+        max-width: none;
+        text-align: left;
+        padding: 0 16px;
+    }
+}
+
+/* Extra Large Screens - 1024px and above styling */
+@media (min-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .journal-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Entrance fade-in-up animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Spotlight floating product animation */
+@keyframes floatingPouch {
+    from {
+        transform: translateY(0) rotate(0deg);
+    }
+    to {
+        transform: translateY(-6px) rotate(1deg);
+    }
+}

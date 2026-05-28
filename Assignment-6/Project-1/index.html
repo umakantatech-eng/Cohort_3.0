@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevation Tea Co. | Premium Organic Whole Leaf Tea</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover premium organic whole leaf tea from Elevation Tea Co. Inspired by Two Leaves and a Bud. Compostable plant-based pyramid sachets.">
+    <meta name="keywords" content="organic tea, whole leaf tea, compostable sachets, green tea, black tea, elevation tea">
+    
+    <!-- Google Fonts for premium luxury feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- 1. TOP ANNOUNCEMENT BAR -->
+    <div class="promo-bar" id="site-announcement">
+        <p>FREE US SHIPPING FOR ORDERS OVER $75 | SHOP ORGANIC WHOLE LEAF</p>
+    </div>
+
+    <!-- 2. HEADER NAVIGATION BAR -->
+    <header class="main-header" id="navigation-header">
+        <div class="header-container">
+            
+            <!-- Left Side Links for Desktop -->
+            <nav class="nav-menu-left" aria-label="Primary Left Navigation">
+                <ul>
+                    <li class="has-dropdown">
+                        <a href="#bestsellers" class="nav-link">Shop <span class="chevron-arrow">▼</span></a>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#origins" class="nav-link">Learn <span class="chevron-arrow">▼</span></a>
+                    </li>
+                    <li>
+                        <a href="#reviews" class="nav-link reviews-link">Reviews <span class="star-rating">★</span></a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Centered Serif Brand Logo -->
+            <a href="#" class="brand-logo" aria-label="Elevation Tea Homepage">
+                <span class="logo-top">elevation</span>
+                <span class="logo-bottom">tea co.</span>
+            </a>
+
+            <!-- Right Side Links for Desktop -->
+            <nav class="nav-menu-right" aria-label="Primary Right Navigation">
+                <ul>
+                    <li><a href="#account" class="nav-link-right">MY ACCOUNT</a></li>
+                    <li><a href="#wholesale" class="nav-link-right">WHOLESALE</a></li>
+                    <li><a href="#journal" class="nav-link-right">TEA JOURNAL</a></li>
+                </ul>
+            </nav>
+
+            <!-- Cart icon and Hamburger button for Mobile -->
+            <div class="header-utilities">
+                <button class="util-btn" aria-label="Search items">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                
+                <a href="#cart" class="cart-btn" aria-label="Shopping Cart">
+                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="cart-count">0</span>
+                </a>
+
+                <!-- Checkbox hack for pure CSS mobile menu toggle -->
+                <input type="checkbox" id="mobile-menu-toggle" class="menu-toggle-checkbox">
+                <label for="mobile-menu-toggle" class="menu-toggle-label" aria-label="Open mobile menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </label>
+            </div>
+            
+        </div>
+    </header>
+
+    <main>
+        
+        <!-- 3. HERO BANNER SECTION -->
+        <section class="hero-section" id="hero-banner">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <span class="hero-subtitle">HIGH ALTITUDE ORGANICS</span>
+                    <h1 class="hero-title">A cup that fits<br>the moment.</h1>
+                    <p class="hero-description">From plastic-free compostable whole leaf tea sachets to ceremonial grade matchas and organic latte mixes, we blend for your mood.</p>
+                    <div class="hero-actions">
+                        <a href="#bestsellers" class="btn btn-primary">Shop Our Blends</a>
+                    </div>
+                </div>
+            </div>
+            <a href="#pluck-story" class="scroll-down-arrow" aria-label="Scroll down">▼</a>
+        </section>
+
+        <!-- Brand Intro Section -->
+        <section class="pluck-intro-section" id="pluck-story">
+            <div class="section-container">
+                <h2 class="pluck-intro-text">A <em>great</em> cup starts with a careful pluck - the top two leaves and a bud.</h2>
+            </div>
+        </section>
+
+        <!-- 4. BEST SELLERS SECTION (Product Cards Grid) -->
+        <section class="bestsellers-section" id="bestsellers">
+            <div class="bestsellers-badge-container">
+                <span class="badge-label">BEST SELLERS</span>
+            </div>
+            
+            <div class="product-row-wrapper">
+                <div class="product-grid">
+                    
+                    <!-- Card 1: Organic Green Tea -->
+                    <article class="product-card" id="card-green">
+                        <div class="card-image-wrapper" style="background-color: #D3EAD7;">
+                            <span class="card-type-badge">TEA SACHETS</span>
+                            <span class="card-star-rating">★ 4.7 (84)</span>
+                            <img src="assets/sachet_close.png" alt="Organic Tropical Green Tea Sachet" class="product-card-img" loading="lazy">
+                            <button class="add-circle-btn" aria-label="Add to Cart">+</button>
+                        </div>
+                        <div class="card-details">
+                            <h3 class="card-title">Organic Tropical Green Tea</h3>
+                            <span class="card-price">From $11.95</span>
+                            <p class="card-description">Fruity pineapple and organic whole leaf green tea blended for a clean steep.</p>
+                        </div>
+                    </article>
+
+                    <!-- Card 2: Herbal Tea Trio -->
+                    <article class="product-card" id="card-trio">
+                        <div class="card-image-wrapper" style="background-color: #F8E2C2;">
+                            <span class="card-type-badge">GIFTS &amp; SAMPLERS</span>
+                            <span class="card-star-rating">★ 5.0 (2)</span>
+                            <img src="assets/chai_latte.png" alt="Herbal Tea Trio Sampler" class="product-card-img" loading="lazy">
+                            <button class="add-circle-btn" aria-label="Add to Cart">+</button>
+                        </div>
+                        <div class="card-details">
+                            <h3 class="card-title">Herbal Tea Trio</h3>
+                            <span class="card-price">$33.30</span>
+                            <p class="card-description">A hand-packed collection of chamomile, peppermint, and rooibos botanicals.</p>
+                        </div>
+                    </article>
+
+                    <!-- Card 3: Organic Peppermint Pouch -->
+                    <article class="product-card" id="card-mint">
+                        <div class="card-image-wrapper" style="background-color: #CEECE1;">
+                            <span class="card-type-badge">NAKED SACHETS</span>
+                            <span class="card-star-rating">★ 5.0 (11)</span>
+                            <img src="assets/matcha_latte.png" alt="Organic Peppermint Naked Sachets Pouch" class="product-card-img" loading="lazy">
+                            <button class="add-circle-btn" aria-label="Add to Cart">+</button>
+                        </div>
+                        <div class="card-details">
+                            <h3 class="card-title">Organic Peppermint - 50 Sachets</h3>
+                            <span class="card-price">$21.95</span>
+                            <p class="card-description">Washington State peppermint leaves that release rich, caffeine-free essential oils.</p>
+                        </div>
+                    </article>
+
+                    <!-- Card 4: Classic Bamboo Chest -->
+                    <article class="product-card" id="card-chest">
+                        <div class="card-image-wrapper" style="background-color: #E6DCD1;">
+                            <span class="card-type-badge">GIFTS &amp; SAMPLERS</span>
+                            <span class="card-star-rating">★ 4.8 (41)</span>
+                            <img src="assets/image.png" alt="Classic Bamboo Tea Chest" class="product-card-img" loading="lazy">
+                            <button class="add-circle-btn" aria-label="Add to Cart">+</button>
+                        </div>
+                        <div class="card-details">
+                            <h3 class="card-title">Classic Bamboo Tea Chest</h3>
+                            <span class="card-price">$42.95</span>
+                            <p class="card-description">Polished bamboo box featuring 8 of our flagship award-winning organic tea sachets.</p>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <!-- View All button -->
+            <div class="centered-cta-row">
+                <a href="#bestsellers" class="btn btn-navy">Explore All Best Sellers</a>
+            </div>
+        </section>
+
+        <!-- 5. WISH LIST SEARCH & CATEGORY CHIPS -->
+        <section class="discover-section" id="discover">
+            <div class="section-container">
+                <div class="section-badge-wrapper">
+                    <span class="badge-label orange-badge">WISH LIST</span>
+                </div>
+                <h2 class="section-heading">Tell us what you're looking for,<br>or choose what you're wishing for.</h2>
+                
+                <div class="search-bar-mockup">
+                    <input type="text" class="search-input-field" placeholder="Search by name, flavor profile..." aria-label="Search tea">
+                    <span class="search-icon-symbol">🔍</span>
+                </div>
+
+                <!-- Wrapping category chips -->
+                <div class="chips-container">
+                    <a href="#bestsellers" class="tea-chip">All Natural</a>
+                    <a href="#bestsellers" class="tea-chip">Black Tea</a>
+                    <a href="#bestsellers" class="tea-chip">Green Tea</a>
+                    <a href="#bestsellers" class="tea-chip">Herbal Tea</a>
+                    <a href="#bestsellers" class="tea-chip">Caffeine-Free</a>
+                    <a href="#bestsellers" class="tea-chip">Organic</a>
+                    <a href="#bestsellers" class="tea-chip">Loose Leaf</a>
+                    <a href="#bestsellers" class="tea-chip">Pyramid Sachets</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. ORIGINS STORY SECTION -->
+        <section class="origins-section" id="origins">
+            <div class="origins-shading-overlay"></div>
+            <div class="origins-content">
+                <span class="origins-badge">OUR SPIRIT</span>
+                <h2 class="origins-title">BORN IN COLORADO</h2>
+                <p class="origins-description">We are an independent, passionate tea company nestled under Rocky Mountain skies in Basalt, Colorado. Our mission is honest sourcing and stewardship.</p>
+                
+                <!-- Pillar features row -->
+                <div class="pillars-row">
+                    <div class="pillar-item">
+                        <span class="pillar-emoji">🏔️</span>
+                        <h3>Mountain Integrity</h3>
+                    </div>
+                    <div class="pillar-item">
+                        <span class="pillar-emoji">♻️</span>
+                        <h3>Plant-Based PLA</h3>
+                    </div>
+                    <div class="pillar-item">
+                        <span class="pillar-emoji">🍃</span>
+                        <h3>100% Organic</h3>
+                    </div>
+                </div>
+                
+                <a href="#difference" class="btn btn-white">Read Our Full Story</a>
+            </div>
+        </section>
+
+        <!-- 7. REVIEWS SECTION (Pastel scroll cards) -->
+        <section class="reviews-section" id="reviews">
+            <div class="reviews-header-wrapper">
+                <span class="badge-label green-badge">REVIEWS</span>
+                <h2 class="section-heading">Loved by tea lovers everywhere.</h2>
+            </div>
+            
+            <div class="reviews-scroll-container">
+                <div class="reviews-row">
+                    <article class="review-card" style="background-color: #FCDDCF;">
+                        <span class="review-stars">★★★★★</span>
+                        <p class="review-quote">"Conventional tea bags chopped up dust always tasted bitter. Elevation's Peppermint is fresh and sweet!"</p>
+                        <h4 class="review-author">— Sarah M., Denver, CO</h4>
+                    </article>
+                    <article class="review-card" style="background-color: #D3EAD7;">
+                        <span class="review-stars">★★★★★</span>
+                        <p class="review-quote">"Tropical Green is my morning ritual! Smells incredible, and is totally plastic-free."</p>
+                        <h4 class="review-author">— Jason K., Seattle, WA</h4>
+                    </article>
+                    <article class="review-card" style="background-color: #F8E2C2;">
+                        <span class="review-stars">★★★★★</span>
+                        <p class="review-quote">"The organic whole leaves expand to fill the pyramid bag! It tastes like premium loose leaf."</p>
+                        <h4 class="review-author">— Elena R., Austin, TX</h4>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. WHOLESALE PROMO BANNER -->
+        <section class="wholesale-section" id="wholesale">
+            <div class="wholesale-image-panel">
+                <img src="assets/matcha_latte.png" alt="Matcha latte cup" class="wholesale-banner-img" loading="lazy">
+            </div>
+            <div class="wholesale-content-panel">
+                <span class="wholesale-subtitle">CAFES &amp; PARTNERS</span>
+                <h2>Our Cafe &amp; Wholesale Partners</h2>
+                <p>Elevate your beverage program with our high-altitude organic tea bags, loose leaf canisters, organic chai concentrates, and matchas.</p>
+                <a href="#contact" class="btn btn-white">Apply for Wholesale</a>
+            </div>
+        </section>
+
+        <!-- 9. FEATURED CHAI SPICED SPOTLIGHT -->
+        <section class="chai-spotlight-section" id="chai-spotlight">
+            <div class="bestsellers-badge-container">
+                <span class="badge-label orange-badge">OUR LATTES</span>
+                <h2 class="section-heading">BARISTA BLENDS FOR EVERY MOOD</h2>
+            </div>
+            
+            <div class="spotlight-split-card">
+                <div class="spotlight-image-side">
+                    <img src="assets/chai_latte.png" alt="Chai Latte mix pouch" class="spotlight-tea-img" loading="lazy">
+                </div>
+                <div class="spotlight-content-side">
+                    <span class="spotlight-category">ORGANIC CHAI</span>
+                    <h3>Nice Chai Latte Mix</h3>
+                    <p class="spotlight-text">Our signature Nice Chai is a not too sweet, not too spicy, organic powdered mix designed to make cozy barista lattes simple at home.</p>
+                    <span class="spotlight-price">$12.95</span>
+                    <a href="#bestsellers" class="btn btn-navy">Quick Shop Chai</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. JOURNAL / BLOG SECTION -->
+        <section class="journal-section" id="journal">
+            <div class="section-container">
+                <div class="reviews-header-wrapper">
+                    <span class="badge-label purple-badge">JOURNAL</span>
+                    <h2 class="section-heading">Steep-logs from our community.</h2>
+                </div>
+                
+                <div class="journal-grid">
+                    <article class="journal-card">
+                        <div class="journal-circle-image"><span class="journal-visual-emoji">☕</span></div>
+                        <h3>How to Brew the Perfect Cup of Organic Whole Leaf</h3>
+                        <p>Steeping is an art. Discover water temperature guidelines, timing charts, and leaf expansion science.</p>
+                        <a href="#journal" class="read-more-link">Read Log →</a>
+                    </article>
+                    <article class="journal-card">
+                        <div class="journal-circle-image"><span class="journal-visual-emoji">🍃</span></div>
+                        <h3>Conventional Tea Bags vs. Plant-Based Sachets</h3>
+                        <p>The microplastic crisis in everyday tea bags, and why PLA compostable sachets are the better way forward.</p>
+                        <a href="#journal" class="read-more-link">Read Log →</a>
+                    </article>
+                    <article class="journal-card">
+                        <div class="journal-circle-image"><span class="journal-visual-emoji">🍵</span></div>
+                        <h3>Understanding Grades of Ceremonial Matcha</h3>
+                        <p>Stone-ground in Uji, Japan, learn what distinguishes authentic ceremonial matcha from culinary green powders.</p>
+                        <a href="#journal" class="read-more-link">Read Log →</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11. NEWSLETTER SUBSCRIPTION -->
+        <section class="newsletter-section" id="newsletter">
+            <div class="newsletter-container">
+                <span class="newsletter-tag">STEEP WITH US</span>
+                <h2>Get news stories, brewing tips, and special offers straight to your inbox.</h2>
+                
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Welcome to the Steep Club!');">
+                    <input type="email" class="newsletter-input" placeholder="name@email.com" required aria-label="Email address">
+                    <button type="submit" class="btn btn-submit">Submit</button>
+                </form>
+
+                <div class="social-circles">
+                    <a href="#" class="social-circle" aria-label="Facebook">📘</a>
+                    <a href="#" class="social-circle" aria-label="Instagram">📸</a>
+                    <a href="#" class="social-circle" aria-label="LinkedIn">💼</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 12. SITE FOOTER -->
+    <footer class="site-footer" id="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Shop Teas</h3>
+                <ul>
+                    <li><a href="#">Tea Sachets</a></li>
+                    <li><a href="#">Pure Matcha</a></li>
+                    <li><a href="#">Tea Lattes</a></li>
+                    <li><a href="#">Loose Leaf</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Our Spirit</a></li>
+                    <li><a href="#">Tea Journal</a></li>
+                    <li><a href="#">Reviews</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">My Account</a></li>
+                    <li><a href="#">Shipping FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Wholesale</h3>
+                <ul>
+                    <li><a href="#">Cafe Partners</a></li>
+                    <li><a href="#">Wholesale Login</a></li>
+                    <li><a href="#">Product Files</a></li>
+                    <li><a href="#">Starter Kits</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Elegant landscape background footer banner featuring only image.png -->
+        <div class="footer-mountain-wrapper">
+            <img src="assets/image.png" alt="Elevation Tea Co Landscape Footer Banner" class="footer-mountain-img" loading="lazy">
+        </div>
+
+        <!-- Bottom copyright bar -->
+        <div class="footer-copyright-row">
+            <p>&copy; ELEVATION TEA CO. 2026. ALL RIGHTS RESERVED. | SITE BY MANUFACTOR</p>
+        </div>
+        
+    </footer>
+
+</body>
+</html>
