@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Explorer Task Manager</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <button class="menu-btn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <div class="title">
+        <h1>DOM Explorer</h1>
+        <p>Task Manager</p>
+      </div>
+
+      <button class="theme-btn">
+        <i class="fa-regular fa-sun"></i>
+      </button>
+    </header>
+
+    <!-- Add Task -->
+    <section class="card add-task">
+      <h2>
+        <i class="fa-solid fa-plus"></i>
+        Add New Task
+      </h2>
+
+      <input id="taskInput" type="text" placeholder="Enter task title..." />
+
+      <select class="categorySelect">
+        <option>Work</option>
+        <option>Study</option>
+        <option>Personal</option>
+      </select>
+
+      <button id="addBtn" class="add-btn">Add Task</button>
+    </section>
+
+    <!-- Stats -->
+    <section class="card stats">
+      <div class="stat-item">
+        <div class="icon pending">
+          <i class="fa-solid fa-hourglass-half"></i>
+        </div>
+
+        <div>
+          <p>Pending</p>
+          <h3 id="pendingCount">0</h3>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="stat-item">
+        <div class="icon completed">
+          <i class="fa-solid fa-check"></i>
+        </div>
+
+        <div>
+          <p>Completed</p>
+          <h3 id="completedCount">0</h3>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="stat-item">
+        <div class="icon total">
+          <i class="fa-solid fa-list"></i>
+        </div>
+
+        <div>
+          <p>total</p>
+          <h3 id="totalCount">0</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Task List -->
+    <section id="taskList" class="task-list">
+      <!-- <div class="task-card"> -->
+
+      <!-- <div class="task-top">
+
+                <div class="task-icon">
+                     <i class="fa-solid fa-briefcase"></i>
+                </div>
+
+                <div class="task-content">
+                    <h3>Learn Javascript</h3>
+
+                    <div class="tags">
+                        <span class="work">Work</span>
+                        <span class="pending-tag">Pending</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="edit">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <button class="complete">
+                     <i class="fa-solid fa-check"></i>
+                </button>
+
+                <button class="delete">
+                     <i class="fa-solid fa-trash"></i>
+                </button>
+            </div> -->
+
+      <!-- </div> -->
+    </section>
+
+    <!-- Event Propagation Demo -->
+    <section class="event-demo card">
+      <h2>Event Propagation Demo</h2>
+
+      <div id="grandparent" class="grandparent">
+        Grandparent
+
+        <div id="parent" class="parent">
+          Parent
+
+          <button id="childBtn">Child Button</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Browser Rendering Pipeline -->
+    <section class="pipeline">
+      <h2>Browser Rendering Pipeline</h2>
+
+      <div class="step">HTML</div>
+      <div class="arrow">↓</div>
+
+      <div class="step">Parsing</div>
+      <div class="arrow">↓</div>
+
+      <div class="step">Tokenization</div>
+      <div class="arrow">↓</div>
+
+      <div class="step">DOM Tree</div>
+
+      <div class="arrow">+</div>
+
+      <div class="step">CSSOM Tree</div>
+
+      <div class="arrow">↓</div>
+
+      <div class="step">Render Tree</div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
