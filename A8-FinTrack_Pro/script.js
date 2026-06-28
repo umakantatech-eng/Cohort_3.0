@@ -1058,10 +1058,10 @@ if (homePage) {
         const insights = await getFinancialInsights(list);
         contentDiv.innerHTML = insights;
       } catch (err) {
-        contentDiv.innerHTML = \`<div style="background: #fee2e2; color: #ef4444; padding: 16px; border-radius: 8px;">
+        contentDiv.innerHTML = `<div style="background: #fee2e2; color: #ef4444; padding: 16px; border-radius: 8px;">
           <p style="margin:0; font-weight: 600;">Oops! Something went wrong.</p>
-          <p style="margin: 4px 0 0 0; font-size: 13px;">\${err.message}</p>
-        </div>\`;
+          <p style="margin: 4px 0 0 0; font-size: 13px;">${err.message}</p>
+        </div>`;
       }
     });
 
