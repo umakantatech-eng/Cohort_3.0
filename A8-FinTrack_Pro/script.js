@@ -254,7 +254,9 @@ if (homePage) {
       .eq('user_id', session.user.id)
       .order('date', { ascending: true });
       
-    if (!error && data) {
+    if (error) {
+      console.error("Fetch Error:", error);
+    } else if (data) {
       _transactionsCache = data;
     }
   };
@@ -892,7 +894,7 @@ if (homePage) {
       // Insert into Supabase
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        await supabase.from('transactions').insert({
+        const { error } = await supabase.from('transactions').insert({
           user_id: session.user.id,
           type: selectedType,
           description: description,
@@ -901,6 +903,12 @@ if (homePage) {
           category: category,
           recurring: recurring
         });
+        
+        if (error) {
+          console.error("Insert Error:", error);
+          msgEl.textContent = error.message;
+          return;
+        }
       }
 
       await window.fetchTransactionsFromDB();
