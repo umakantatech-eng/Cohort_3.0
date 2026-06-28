@@ -552,7 +552,8 @@ if (homePage) {
   // ==========================================
   //  RENDER CHART
   // ==========================================
-  function renderChart() {
+  async function renderChart() {
+    const { Chart } = await import('chart.js/auto');
     var list = getDisplayTransactions();
     var canvas = document.querySelector("#cashFlowChart");
 
@@ -679,7 +680,8 @@ if (homePage) {
   //  RENDER DESKTOP CHART
   // ==========================================
   var desktopChartInstance = null;
-  function renderDesktopChart() {
+  async function renderDesktopChart() {
+    const { Chart } = await import('chart.js/auto');
     var list = getDisplayTransactions();
     var canvas = document.querySelector("#cashFlowChartDesktop");
     if (!canvas) return;
