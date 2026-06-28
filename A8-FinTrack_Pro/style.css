@@ -908,6 +908,10 @@ body.dark .hero-card {
   outline: 4px solid rgba(255, 255, 255, 0.8);
 }
 
+body.dark .fab {
+  outline-color: var(--background);
+}
+
 .fab:hover {
   transform: translateX(-50%) scale(1.08);
   box-shadow: 0 12px 36px rgba(91, 92, 235, 0.6);
