@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings | FinTrack Pro</title>
+    <meta
+      name="description"
+      content="Manage your FinTrack Pro profile, currency and preferences."
+    />
+
+    <!-- GOOGLE FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FONT AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <!-- CSS LINK -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+
+      <!-- ===== DESKTOP SIDEBAR (hidden on mobile) ===== -->
+      <aside class="sidebar" id="desktopSidebar">
+        <div class="sidebar-logo">
+          <i class="fa-solid fa-layer-group"></i>
+          <div class="sidebar-logo-text">
+            <h2>FinTrack <span>Pro</span></h2>
+            <p>Personal Finance</p>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <a href="home.html" class="sidebar-link">
+            <i class="fa-solid fa-border-all"></i> Dashboard
+          </a>
+          <a href="settings.html" class="sidebar-link active">
+            <i class="fa-solid fa-gear"></i> Settings
+          </a>
+        </nav>
+        <button class="sidebar-add-btn" onclick="window.location.href='home.html'">
+          <i class="fa-solid fa-plus"></i> Add Transaction
+        </button>
+      </aside>
+
+      <!-- ===== APP MAIN WRAPPER ===== -->
+      <div class="app-main">
+
+        <!-- MOBILE HEADER (hidden on desktop) -->
+        <header class="header">
+          <button class="icon-btn" id="themeBtn">
+            <i class="fa-regular fa-sun"></i>
+          </button>
+          <h1 class="app-logo">FinTrack <span>Pro</span></h1>
+          <button class="icon-btn" id="profileBtn">
+            <i class="fa-regular fa-user"></i>
+          </button>
+        </header>
+
+        <!-- DESKTOP TOPBAR (hidden on mobile) -->
+        <div class="desktop-topbar">
+          <div></div>
+          <div class="desktop-topbar-right">
+            <span class="desktop-username" id="desktopUserName">User</span>
+            <button class="desktop-logout-btn" onclick="logoutUser()">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+          </div>
+        </div>
+
+        <!-- Settings Content -->
+        <section class="content settings-content">
+
+        <!-- Page Title -->
+        <div class="settings-title">
+          <h2>Settings</h2>
+          <p>Manage your profile and preferences</p>
+        </div>
+
+        <div class="settings-grid">
+        <!-- Profile Card -->
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <i class="fa-solid fa-user-circle"></i>
+            <h3>Profile</h3>
+          </div>
+
+          <div class="form-group">
+            <label for="settingsName">Display Name</label>
+            <input
+              type="text"
+              id="settingsName"
+              placeholder="Enter your name"
+            />
+          </div>
+
+          <button class="primary-btn" id="saveNameBtn" onclick="saveName()">
+            Save Name <i class="fa-solid fa-check"></i>
+          </button>
+        </div>
+
+        <!-- Currency Card -->
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <i class="fa-solid fa-coins"></i>
+            <h3>Currency</h3>
+          </div>
+
+          <div class="form-group">
+            <label for="currencySelect">Choose Currency</label>
+            <select id="currencySelect" onchange="saveCurrency()">
+              <option value="₹">₹ - INR (Indian Rupee)</option>
+              <option value="$">$ - USD (US Dollar)</option>
+              <option value="€">€ - EUR (Euro)</option>
+              <option value="£">£ - GBP (British Pound)</option>
+              <option value="¥">¥ - JPY (Japanese Yen)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Appearance Card -->
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <i class="fa-solid fa-moon"></i>
+            <h3>Appearance</h3>
+          </div>
+
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <p class="toggle-label">Dark Mode</p>
+              <small>Switch to dark theme</small>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()" />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Danger Zone Card -->
+        <div class="settings-card danger-card">
+          <div class="settings-card-header">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h3>Danger Zone</h3>
+          </div>
+
+          <p class="danger-text">
+            This will permanently delete all your transactions and reset everything.
+          </p>
+
+          <button class="danger-btn" id="resetBtn" onclick="resetAllData()">
+            <i class="fa-solid fa-trash"></i> Reset All Data
+          </button>
+        </div>
+
+        <!-- Logout -->
+        <div class="settings-card logout-card" style="border: none; background: transparent; padding: 0; display: flex; align-items: flex-end;">
+          <button class="logout-btn" id="logoutBtn" onclick="logoutUser()" style="margin-top: auto;">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </button>
+        </div>
+
+        </div> <!-- end .settings-grid -->
+
+      </section><!-- end .content -->
+
+      <!-- Bottom Navigation -->
+      <nav class="bottom-nav">
+        <button class="nav-item" id="homeNavBtn" onclick="goHome()">
+          <i class="fa-solid fa-house"></i>
+          <span>Home</span>
+        </button>
+
+        <!-- Center FAB space -->
+        <div class="nav-fab-space"></div>
+
+        <button class="nav-item active" id="settingsNavBtn">
+          <i class="fa-solid fa-gear"></i>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      </div> <!-- end app-main -->
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

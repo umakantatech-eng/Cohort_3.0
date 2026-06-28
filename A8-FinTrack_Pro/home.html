@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home | FinTrack Pro</title>
+    <meta name="description" content="Track your income and expenses with FinTrack Pro." />
+
+    <!-- GOOGLE FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <!-- CHART JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+
+      <!-- ===== DESKTOP SIDEBAR (hidden on mobile) ===== -->
+      <aside class="sidebar" id="desktopSidebar">
+
+        <div class="sidebar-logo">
+          <i class="fa-solid fa-layer-group"></i>
+          <div class="sidebar-logo-text">
+            <h2>FinTrack <span>Pro</span></h2>
+            <p>Personal Finance</p>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="home.html" class="sidebar-link active">
+            <i class="fa-solid fa-border-all"></i> Dashboard
+          </a>
+          <a href="settings.html" class="sidebar-link">
+            <i class="fa-solid fa-gear"></i> Settings
+          </a>
+        </nav>
+
+        <button class="sidebar-add-btn" onclick="openModal()">
+          <i class="fa-solid fa-plus"></i> Add Transaction
+        </button>
+
+      </aside>
+
+      <!-- ===== APP MAIN WRAPPER ===== -->
+      <div class="app-main">
+
+        <!-- MOBILE HEADER (hidden on desktop) -->
+        <header class="header">
+          <button class="icon-btn" id="themeBtn">
+            <i class="fa-regular fa-sun"></i>
+          </button>
+          <h1 class="app-logo">FinTrack <span>Pro</span></h1>
+          <button class="icon-btn" id="profileBtn">
+            <i class="fa-regular fa-user"></i>
+          </button>
+        </header>
+
+        <!-- DESKTOP TOPBAR (hidden on mobile) -->
+        <div class="desktop-topbar">
+          <div></div>
+          <div class="desktop-topbar-right">
+            <span class="desktop-username" id="desktopUserName">User</span>
+            <button class="desktop-logout-btn" onclick="logoutUser()">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+          </div>
+        </div>
+
+        <!-- ===== MOBILE CONTENT (hidden on desktop ≥768px) ===== -->
+        <section class="content mobile-content">
+
+          <!-- Hero / Greeting Card -->
+          <section class="hero-card">
+            <div class="hero-content">
+              <h3>Good Morning 👋</h3>
+              <h2 id="userName">User</h2>
+              <p>Track every rupee.<br />Build wealth daily.</p>
+            </div>
+            <div class="hero-image">
+              <img src="assets/wallet.png" alt="Wallet" />
+            </div>
+          </section>
+
+          <!-- Summary Cards (4 in a row) -->
+          <section class="summary-grid">
+            <article class="summary-card">
+              <div class="card-icon balance-icon"><i class="fa-solid fa-wallet"></i></div>
+              <h4>Balance</h4>
+              <h2 id="balance">₹0.00</h2>
+              <span class="card-sub">Today's Balance</span>
+            </article>
+            <article class="summary-card">
+              <div class="card-icon income-icon"><i class="fa-solid fa-arrow-down"></i></div>
+              <h4>Income</h4>
+              <h2 id="income" class="income-text">₹0.00</h2>
+              <span class="card-sub">Total Income</span>
+            </article>
+            <article class="summary-card">
+              <div class="card-icon expense-icon"><i class="fa-solid fa-arrow-up"></i></div>
+              <h4>Expense</h4>
+              <h2 id="expense" class="expense-text">₹0.00</h2>
+              <span class="card-sub">Total Expense</span>
+            </article>
+            <article class="summary-card">
+              <div class="card-icon txn-icon"><i class="fa-regular fa-file-lines"></i></div>
+              <h4>Transactions</h4>
+              <h2 id="totalTransaction">0</h2>
+              <span class="card-sub">This Month</span>
+            </article>
+          </section>
+
+          <!-- Cash Flow Chart -->
+          <section class="chart-card">
+            <div class="section-header">
+              <h2>Cash Flow Overview</h2>
+              <div class="chart-legend">
+                <span class="legend-dot income-dot"></span><span>Income</span>
+                <span class="legend-dot expense-dot"></span><span>Expense</span>
+              </div>
+            </div>
+            <canvas id="cashFlowChart" height="110"></canvas>
+          </section>
+
+          <!-- Filter Buttons -->
+          <section class="filter-buttons">
+            <button class="filter-btn active" id="filterAll" onclick="setFilter('all')">
+              <i class="fa-solid fa-arrow-down-up-across-line"></i> All
+            </button>
+            <button class="filter-btn" id="filterIncome" onclick="setFilter('income')">
+              <i class="fa-solid fa-arrow-down"></i> Income
+            </button>
+            <button class="filter-btn" id="filterExpense" onclick="setFilter('expense')">
+              <i class="fa-solid fa-arrow-up"></i> Expense
+            </button>
+          </section>
+
+          <!-- Recent Transactions -->
+          <section class="transaction-section">
+            <div class="section-header">
+              <h2>Recent Transactions</h2>
+              <button class="view-all-btn">View All</button>
+            </div>
+            <div class="transaction-list" id="transactionList">
+              <div class="empty-state" id="emptyState">
+                <i class="fa-solid fa-receipt"></i>
+                <p>No transactions yet</p>
+                <small>Tap + to add your first one</small>
+              </div>
+            </div>
+          </section>
+
+        </section>
+        <!-- END MOBILE CONTENT -->
+
+        <!-- ===== DESKTOP CONTENT (hidden on mobile) ===== -->
+        <div class="desktop-content">
+
+          <!-- Page Header -->
+          <div class="desktop-page-header">
+            <h1>Financial Overview</h1>
+            <p>Real-time tracking application</p>
+          </div>
+
+          <!-- 4 Summary Cards -->
+          <div class="desktop-cards">
+
+            <div class="desktop-card">
+              <div class="card-icon balance-icon"><i class="fa-solid fa-building-columns"></i></div>
+              <p class="dc-label">Current Balance</p>
+              <h3 class="dc-amount" id="desktopBalance">₹0.00</h3>
+            </div>
+
+            <div class="desktop-card">
+              <div class="card-icon income-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+              <p class="dc-label">Total Income</p>
+              <h3 class="dc-amount income-text" id="desktopIncome">₹0.00</h3>
+            </div>
+
+            <div class="desktop-card">
+              <div class="card-icon expense-icon"><i class="fa-solid fa-arrow-trend-down"></i></div>
+              <p class="dc-label">Total Expense</p>
+              <h3 class="dc-amount expense-text" id="desktopExpense">₹0.00</h3>
+            </div>
+
+            <div class="desktop-card">
+              <div class="card-icon txn-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+              <p class="dc-label">Total Transactions</p>
+              <h3 class="dc-amount" id="desktopTotal">0</h3>
+            </div>
+
+          </div>
+
+          <!-- Dashboard Grid: main column + side column -->
+          <div class="desktop-grid">
+
+            <!-- Left: Chart + Transactions Table -->
+            <div class="desktop-main-col">
+
+              <!-- Chart Card -->
+              <div class="desktop-chart-card">
+                <div class="desktop-card-header">
+                  <h3>Cash Flow Analysis</h3>
+                  <div class="chart-legend">
+                    <span class="legend-dot income-dot"></span><span>Income</span>
+                    <span class="legend-dot expense-dot"></span><span>Expenses</span>
+                  </div>
+                </div>
+                <div class="desktop-chart-area">
+                  <canvas id="cashFlowChartDesktop"></canvas>
+                </div>
+              </div>
+
+              <!-- Transactions Table Card -->
+              <div class="desktop-table-card">
+                <div class="desktop-card-header">
+                  <h3>All Transactions</h3>
+                </div>
+
+                <!-- Search + Type Filter -->
+                <div class="desktop-search-bar">
+                  <div class="desktop-search-input">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="desktopSearch" placeholder="Search transactions..." oninput="filterDesktopTable()" />
+                  </div>
+                  <select id="desktopTypeFilter" onchange="filterDesktopTable()">
+                    <option value="all">All Types</option>
+                    <option value="income">Income Only</option>
+                    <option value="expense">Expense Only</option>
+                  </select>
+                </div>
+
+                <!-- Table -->
+                <div class="desktop-table-wrap">
+                  <table class="desktop-table">
+                    <thead>
+                      <tr>
+                        <th>DATE</th>
+                        <th>DESCRIPTION</th>
+                        <th>CATEGORY</th>
+                        <th>AMOUNT</th>
+                        <th>ACTIONS</th>
+                      </tr>
+                    </thead>
+                    <tbody id="desktopTableBody">
+                      <!-- JS fills rows here -->
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- end desktop-main-col -->
+
+            <!-- Right: Preferences Panel -->
+            <div class="desktop-side-col">
+
+              <div class="desktop-pref-card">
+                <div class="desktop-card-header">
+                  <h3>Preferences</h3>
+                </div>
+
+                <div class="pref-item">
+                  <div><h4 class="pref-label">Dark Mode</h4></div>
+                  <label class="switch">
+                    <input type="checkbox" id="desktopDarkToggle" onchange="toggleDarkMode()" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <button class="desktop-reset-btn" onclick="resetAllData()">
+                  <i class="fa-solid fa-trash"></i> Reset All Data
+                </button>
+              </div>
+
+            </div>
+            <!-- end desktop-side-col -->
+
+          </div>
+          <!-- end desktop-grid -->
+
+        </div>
+        <!-- END DESKTOP CONTENT -->
+
+        <!-- MOBILE FAB (hidden on desktop) -->
+        <button class="fab" id="addTransactionBtn">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+
+        <!-- MOBILE BOTTOM NAV (hidden on desktop) -->
+        <nav class="bottom-nav">
+          <button class="nav-item active" id="homeNavBtn" onclick="goHome()">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+          </button>
+          <div class="nav-fab-space"></div>
+          <button class="nav-item" id="settingsNavBtn" onclick="goSettings()">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </button>
+        </nav>
+
+        <!-- Modal Overlay -->
+        <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+
+        <!-- Add Transaction Modal -->
+        <div class="modal" id="transactionModal">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <h2>Add Transaction</h2>
+              <button class="modal-close" id="closeModalBtn" onclick="closeModal()">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <form id="transactionForm">
+
+              <div class="type-toggle">
+                <button type="button" class="type-btn active income-btn" id="incomeTypeBtn" onclick="selectType('income')">
+                  <i class="fa-solid fa-arrow-down"></i> Income
+                </button>
+                <button type="button" class="type-btn expense-btn" id="expenseTypeBtn" onclick="selectType('expense')">
+                  <i class="fa-solid fa-arrow-up"></i> Expense
+                </button>
+              </div>
+
+              <div class="form-group">
+                <label for="txnDescription">Description</label>
+                <input type="text" id="txnDescription" placeholder="e.g. Salary, Grocery..." />
+              </div>
+
+              <div class="form-group">
+                <label for="txnAmount">Amount</label>
+                <input type="number" id="txnAmount" placeholder="0.00" min="0" />
+              </div>
+
+              <div class="form-group">
+                <label for="txnDate">Date</label>
+                <input type="date" id="txnDate" />
+              </div>
+
+              <div class="form-group">
+                <label for="txnCategory">Category</label>
+                <select id="txnCategory">
+                  <option value="">Select Category</option>
+                  <option value="Food & Dining">Food & Dining</option>
+                  <option value="Shopping">Shopping</option>
+                  <option value="Recharge & Bills">Recharge & Bills</option>
+                  <option value="Petrol & Auto">Petrol & Auto</option>
+                  <option value="Utilities">Utilities</option>
+                  <option value="Salary">Salary</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <p id="formMessage" class="form-message"></p>
+
+              <button type="submit" class="primary-btn">
+                Save Transaction <i class="fa-solid fa-check"></i>
+              </button>
+
+            </form>
+          </div>
+        </div>
+        <!-- END MODAL -->
+
+      </div>
+      <!-- end .app-main -->
+
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
