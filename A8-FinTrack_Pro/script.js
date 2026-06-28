@@ -182,6 +182,14 @@ if (homePage) {
   var currentFilter = "all";     // "all", "income", "expense"
   var selectedType = "income";   // type chosen in the modal
 
+  // --- Security Utility ---
+  window.escapeHTML = function(str) {
+    if (typeof str !== 'string') return '';
+    return str.replace(/[&<>"']/g, function(match) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[match];
+    });
+  };
+
   // --- Load user name ---
   var userNameEl = document.querySelector("#userName");
   var desktopUserNameEl = document.querySelector("#desktopUserName");
@@ -463,7 +471,7 @@ if (homePage) {
           '<i class="fa-solid fa-arrow-' + (txn.type === "income" ? "down" : "up") + '"></i>' +
         '</div>' +
         '<div class="txn-info">' +
-          '<h4>' + txn.description + '</h4>' +
+          '<h4>' + window.escapeHTML(txn.description) + '</h4>' +
           '<div class="txn-meta">' +
             '<span>' + dateStr + '</span>' +
             '<span class="dot"></span>' +
@@ -474,7 +482,7 @@ if (homePage) {
           '<div class="txn-amount ' + txn.type + '">' +
             (txn.type === "income" ? "+" : "-") + formatAmount(txn.amount) +
           '</div>' +
-          '<div class="txn-category">' + (categoryEmojis[txn.category] || "📦") + ' ' + txn.category + '</div>' +
+          '<div class="txn-category">' + (categoryEmojis[txn.category] || "📦") + ' ' + window.escapeHTML(txn.category) + '</div>' +
         '</div>' +
         '<button class="txn-delete-btn" onclick="deleteTransaction(\'' + txn.id + '\')">' +
           '<i class="fa-solid fa-trash"></i>' +
@@ -536,8 +544,8 @@ if (homePage) {
 
       tr.innerHTML =
         '<td>' + dateStr + '</td>' +
-        '<td><strong>' + txn.description + '</strong></td>' +
-        '<td>' + (categoryEmojis[txn.category] || "📦") + ' ' + txn.category + '</td>' +
+        '<td><strong>' + window.escapeHTML(txn.description) + '</strong></td>' +
+        '<td>' + (categoryEmojis[txn.category] || "📦") + ' ' + window.escapeHTML(txn.category) + '</td>' +
         '<td class="' + amountClass + '">' + amountPrefix + formatAmount(txn.amount) + '</td>' +
         '<td>' +
           '<button class="dt-delete-btn" onclick="deleteTransaction(\'' + txn.id + '\')">' +
