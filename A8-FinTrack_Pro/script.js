@@ -236,6 +236,37 @@ if (homePage) {
     return [];
   }
 
+  // Get filtered transactions based on Month Filter
+  function getDisplayTransactions() {
+    var list = loadTransactions();
+    var monthFilterEl = document.querySelector("#monthFilter");
+    var monthFilter = monthFilterEl ? monthFilterEl.value : "all";
+    
+    if (monthFilter !== "all") {
+      var now = new Date();
+      var targetMonth = now.getMonth();
+      var targetYear = now.getFullYear();
+      
+      if (monthFilter === "last") {
+        targetMonth -= 1;
+        if (targetMonth < 0) {
+          targetMonth = 11;
+          targetYear -= 1;
+        }
+      }
+      
+      var filteredList = [];
+      for(var i=0; i<list.length; i++) {
+        var d = new Date(list[i].date);
+        if (d.getMonth() === targetMonth && d.getFullYear() === targetYear) {
+          filteredList.push(list[i]);
+        }
+      }
+      return filteredList;
+    }
+    return list;
+  }
+
   // Save transactions to localStorage
   function saveTransactions(list) {
     localStorage.setItem(STORAGE.TRANSACTIONS, JSON.stringify(list));
@@ -288,7 +319,7 @@ if (homePage) {
   //  UPDATE SUMMARY CARDS
   // ==========================================
   function updateCards() {
-    var list = loadTransactions();
+    var list = getDisplayTransactions();
     var totals = calculateTotals(list);
 
     // Mobile
@@ -312,25 +343,69 @@ if (homePage) {
     if (dIncEl) dIncEl.textContent = formatAmount(totals.income);
     if (dExpEl) dExpEl.textContent = formatAmount(totals.expense);
     if (dTotEl) dTotEl.textContent = list.length;
+
+    // Badges
+    var badgeDesktop = document.querySelector(".nav-badge-desktop");
+    var badgeMobile = document.querySelector(".nav-badge-mobile");
+    if (badgeDesktop) badgeDesktop.textContent = list.length;
+    if (badgeMobile) badgeMobile.textContent = list.length;
+
+    // Budget Check
+    var budgetAlert = document.querySelector("#budgetAlert");
+    var savedBudget = localStorage.getItem("fintrack_budget");
+    if (budgetAlert && savedBudget) {
+      if (totals.expense > parseFloat(savedBudget)) {
+        budgetAlert.style.display = "block";
+      } else {
+        budgetAlert.style.display = "none";
+      }
+    }
   }
 
   // ==========================================
   //  RENDER TRANSACTION LIST (MOBILE)
   // ==========================================
+  
+  var categoryEmojis = {
+    "Salary": "💰",
+    "Business": "💼",
+    "Investments": "📈",
+    "Food": "🍔",
+    "Transport": "🚗",
+    "Shopping": "🛍️",
+    "Bills": "🧾",
+    "Entertainment": "🎬",
+    "Health": "💊",
+    "Education": "📚",
+    "Other": "📦"
+  };
+
   function renderTransactions() {
-    var list = loadTransactions();
+    var list = getDisplayTransactions();
     var listEl = document.querySelector("#transactionList");
     if (!listEl) return;
 
-    // Filter the list based on currentFilter
+    var searchInput = document.querySelector("#mobileSearch");
+    var searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
+
+    // Filter the list based on currentFilter and search
     var filtered = [];
     for (var i = 0; i < list.length; i++) {
+      var txn = list[i];
+      var matchType = false;
+
       if (currentFilter === "all") {
-        filtered.push(list[i]);
-      } else if (currentFilter === "income" && list[i].type === "income") {
-        filtered.push(list[i]);
-      } else if (currentFilter === "expense" && list[i].type === "expense") {
-        filtered.push(list[i]);
+        matchType = true;
+      } else if (currentFilter === "income" && txn.type === "income") {
+        matchType = true;
+      } else if (currentFilter === "expense" && txn.type === "expense") {
+        matchType = true;
+      }
+
+      var matchSearch = (txn.description.toLowerCase().includes(searchTerm) || txn.category.toLowerCase().includes(searchTerm));
+
+      if (matchType && matchSearch) {
+        filtered.push(txn);
       }
     }
 
@@ -372,7 +447,7 @@ if (homePage) {
           '<div class="txn-amount ' + txn.type + '">' +
             (txn.type === "income" ? "+" : "-") + formatAmount(txn.amount) +
           '</div>' +
-          '<div class="txn-category">' + txn.category + '</div>' +
+          '<div class="txn-category">' + (categoryEmojis[txn.category] || "📦") + ' ' + txn.category + '</div>' +
         '</div>' +
         '<button class="txn-delete-btn" onclick="deleteTransaction(\'' + txn.id + '\')">' +
           '<i class="fa-solid fa-trash"></i>' +
@@ -390,7 +465,7 @@ if (homePage) {
   };
 
   function renderDesktopTransactions() {
-    var list = loadTransactions();
+    var list = getDisplayTransactions();
     var tbody = document.querySelector("#desktopTableBody");
     if (!tbody) return;
 
@@ -435,7 +510,7 @@ if (homePage) {
       tr.innerHTML =
         '<td>' + dateStr + '</td>' +
         '<td><strong>' + txn.description + '</strong></td>' +
-        '<td>' + txn.category + '</td>' +
+        '<td>' + (categoryEmojis[txn.category] || "📦") + ' ' + txn.category + '</td>' +
         '<td class="' + amountClass + '">' + amountPrefix + formatAmount(txn.amount) + '</td>' +
         '<td>' +
           '<button class="dt-delete-btn" onclick="deleteTransaction(\'' + txn.id + '\')">' +
@@ -451,7 +526,7 @@ if (homePage) {
   //  RENDER CHART
   // ==========================================
   function renderChart() {
-    var list = loadTransactions();
+    var list = getDisplayTransactions();
     var canvas = document.querySelector("#cashFlowChart");
 
     // Group by date
@@ -577,7 +652,7 @@ if (homePage) {
   // ==========================================
   var desktopChartInstance = null;
   function renderDesktopChart() {
-    var list = loadTransactions();
+    var list = getDisplayTransactions();
     var canvas = document.querySelector("#cashFlowChartDesktop");
     if (!canvas) return;
 
@@ -724,6 +799,8 @@ if (homePage) {
     // Reset form
     document.querySelector("#transactionForm").reset();
     document.querySelector("#txnDate").value = today;
+    var recurringInput = document.querySelector("#txnRecurring");
+    if (recurringInput) recurringInput.checked = false;
     document.querySelector("#formMessage").textContent = "";
 
     // Reset type selection to income
@@ -767,6 +844,8 @@ if (homePage) {
       var amount = document.querySelector("#txnAmount").value.trim();
       var date = document.querySelector("#txnDate").value;
       var category = document.querySelector("#txnCategory").value;
+      var recurringInput = document.querySelector("#txnRecurring");
+      var recurring = recurringInput ? recurringInput.checked : false;
       var msgEl = document.querySelector("#formMessage");
 
       msgEl.textContent = "";
@@ -799,7 +878,8 @@ if (homePage) {
         description: description,
         amount: parseFloat(amount),
         date: date,
-        category: category
+        category: category,
+        recurring: recurring
       };
 
       // Load existing transactions, add new one, save back
@@ -824,7 +904,59 @@ if (homePage) {
     window.location.href = "settings.html";
   };
 
+  // --- Process Recurring Transactions ---
+  function processRecurringTransactions() {
+    var list = loadTransactions();
+    var hasNew = false;
+    
+    var now = new Date();
+    var currentMonth = now.getMonth();
+    var currentYear = now.getFullYear();
+
+    for (var i = 0; i < list.length; i++) {
+      var txn = list[i];
+      if (txn.recurring) {
+        var origDate = new Date(txn.date);
+        
+        // If the transaction is from a previous month (or year)
+        if (origDate.getMonth() !== currentMonth || origDate.getFullYear() !== currentYear) {
+          
+          // Check if we already created a clone this month
+          var alreadyCloned = false;
+          for (var j = 0; j < list.length; j++) {
+            var checkDate = new Date(list[j].date);
+            if (checkDate.getMonth() === currentMonth && checkDate.getFullYear() === currentYear &&
+                list[j].description === txn.description && list[j].amount === txn.amount && list[j].type === txn.type) {
+              alreadyCloned = true;
+              break;
+            }
+          }
+          
+          if (!alreadyCloned) {
+            // Create a new clone for this month, at today's date
+            var newTxn = {
+              id: String(Date.now()) + Math.floor(Math.random() * 1000),
+              type: txn.type,
+              description: txn.description,
+              amount: txn.amount,
+              date: now.toISOString().split("T")[0],
+              category: txn.category,
+              recurring: true // Keep it recurring for future months
+            };
+            list.push(newTxn);
+            hasNew = true;
+          }
+        }
+      }
+    }
+    
+    if (hasNew) {
+      saveTransactions(list);
+    }
+  }
+
   // --- Initial load ---
+  processRecurringTransactions();
   refreshUI();
 
 } // end if(homePage)
@@ -906,6 +1038,37 @@ if (settingsPage) {
     localStorage.setItem(STORAGE.CURRENCY, selected);
   };
 
+  // Save Budget
+  window.saveBudget = function () {
+    var budget = document.querySelector("#monthlyBudget").value;
+    if (budget && parseFloat(budget) >= 0) {
+      localStorage.setItem("fintrack_budget", budget);
+      alert("Budget saved successfully!");
+    } else {
+      alert("Please enter a valid amount.");
+    }
+  };
+
+  // Load settings on page load
+  window.addEventListener("DOMContentLoaded", function () {
+    var currInput = document.querySelector("#currencySelect");
+    if (currInput) currInput.value = getCurrency();
+    
+    var savedTheme = localStorage.getItem(STORAGE.THEME);
+    var darkModeToggle = document.querySelector("#darkModeToggle");
+    if (savedTheme === "dark" && darkModeToggle) {
+      darkModeToggle.checked = true;
+    }
+    
+    var nameInput = document.querySelector("#settingsName");
+    var user = JSON.parse(localStorage.getItem(STORAGE.USER));
+    if (nameInput && user) nameInput.value = user.fullName;
+
+    var budgetInput = document.querySelector("#monthlyBudget");
+    var savedBudget = localStorage.getItem("fintrack_budget");
+    if (budgetInput && savedBudget) budgetInput.value = savedBudget;
+  });
+
   // Dark Mode Toggle (the switch)
   window.toggleDarkMode = function () {
     document.body.classList.toggle("dark");
@@ -947,3 +1110,35 @@ if (settingsPage) {
   };
 
 } // end if(settingsPage)
+
+// ==========================================
+//  EXPORT DATA TO CSV
+// ==========================================
+window.exportToCSV = function () {
+  var saved = localStorage.getItem(STORAGE.TRANSACTIONS);
+  var list = saved ? JSON.parse(saved) : [];
+
+  if (list.length === 0) {
+    alert("No transactions to export.");
+    return;
+  }
+
+  var csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += "Date,Description,Category,Type,Amount\n";
+
+  list.forEach(function (txn) {
+    // Escape commas in description or category
+    var desc = '"' + txn.description.replace(/"/g, '""') + '"';
+    var cat = '"' + txn.category.replace(/"/g, '""') + '"';
+    var row = [txn.date, desc, cat, txn.type, txn.amount].join(",");
+    csvContent += row + "\n";
+  });
+
+  var encodedUri = encodeURI(csvContent);
+  var link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "fintrack_transactions.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};

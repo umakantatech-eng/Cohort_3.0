@@ -37,6 +37,7 @@
         <nav class="sidebar-nav">
           <a href="home.html" class="sidebar-link active">
             <i class="fa-solid fa-border-all"></i> Dashboard
+            <span class="nav-badge nav-badge-desktop">0</span>
           </a>
           <a href="settings.html" class="sidebar-link">
             <i class="fa-solid fa-gear"></i> Settings
@@ -72,6 +73,22 @@
               <i class="fa-solid fa-right-from-bracket"></i> Logout
             </button>
           </div>
+        </div>
+
+        <!-- Global Action Toolbar -->
+        <div class="global-toolbar">
+          <select id="monthFilter" onchange="refreshUI()">
+            <option value="all">All Time</option>
+            <option value="current">Current Month</option>
+            <option value="last">Last Month</option>
+          </select>
+          <button class="primary-btn print-btn" onclick="window.print()">
+            <i class="fa-solid fa-print"></i> Print
+          </button>
+        </div>
+
+        <div id="budgetAlert" style="display: none; background: #fee2e2; color: #ef4444; padding: 12px 20px; border-radius: 8px; margin: 16px 20px 0; font-weight: 600; font-size: 14px; border: 1px solid #fca5a5;">
+          <i class="fa-solid fa-triangle-exclamation"></i> You have exceeded your monthly budget!
         </div>
 
         <!-- ===== MOBILE CONTENT (hidden on desktop ≥768px) ===== -->
@@ -128,6 +145,14 @@
             </div>
             <canvas id="cashFlowChart" height="110"></canvas>
           </section>
+
+          <!-- Mobile Search -->
+          <div class="mobile-search-bar">
+            <div class="desktop-search-input">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="mobileSearch" placeholder="Search transactions..." oninput="renderTransactions()" />
+            </div>
+          </div>
 
           <!-- Filter Buttons -->
           <section class="filter-buttons">
@@ -297,9 +322,10 @@
 
         <!-- MOBILE BOTTOM NAV (hidden on desktop) -->
         <nav class="bottom-nav">
-          <button class="nav-item active" id="homeNavBtn" onclick="goHome()">
+          <button class="nav-item active" id="homeNavBtn" onclick="goHome()" style="position: relative;">
             <i class="fa-solid fa-house"></i>
             <span>Home</span>
+            <span class="nav-badge nav-badge-mobile">0</span>
           </button>
           <div class="nav-fab-space"></div>
           <button class="nav-item" id="settingsNavBtn" onclick="goSettings()">
@@ -363,6 +389,11 @@
                 </select>
               </div>
 
+              <div class="form-group" style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+                <input type="checkbox" id="txnRecurring" style="width: auto; margin: 0;" />
+                <label for="txnRecurring" style="margin: 0; font-weight: normal;">Repeat every month</label>
+              </div>
+
               <p id="formMessage" class="form-message"></p>
 
               <button type="submit" class="primary-btn">
@@ -379,6 +410,6 @@
 
     </main>
 
-    <script src="script.js"></script>
+    <script type="module" src="/script.js"></script>
   </body>
 </html>

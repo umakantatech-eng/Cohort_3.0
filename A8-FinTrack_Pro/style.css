@@ -618,6 +618,44 @@ body.dark .hero-card {
 }
 
 /* ==========================================
+   GLOBAL TOOLBAR (Month & Print)
+========================================== */
+.global-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px 0;
+  gap: 12px;
+}
+
+.global-toolbar select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  outline: none;
+}
+
+.global-toolbar .print-btn {
+  height: auto;
+  padding: 8px 16px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: auto;
+}
+
+/* ==========================================
+   MOBILE SEARCH BAR
+========================================== */
+.mobile-search-bar {
+  margin-bottom: 16px;
+}
+
+/* ==========================================
    FILTER BUTTONS
 ========================================== */
 .filter-buttons {
@@ -913,6 +951,24 @@ body.dark .hero-card {
 
 .nav-item:hover {
   color: var(--primary);
+}
+
+/* Nav Badge */
+.nav-badge {
+  background: var(--danger);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+
+.nav-badge-mobile {
+  position: absolute;
+  top: 4px;
+  right: 18px;
+  padding: 1px 5px;
 }
 
 /* Empty space in the middle for the FAB */
@@ -1838,3 +1894,59 @@ body.dark .danger-card {
 
 }
 /* END DESKTOP MEDIA QUERY */
+
+/* ==========================================
+   PRINT STYLES
+========================================== */
+@media print {
+  /* Hide UI elements that shouldn't be printed */
+  .sidebar,
+  .header,
+  .bottom-nav,
+  .global-toolbar,
+  .hero-card,
+  .filter-buttons,
+  .mobile-search-bar,
+  .dt-delete-btn,
+  .txn-delete-btn,
+  .sidebar-add-btn,
+  .desktop-search-bar,
+  .desktop-page-header,
+  #budgetAlert {
+    display: none !important;
+  }
+  
+  /* Reset background and text for print */
+  body, .app, .app-main, .content, .desktop-content {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  /* Make cards look good on paper */
+  .desktop-card,
+  .summary-card,
+  .chart-card,
+  .desktop-chart-card,
+  .desktop-table-card,
+  .transaction-section {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    page-break-inside: avoid;
+    margin-bottom: 20px !important;
+  }
+  
+  /* Expand the main column so it prints full width */
+  .desktop-grid {
+    display: block !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .desktop-main-col {
+    width: 100% !important;
+  }
+}
