@@ -1,30 +1,43 @@
+import { supabase } from './supabaseClient.js';
+import { getFinancialInsights } from './services/gemini.js';
+
 // ==========================================
-//  STORAGE KEYS
+//  STORAGE KEYS (Legacy / Local)
 // ==========================================
 var STORAGE = {
-  USER: "fintrack_user",
-  SESSION: "fintrack_session",
+  USER: "fintrack_user", // Legacy
+  SESSION: "fintrack_session", // Legacy
   TRANSACTIONS: "fintrack_transactions",
   THEME: "fintrack_theme",
   CURRENCY: "fintrack_currency"
 };
 
 // ==========================================
-//  SPLASH SCREEN
+//  SPLASH SCREEN & AUTH STATE
 // ==========================================
 var splashPage = document.querySelector(".splash-page");
 
 if (splashPage) {
-  setTimeout(function () {
-    var isLoggedIn = localStorage.getItem(STORAGE.SESSION);
+  setTimeout(async function () {
+    const { data: { session } } = await supabase.auth.getSession();
 
-    if (isLoggedIn === "true") {
+    if (session) {
       window.location.href = "home.html";
     } else {
       window.location.href = "login.html";
     }
   }, 2000);
 }
+
+// Global Auth State Listener
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_OUT' || event === 'USER_DELETED') {
+    // Redirect to login if signed out
+    if (!window.location.href.includes("login.html") && !window.location.href.includes("register.html") && !window.location.href.includes("index.html")) {
+      window.location.href = "login.html";
+    }
+  }
+});
 
 // ==========================================
 //  PASSWORD TOGGLE (Register & Login)
@@ -52,56 +65,62 @@ passwordToggles.forEach(function (toggle) {
 var registerform = document.querySelector("#registerform");
 
 if (registerform) {
-  registerform.addEventListener("submit", function (e) {
+  registerform.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     var fullName = document.querySelector("#fullName").value.trim();
+    var email = document.querySelector("#email").value.trim();
     var password = document.querySelector("#password").value.trim();
     var confirmPassword = document.querySelector("#confirmPassword").value.trim();
     var message = document.querySelector("#registerMessage");
 
     message.className = "message";
 
-    // Check empty fields
-    if (!fullName || !password || !confirmPassword) {
+    if (!fullName || !email || !password || !confirmPassword) {
       message.textContent = "Please fill all fields.";
       message.classList.add("error");
       return;
     }
 
-    // Check password length
     if (password.length < 6) {
       message.textContent = "Password must be at least 6 characters.";
       message.classList.add("error");
       return;
     }
 
-    // Check passwords match
     if (password !== confirmPassword) {
       message.textContent = "Passwords do not match.";
       message.classList.add("error");
       return;
     }
 
-    // Build user object
-    var user = {
-      id: Date.now(),
-      fullName: fullName,
-      password: password,
-      createdAt: new Date().toISOString()
-    };
-
-    // Save user to localStorage
-    localStorage.setItem(STORAGE.USER, JSON.stringify(user));
-
-    message.textContent = "Account created successfully!";
+    message.textContent = "Creating account...";
     message.classList.add("success");
 
-    registerform.reset();
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          full_name: fullName
+        }
+      }
+    });
 
-    setTimeout(function () {
-      window.location.href = "login.html";
-    }, 800);
+    if (error) {
+      message.textContent = error.message;
+      message.classList.remove("success");
+      message.classList.add("error");
+    } else {
+      message.textContent = "Account created! Please verify your email to log in.";
+      message.classList.remove("error");
+      message.classList.add("success");
+      registerform.reset();
+      
+      setTimeout(function () {
+        window.location.href = "login.html";
+      }, 3000);
+    }
   });
 }
 
@@ -111,48 +130,42 @@ if (registerform) {
 var loginForm = document.querySelector("#loginForm");
 
 if (loginForm) {
-  loginForm.addEventListener("submit", function (e) {
+  loginForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    var loginName = document.querySelector("#loginName").value.trim();
+    var loginEmail = document.querySelector("#loginEmail").value.trim();
     var loginPassword = document.querySelector("#loginPassword").value.trim();
     var message = document.querySelector("#loginMessage");
 
     message.className = "message";
 
-    // Check empty fields
-    if (!loginName || !loginPassword) {
+    if (!loginEmail || !loginPassword) {
       message.textContent = "Please fill all fields.";
       message.classList.add("error");
       return;
     }
 
-    // Get saved user
-    var user = JSON.parse(localStorage.getItem(STORAGE.USER));
-
-    // No account found
-    if (!user) {
-      message.textContent = "No account found. Please register first.";
-      message.classList.add("error");
-      return;
-    }
-
-    // Check credentials
-    if (loginName !== user.fullName || loginPassword !== user.password) {
-      message.textContent = "Invalid name or password.";
-      message.classList.add("error");
-      return;
-    }
-
-    // Create session
-    localStorage.setItem(STORAGE.SESSION, "true");
-
-    message.textContent = "Login successful!";
+    message.textContent = "Logging in...";
     message.classList.add("success");
 
-    setTimeout(function () {
-      window.location.href = "home.html";
-    }, 600);
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: loginEmail,
+      password: loginPassword,
+    });
+
+    if (error) {
+      message.textContent = error.message;
+      message.classList.remove("success");
+      message.classList.add("error");
+    } else {
+      message.textContent = "Login successful!";
+      message.classList.remove("error");
+      message.classList.add("success");
+
+      setTimeout(function () {
+        window.location.href = "home.html";
+      }, 600);
+    }
   });
 }
 
@@ -162,20 +175,30 @@ if (loginForm) {
 var homePage = document.querySelector("#transactionModal");
 
 if (homePage) {
+  (async function() {
 
   // --- Variables ---
   var cashFlowChart = null;      // will hold the Chart.js instance
   var currentFilter = "all";     // "all", "income", "expense"
   var selectedType = "income";   // type chosen in the modal
 
+  // --- Security Utility ---
+  window.escapeHTML = function(str) {
+    if (typeof str !== 'string') return '';
+    return str.replace(/[&<>"']/g, function(match) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[match];
+    });
+  };
+
   // --- Load user name ---
   var userNameEl = document.querySelector("#userName");
   var desktopUserNameEl = document.querySelector("#desktopUserName");
-  var user = JSON.parse(localStorage.getItem(STORAGE.USER));
-
-  if (user) {
-    if (userNameEl) userNameEl.textContent = user.fullName;
-    if (desktopUserNameEl) desktopUserNameEl.textContent = user.fullName;
+  
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session && session.user) {
+    const fullName = session.user.user_metadata?.full_name || session.user.email;
+    if (userNameEl) userNameEl.textContent = fullName;
+    if (desktopUserNameEl) desktopUserNameEl.textContent = fullName;
   }
 
   // --- Apply saved theme on page load ---
@@ -227,19 +250,62 @@ if (homePage) {
   //  GET / SAVE TRANSACTIONS
   // ==========================================
 
-  // Load transactions from localStorage
-  function loadTransactions() {
-    var saved = localStorage.getItem(STORAGE.TRANSACTIONS);
-    if (saved) {
-      return JSON.parse(saved);
+  // Supabase Transactions Cache
+  var _transactionsCache = [];
+
+  window.fetchTransactionsFromDB = async function() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
+    
+    const { data, error } = await supabase
+      .from('transactions')
+      .select('*')
+      .eq('user_id', session.user.id)
+      .order('date', { ascending: true });
+      
+    if (error) {
+      console.error("Fetch Error:", error);
+    } else if (data) {
+      _transactionsCache = data;
     }
-    return [];
+  };
+
+  function loadTransactions() {
+    return _transactionsCache;
   }
 
-  // Save transactions to localStorage
-  function saveTransactions(list) {
-    localStorage.setItem(STORAGE.TRANSACTIONS, JSON.stringify(list));
+  // Get filtered transactions based on Month Filter
+  function getDisplayTransactions() {
+    var list = loadTransactions();
+    var monthFilterEl = document.querySelector("#monthFilter");
+    var monthFilter = monthFilterEl ? monthFilterEl.value : "all";
+    
+    if (monthFilter !== "all") {
+      var now = new Date();
+      var targetMonth = now.getMonth();
+      var targetYear = now.getFullYear();
+      
+      if (monthFilter === "last") {
+        targetMonth -= 1;
+        if (targetMonth < 0) {
+          targetMonth = 11;
+          targetYear -= 1;
+        }
+      }
+      
+      var filteredList = [];
+      for(var i=0; i<list.length; i++) {
+        var d = new Date(list[i].date);
+        if (d.getMonth() === targetMonth && d.getFullYear() === targetYear) {
+          filteredList.push(list[i]);
+        }
+      }
+      return filteredList;
+    }
+    return list;
   }
+
+  // (Removed LocalStorage saveTransactions)
 
   // ==========================================
   //  GET CURRENCY SYMBOL
@@ -288,7 +354,7 @@ if (homePage) {
   //  UPDATE SUMMARY CARDS
   // ==========================================
   function updateCards() {
-    var list = loadTransactions();
+    var list = getDisplayTransactions();
     var totals = calculateTotals(list);
 
     // Mobile
@@ -312,25 +378,69 @@ if (homePage) {
     if (dIncEl) dIncEl.textContent = formatAmount(totals.income);
     if (dExpEl) dExpEl.textContent = formatAmount(totals.expense);
     if (dTotEl) dTotEl.textContent = list.length;
+
+    // Badges
+    var badgeDesktop = document.querySelector(".nav-badge-desktop");
+    var badgeMobile = document.querySelector(".nav-badge-mobile");
+    if (badgeDesktop) badgeDesktop.textContent = list.length;
+    if (badgeMobile) badgeMobile.textContent = list.length;
+
+    // Budget Check
+    var budgetAlert = document.querySelector("#budgetAlert");
+    var savedBudget = localStorage.getItem("fintrack_budget");
+    if (budgetAlert && savedBudget) {
+      if (totals.expense > parseFloat(savedBudget)) {
+        budgetAlert.style.display = "block";
+      } else {
+        budgetAlert.style.display = "none";
+      }
+    }
   }
 
   // ==========================================
   //  RENDER TRANSACTION LIST (MOBILE)
   // ==========================================
+  
+  var categoryEmojis = {
+    "Salary": "💰",
+    "Business": "💼",
+    "Investments": "📈",
+    "Food": "🍔",
+    "Transport": "🚗",
+    "Shopping": "🛍️",
+    "Bills": "🧾",
+    "Entertainment": "🎬",
+    "Health": "💊",
+    "Education": "📚",
+    "Other": "📦"
+  };
+
   function renderTransactions() {
-    var list = loadTransactions();
+    var list = getDisplayTransactions();
     var listEl = document.querySelector("#transactionList");
     if (!listEl) return;
 
-    // Filter the list based on currentFilter
+    var searchInput = document.querySelector("#mobileSearch");
+    var searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
+
+    // Filter the list based on currentFilter and search
     var filtered = [];
     for (var i = 0; i < list.length; i++) {
+      var txn = list[i];
+      var matchType = false;
+
       if (currentFilter === "all") {
-        filtered.push(list[i]);
-      } else if (currentFilter === "income" && list[i].type === "income") {
-        filtered.push(list[i]);
-      } else if (currentFilter === "expense" && list[i].type === "expense") {
-        filtered.push(list[i]);
+        matchType = true;
+      } else if (currentFilter === "income" && txn.type === "income") {
+        matchType = true;
+      } else if (currentFilter === "expense" && txn.type === "expense") {
+        matchType = true;
+      }
+
+      var matchSearch = (txn.description.toLowerCase().includes(searchTerm) || txn.category.toLowerCase().includes(searchTerm));
+
+      if (matchType && matchSearch) {
+        filtered.push(txn);
       }
     }
 
@@ -361,7 +471,7 @@ if (homePage) {
           '<i class="fa-solid fa-arrow-' + (txn.type === "income" ? "down" : "up") + '"></i>' +
         '</div>' +
         '<div class="txn-info">' +
-          '<h4>' + txn.description + '</h4>' +
+          '<h4>' + window.escapeHTML(txn.description) + '</h4>' +
           '<div class="txn-meta">' +
             '<span>' + dateStr + '</span>' +
             '<span class="dot"></span>' +
@@ -372,7 +482,7 @@ if (homePage) {
           '<div class="txn-amount ' + txn.type + '">' +
             (txn.type === "income" ? "+" : "-") + formatAmount(txn.amount) +
           '</div>' +
-          '<div class="txn-category">' + txn.category + '</div>' +
+          '<div class="txn-category">' + (categoryEmojis[txn.category] || "📦") + ' ' + window.escapeHTML(txn.category) + '</div>' +
         '</div>' +
         '<button class="txn-delete-btn" onclick="deleteTransaction(\'' + txn.id + '\')">' +
           '<i class="fa-solid fa-trash"></i>' +
@@ -390,7 +500,7 @@ if (homePage) {
   };
 
   function renderDesktopTransactions() {
-    var list = loadTransactions();
+    var list = getDisplayTransactions();
     var tbody = document.querySelector("#desktopTableBody");
     if (!tbody) return;
 
@@ -434,8 +544,8 @@ if (homePage) {
 
       tr.innerHTML =
         '<td>' + dateStr + '</td>' +
-        '<td><strong>' + txn.description + '</strong></td>' +
-        '<td>' + txn.category + '</td>' +
+        '<td><strong>' + window.escapeHTML(txn.description) + '</strong></td>' +
+        '<td>' + (categoryEmojis[txn.category] || "📦") + ' ' + window.escapeHTML(txn.category) + '</td>' +
         '<td class="' + amountClass + '">' + amountPrefix + formatAmount(txn.amount) + '</td>' +
         '<td>' +
           '<button class="dt-delete-btn" onclick="deleteTransaction(\'' + txn.id + '\')">' +
@@ -450,8 +560,9 @@ if (homePage) {
   // ==========================================
   //  RENDER CHART
   // ==========================================
-  function renderChart() {
-    var list = loadTransactions();
+  async function renderChart() {
+    const { Chart } = await import('chart.js/auto');
+    var list = getDisplayTransactions();
     var canvas = document.querySelector("#cashFlowChart");
 
     // Group by date
@@ -571,13 +682,15 @@ if (homePage) {
     renderChart();
     renderDesktopChart();
   }
+  window.refreshUI = refreshUI;
 
   // ==========================================
   //  RENDER DESKTOP CHART
   // ==========================================
   var desktopChartInstance = null;
-  function renderDesktopChart() {
-    var list = loadTransactions();
+  async function renderDesktopChart() {
+    const { Chart } = await import('chart.js/auto');
+    var list = getDisplayTransactions();
     var canvas = document.querySelector("#cashFlowChartDesktop");
     if (!canvas) return;
 
@@ -684,18 +797,12 @@ if (homePage) {
   // ==========================================
   //  DELETE TRANSACTION
   // ==========================================
-  window.deleteTransaction = function (id) {
-    var list = loadTransactions();
+  window.deleteTransaction = async function (id) {
+    var confirmed = confirm("Are you sure you want to delete this transaction?");
+    if (!confirmed) return;
 
-    // Filter out the transaction with matching id
-    var newList = [];
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].id !== id) {
-        newList.push(list[i]);
-      }
-    }
-
-    saveTransactions(newList);
+    await supabase.from('transactions').delete().eq('id', id);
+    await window.fetchTransactionsFromDB();
     refreshUI();
   };
 
@@ -709,11 +816,11 @@ if (homePage) {
   // Open modal
   if (addBtn) {
     addBtn.addEventListener("click", function () {
-      openModal();
+      if (typeof window.openModal === "function") window.openModal();
     });
   }
 
-  function openModal() {
+  window.openModal = function() {
     modal.classList.add("show");
     overlay.classList.add("show");
 
@@ -724,11 +831,13 @@ if (homePage) {
     // Reset form
     document.querySelector("#transactionForm").reset();
     document.querySelector("#txnDate").value = today;
+    var recurringInput = document.querySelector("#txnRecurring");
+    if (recurringInput) recurringInput.checked = false;
     document.querySelector("#formMessage").textContent = "";
 
     // Reset type selection to income
-    selectType("income");
-  }
+    if (typeof window.selectType === "function") window.selectType("income");
+  };
 
   window.closeModal = function () {
     modal.classList.remove("show");
@@ -760,13 +869,15 @@ if (homePage) {
   var txnForm = document.querySelector("#transactionForm");
 
   if (txnForm) {
-    txnForm.addEventListener("submit", function (e) {
+    txnForm.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       var description = document.querySelector("#txnDescription").value.trim();
       var amount = document.querySelector("#txnAmount").value.trim();
       var date = document.querySelector("#txnDate").value;
       var category = document.querySelector("#txnCategory").value;
+      var recurringInput = document.querySelector("#txnRecurring");
+      var recurring = recurringInput ? recurringInput.checked : false;
       var msgEl = document.querySelector("#formMessage");
 
       msgEl.textContent = "";
@@ -792,24 +903,52 @@ if (homePage) {
         return;
       }
 
-      // Build transaction object - use timestamp as unique ID
-      var transaction = {
-        id: String(Date.now()),
+      var submitBtn = txnForm.querySelector("button[type='submit']");
+      var originalBtnHtml = submitBtn.innerHTML;
+      submitBtn.innerHTML = 'Saving... <i class="fa-solid fa-spinner fa-spin"></i>';
+      submitBtn.disabled = true;
+
+      // Optimistic UI Update
+      var tempTxn = {
+        id: "temp-" + Date.now(),
         type: selectedType,
         description: description,
         amount: parseFloat(amount),
         date: date,
-        category: category
+        category: category,
+        recurring: recurring
       };
-
-      // Load existing transactions, add new one, save back
-      var list = loadTransactions();
-      list.push(transaction);
-      saveTransactions(list);
-
-      // Close modal and refresh everything
-      closeModal();
+      
+      var list = typeof loadTransactions === 'function' ? loadTransactions() : [];
+      list.push(tempTxn);
       refreshUI();
+      closeModal();
+
+      // Insert into Supabase
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { error } = await supabase.from('transactions').insert({
+          user_id: session.user.id,
+          type: selectedType,
+          description: description,
+          amount: parseFloat(amount),
+          date: date,
+          category: category,
+          recurring: recurring
+        });
+        
+        if (error) {
+          console.error("Insert Error:", error);
+          alert("Error saving transaction: " + error.message);
+        }
+      }
+
+      await window.fetchTransactionsFromDB();
+      refreshUI(); // Re-render with actual DB data
+
+      // Reset Button State
+      submitBtn.innerHTML = originalBtnHtml;
+      submitBtn.disabled = false;
     });
   }
 
@@ -824,9 +963,144 @@ if (homePage) {
     window.location.href = "settings.html";
   };
 
-  // --- Initial load ---
-  refreshUI();
+  // --- Process Recurring Transactions ---
+  async function processRecurringTransactions() {
+    var list = loadTransactions();
+    var hasNew = false;
+    
+    var now = new Date();
+    var currentMonth = now.getMonth();
+    var currentYear = now.getFullYear();
 
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
+
+    for (var i = 0; i < list.length; i++) {
+      var txn = list[i];
+      if (txn.recurring) {
+        var origDate = new Date(txn.date);
+        
+        // If the transaction is from a previous month (or year)
+        if (origDate.getMonth() !== currentMonth || origDate.getFullYear() !== currentYear) {
+          
+          // Check if we already created a clone this month
+          var alreadyCloned = false;
+          for (var j = 0; j < list.length; j++) {
+            var checkDate = new Date(list[j].date);
+            if (checkDate.getMonth() === currentMonth && checkDate.getFullYear() === currentYear &&
+                list[j].description === txn.description && list[j].amount === txn.amount && list[j].type === txn.type) {
+              alreadyCloned = true;
+              break;
+            }
+          }
+          
+          if (!alreadyCloned) {
+            // Create a new clone for this month, at today's date
+            await supabase.from('transactions').insert({
+              user_id: session.user.id,
+              type: txn.type,
+              description: txn.description,
+              amount: txn.amount,
+              date: now.toISOString().split("T")[0],
+              category: txn.category,
+              recurring: true // Keep it recurring for future months
+            });
+            hasNew = true;
+          }
+        }
+      }
+    }
+    
+    if (hasNew) {
+      await window.fetchTransactionsFromDB();
+    }
+  }
+
+  // --- Initial load (Non-blocking) ---
+  refreshUI(); // Render instantly with cache/empty state
+  
+  (async function initDB() {
+    await window.fetchTransactionsFromDB();
+    await processRecurringTransactions();
+    refreshUI(); // Re-render once data arrives
+  })();
+
+  // ==========================================
+  //  AI ASSISTANT (Injected dynamically)
+  // ==========================================
+  function injectAIUI() {
+    // Inject floating AI button
+    const aiBtn = document.createElement('button');
+    aiBtn.id = 'aiAssistantBtn';
+    aiBtn.innerHTML = '<i class="fa-solid fa-sparkles"></i> AI Insights';
+    aiBtn.style.cssText = 'position: fixed; bottom: 85px; right: 20px; background: linear-gradient(135deg, #8b5cf6, #3b82f6); color: white; border: none; border-radius: 20px; padding: 10px 16px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4); z-index: 100; display: flex; gap: 8px; align-items: center; transition: transform 0.2s;';
+    
+    // Inject AI Modal
+    const aiModal = document.createElement('div');
+    aiModal.id = 'aiModal';
+    aiModal.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); opacity: 0; pointer-events: none; width: 90%; max-width: 500px; max-height: 85vh; background: var(--card-bg); border-radius: var(--radius-lg); z-index: 500; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow-y: auto; transition: all 0.3s ease; color: var(--text-dark);';
+    aiModal.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px;">
+        <h2 style="font-size: 18px; color: var(--text-dark); margin:0;"><i class="fa-solid fa-sparkles" style="color: #8b5cf6;"></i> AI Financial Insights</h2>
+        <button id="closeAiModalBtn" style="background: none; border: none; font-size: 20px; color: var(--text-light); cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="aiContent" style="font-size: 14px; line-height: 1.6;">
+        <p style="text-align: center; color: var(--text-light); padding: 20px 0;"><i class="fa-solid fa-spinner fa-spin"></i> Generating your personalized insights...</p>
+      </div>
+    `;
+
+    // Inject AI Modal Styles
+    const aiStyles = document.createElement('style');
+    aiStyles.innerHTML = `
+      #aiContent { font-family: var(--font-family); color: var(--text-dark); }
+      #aiContent p { font-size: 14.5px; color: var(--text-muted); margin: 0 0 16px 0; line-height: 1.6; }
+      #aiContent ul { margin: 0 0 16px 0; padding-left: 20px; color: var(--text-muted); }
+      #aiContent li { margin-bottom: 12px; font-size: 14.5px; line-height: 1.6; }
+      #aiContent strong { color: var(--text-dark); font-weight: 700; }
+      body.dark #aiContent { color: var(--text-light); }
+      body.dark #aiContent p, body.dark #aiContent ul { color: #a1a1aa; }
+      body.dark #aiContent strong { color: #f4f4f5; }
+    `;
+    document.head.appendChild(aiStyles);
+
+    document.body.appendChild(aiBtn);
+    document.body.appendChild(aiModal);
+
+    const overlay = document.getElementById('modalOverlay');
+
+    aiBtn.addEventListener('click', async () => {
+      // Show modal
+      overlay.classList.add('show');
+      aiModal.style.opacity = '1';
+      aiModal.style.pointerEvents = 'auto';
+      aiModal.style.transform = 'translate(-50%, -50%) scale(1)';
+      
+      const contentDiv = document.getElementById('aiContent');
+      contentDiv.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 40px 0; font-size: 16px;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 24px; color: var(--primary); margin-bottom: 12px; display: block;"></i> Analyzing your finances...</p>';
+      
+      try {
+        const list = typeof loadTransactions === 'function' ? loadTransactions() : [];
+        const insights = await getFinancialInsights(list);
+        contentDiv.innerHTML = insights;
+      } catch (err) {
+        contentDiv.innerHTML = `<div style="background: #fee2e2; color: #ef4444; padding: 16px; border-radius: 8px;">
+          <p style="margin:0; font-weight: 600;">Oops! Something went wrong.</p>
+          <p style="margin: 4px 0 0 0; font-size: 13px;">${err.message}</p>
+        </div>`;
+      }
+    });
+
+    document.getElementById('closeAiModalBtn').addEventListener('click', () => {
+      overlay.classList.remove('show');
+      aiModal.style.opacity = '0';
+      aiModal.style.pointerEvents = 'none';
+      aiModal.style.transform = 'translate(-50%, -50%) scale(0.9)';
+    });
+  }
+
+  injectAIUI();
+
+  })();
 } // end if(homePage)
 
 // ==========================================
@@ -906,6 +1180,38 @@ if (settingsPage) {
     localStorage.setItem(STORAGE.CURRENCY, selected);
   };
 
+  // Save Budget
+  window.saveBudget = function () {
+    var budget = document.querySelector("#monthlyBudget").value;
+    if (budget && parseFloat(budget) >= 0) {
+      localStorage.setItem("fintrack_budget", budget);
+      alert("Budget saved successfully!");
+    } else {
+      alert("Please enter a valid amount.");
+    }
+  };
+
+  // Load settings on page load
+  window.addEventListener("DOMContentLoaded", async function () {
+    var currInput = document.querySelector("#currencySelect");
+    if (currInput) currInput.value = getCurrency();
+    
+    var savedTheme = localStorage.getItem(STORAGE.THEME);
+    var darkModeToggle = document.querySelector("#darkModeToggle");
+    if (savedTheme === "dark" && darkModeToggle) {
+      darkModeToggle.checked = true;
+    }
+    
+    var nameInput = document.querySelector("#settingsName");
+    const { data: { session } } = await supabase.auth.getSession();
+    if (nameInput && session && session.user) {
+      nameInput.value = session.user.user_metadata?.full_name || session.user.email;
+    }
+    var budgetInput = document.querySelector("#monthlyBudget");
+    var savedBudget = localStorage.getItem("fintrack_budget");
+    if (budgetInput && savedBudget) budgetInput.value = savedBudget;
+  });
+
   // Dark Mode Toggle (the switch)
   window.toggleDarkMode = function () {
     document.body.classList.toggle("dark");
@@ -917,22 +1223,12 @@ if (settingsPage) {
     }
   };
 
-  // Reset All Data
-  window.resetAllData = function () {
-    var confirmed = confirm("Are you sure? This will delete ALL your transactions and cannot be undone.");
-
-    if (confirmed) {
-      localStorage.removeItem(STORAGE.TRANSACTIONS);
-      alert("All data has been reset.");
-    }
-  };
-
   // Logout
-  window.logoutUser = function () {
+  window.logoutUser = async function () {
     var confirmed = confirm("Are you sure you want to logout?");
 
     if (confirmed) {
-      localStorage.removeItem(STORAGE.SESSION);
+      await supabase.auth.signOut();
       window.location.href = "login.html";
     }
   };
@@ -947,3 +1243,82 @@ if (settingsPage) {
   };
 
 } // end if(settingsPage)
+
+// ==========================================
+//  GLOBAL DATA UTILITIES
+// ==========================================
+
+// Reset All Data
+window.resetAllData = async function () {
+  var confirmed = confirm("Are you sure? This will delete ALL your transactions and cannot be undone.");
+
+  if (confirmed) {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { error } = await supabase.from('transactions').delete().eq('user_id', session.user.id);
+        if (error) throw error;
+        
+        if (typeof window.fetchTransactionsFromDB === 'function') {
+          await window.fetchTransactionsFromDB();
+        }
+        if (typeof refreshUI === 'function') {
+          refreshUI();
+        }
+        alert("All data has been reset.");
+      }
+    } catch (err) {
+      console.error("Reset Error:", err);
+      alert("Failed to reset data: " + err.message);
+    }
+  }
+};
+
+// ==========================================
+//  EXPORT DATA TO CSV
+// ==========================================
+window.exportToCSV = async function () {
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      alert("Please login to export data.");
+      return;
+    }
+    
+    const { data: list, error } = await supabase
+      .from('transactions')
+      .select('*')
+      .eq('user_id', session.user.id)
+      .order('date', { ascending: true });
+      
+    if (error) throw error;
+
+    if (!list || list.length === 0) {
+      alert("No transactions to export.");
+      return;
+    }
+
+    var csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Date,Description,Category,Type,Amount\n";
+
+    list.forEach(function (txn) {
+      // Escape commas in description or category
+      var desc = '"' + txn.description.replace(/"/g, '""') + '"';
+      var cat = '"' + txn.category.replace(/"/g, '""') + '"';
+      var row = [txn.date, desc, cat, txn.type, txn.amount].join(",");
+      csvContent += row + "\n";
+    });
+
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "FinTrack_Pro_Transactions.csv");
+    document.body.appendChild(link);
+
+    link.click();
+    document.body.removeChild(link);
+  } catch (err) {
+    console.error("Export Error:", err);
+    alert("Failed to export data: " + err.message);
+  }
+};

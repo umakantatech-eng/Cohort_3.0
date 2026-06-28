@@ -29,9 +29,9 @@
   --radius-sm: 12px;
   --radius-md: 18px;
   --radius-lg: 24px;
-  --shadow: 0 4px 16px rgba(99, 102, 241, 0.08);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
-  --transition: 0.3s ease;
+  --shadow: 0 8px 30px rgba(99, 102, 241, 0.06);
+  --shadow-md: 0 12px 40px rgba(99, 102, 241, 0.08);
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ==========================================
@@ -45,8 +45,8 @@ body.dark {
   --nav-bg: #1e293b;
   --text: #f1f5f9;
   --text-light: #94a3b8;
-  --border: #334155;
-  --shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --border: rgba(255, 255, 255, 0.05);
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
   --primary-light: #1e1f4a;
   --success-light: #052e16;
   --danger-light: #450a0a;
@@ -375,17 +375,22 @@ main {
    HEADER (top navbar)
 ========================================== */
 .header {
-  height: 68px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  background: #ffffff;
-  border-bottom: none;
   position: sticky;
   top: 0;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   z-index: 100;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.05);
+}
+
+body.dark .header {
+  background: rgba(30, 41, 59, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .app-logo {
@@ -411,6 +416,12 @@ main {
   color: var(--text);
   transition: var(--transition);
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+body.dark .icon-btn {
+  background: var(--nav-bg);
+  border-color: #334155;
+  color: #f1f5f9;
 }
 
 .icon-btn:hover {
@@ -615,6 +626,44 @@ body.dark .hero-card {
 
 .expense-dot {
   background: var(--danger);
+}
+
+/* ==========================================
+   GLOBAL TOOLBAR (Month & Print)
+========================================== */
+.global-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px 0;
+  gap: 12px;
+}
+
+.global-toolbar select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  outline: none;
+}
+
+.global-toolbar .print-btn {
+  height: auto;
+  padding: 8px 16px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: auto;
+}
+
+/* ==========================================
+   MOBILE SEARCH BAR
+========================================== */
+.mobile-search-bar {
+  margin-bottom: 16px;
 }
 
 /* ==========================================
@@ -859,6 +908,10 @@ body.dark .hero-card {
   outline: 4px solid rgba(255, 255, 255, 0.8);
 }
 
+body.dark .fab {
+  outline-color: var(--background);
+}
+
 .fab:hover {
   transform: translateX(-50%) scale(1.08);
   box-shadow: 0 12px 36px rgba(91, 92, 235, 0.6);
@@ -873,20 +926,29 @@ body.dark .hero-card {
 ========================================== */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
+  bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 430px;
-  height: 76px;
-  background: #ffffff;
-  border-top: none;
+  width: calc(100% - 32px);
+  max-width: 400px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 0 10px 8px;
+  padding: 0 10px;
   z-index: 200;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.15);
+}
+
+body.dark .bottom-nav {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .nav-item {
@@ -915,6 +977,24 @@ body.dark .hero-card {
   color: var(--primary);
 }
 
+/* Nav Badge */
+.nav-badge {
+  background: var(--danger);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+
+.nav-badge-mobile {
+  position: absolute;
+  top: 4px;
+  right: 18px;
+  padding: 1px 5px;
+}
+
 /* Empty space in the middle for the FAB */
 .nav-fab-space {
   width: 80px;
@@ -927,8 +1007,7 @@ body.dark .hero-card {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.75);
   z-index: 300;
   display: none;
   opacity: 0;
@@ -1838,3 +1917,59 @@ body.dark .danger-card {
 
 }
 /* END DESKTOP MEDIA QUERY */
+
+/* ==========================================
+   PRINT STYLES
+========================================== */
+@media print {
+  /* Hide UI elements that shouldn't be printed */
+  .sidebar,
+  .header,
+  .bottom-nav,
+  .global-toolbar,
+  .hero-card,
+  .filter-buttons,
+  .mobile-search-bar,
+  .dt-delete-btn,
+  .txn-delete-btn,
+  .sidebar-add-btn,
+  .desktop-search-bar,
+  .desktop-page-header,
+  #budgetAlert {
+    display: none !important;
+  }
+  
+  /* Reset background and text for print */
+  body, .app, .app-main, .content, .desktop-content {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  /* Make cards look good on paper */
+  .desktop-card,
+  .summary-card,
+  .chart-card,
+  .desktop-chart-card,
+  .desktop-table-card,
+  .transaction-section {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    page-break-inside: avoid;
+    margin-bottom: 20px !important;
+  }
+  
+  /* Expand the main column so it prints full width */
+  .desktop-grid {
+    display: block !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .desktop-main-col {
+    width: 100% !important;
+  }
+}
