@@ -891,6 +891,27 @@ if (homePage) {
         return;
       }
 
+      var submitBtn = txnForm.querySelector("button[type='submit']");
+      var originalBtnHtml = submitBtn.innerHTML;
+      submitBtn.innerHTML = 'Saving... <i class="fa-solid fa-spinner fa-spin"></i>';
+      submitBtn.disabled = true;
+
+      // Optimistic UI Update
+      var tempTxn = {
+        id: "temp-" + Date.now(),
+        type: selectedType,
+        description: description,
+        amount: parseFloat(amount),
+        date: date,
+        category: category,
+        recurring: recurring
+      };
+      
+      var list = typeof loadTransactions === 'function' ? loadTransactions() : [];
+      list.push(tempTxn);
+      refreshUI();
+      closeModal();
+
       // Insert into Supabase
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
@@ -906,16 +927,16 @@ if (homePage) {
         
         if (error) {
           console.error("Insert Error:", error);
-          msgEl.textContent = error.message;
-          return;
+          alert("Error saving transaction: " + error.message);
         }
       }
 
       await window.fetchTransactionsFromDB();
+      refreshUI(); // Re-render with actual DB data
 
-      // Close modal and refresh everything
-      closeModal();
-      refreshUI();
+      // Reset Button State
+      submitBtn.innerHTML = originalBtnHtml;
+      submitBtn.disabled = false;
     });
   }
 
