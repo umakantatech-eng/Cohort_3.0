@@ -388,6 +388,11 @@ main {
   box-shadow: 0 2px 12px rgba(0,0,0,0.05);
 }
 
+body.dark .header {
+  background: var(--card-bg-dark);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
 .app-logo {
   font-size: 22px;
   font-weight: 800;
@@ -411,6 +416,12 @@ main {
   color: var(--text);
   transition: var(--transition);
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+body.dark .icon-btn {
+  background: var(--card-bg-dark);
+  border-color: #334155;
+  color: #f1f5f9;
 }
 
 .icon-btn:hover {
@@ -925,6 +936,11 @@ body.dark .hero-card {
   padding: 0 10px 8px;
   z-index: 200;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+}
+
+body.dark .bottom-nav {
+  background: var(--card-bg-dark);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .nav-item {
