@@ -241,13 +241,26 @@ if (homePage) {
   //  GET / SAVE TRANSACTIONS
   // ==========================================
 
-  // Load transactions from localStorage
-  function loadTransactions() {
-    var saved = localStorage.getItem(STORAGE.TRANSACTIONS);
-    if (saved) {
-      return JSON.parse(saved);
+  // Supabase Transactions Cache
+  var _transactionsCache = [];
+
+  window.fetchTransactionsFromDB = async function() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
+    
+    const { data, error } = await supabase
+      .from('transactions')
+      .select('*')
+      .eq('user_id', session.user.id)
+      .order('date', { ascending: true });
+      
+    if (!error && data) {
+      _transactionsCache = data;
     }
-    return [];
+  };
+
+  function loadTransactions() {
+    return _transactionsCache;
   }
 
   // Get filtered transactions based on Month Filter
@@ -281,10 +294,7 @@ if (homePage) {
     return list;
   }
 
-  // Save transactions to localStorage
-  function saveTransactions(list) {
-    localStorage.setItem(STORAGE.TRANSACTIONS, JSON.stringify(list));
-  }
+  // (Removed LocalStorage saveTransactions)
 
   // ==========================================
   //  GET CURRENCY SYMBOL
@@ -773,18 +783,12 @@ if (homePage) {
   // ==========================================
   //  DELETE TRANSACTION
   // ==========================================
-  window.deleteTransaction = function (id) {
-    var list = loadTransactions();
+  window.deleteTransaction = async function (id) {
+    var confirmed = confirm("Are you sure you want to delete this transaction?");
+    if (!confirmed) return;
 
-    // Filter out the transaction with matching id
-    var newList = [];
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].id !== id) {
-        newList.push(list[i]);
-      }
-    }
-
-    saveTransactions(newList);
+    await supabase.from('transactions').delete().eq('id', id);
+    await window.fetchTransactionsFromDB();
     refreshUI();
   };
 
@@ -851,7 +855,7 @@ if (homePage) {
   var txnForm = document.querySelector("#transactionForm");
 
   if (txnForm) {
-    txnForm.addEventListener("submit", function (e) {
+    txnForm.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       var description = document.querySelector("#txnDescription").value.trim();
@@ -885,21 +889,21 @@ if (homePage) {
         return;
       }
 
-      // Build transaction object - use timestamp as unique ID
-      var transaction = {
-        id: String(Date.now()),
-        type: selectedType,
-        description: description,
-        amount: parseFloat(amount),
-        date: date,
-        category: category,
-        recurring: recurring
-      };
+      // Insert into Supabase
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        await supabase.from('transactions').insert({
+          user_id: session.user.id,
+          type: selectedType,
+          description: description,
+          amount: parseFloat(amount),
+          date: date,
+          category: category,
+          recurring: recurring
+        });
+      }
 
-      // Load existing transactions, add new one, save back
-      var list = loadTransactions();
-      list.push(transaction);
-      saveTransactions(list);
+      await window.fetchTransactionsFromDB();
 
       // Close modal and refresh everything
       closeModal();
@@ -919,13 +923,16 @@ if (homePage) {
   };
 
   // --- Process Recurring Transactions ---
-  function processRecurringTransactions() {
+  async function processRecurringTransactions() {
     var list = loadTransactions();
     var hasNew = false;
     
     var now = new Date();
     var currentMonth = now.getMonth();
     var currentYear = now.getFullYear();
+
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
 
     for (var i = 0; i < list.length; i++) {
       var txn = list[i];
@@ -948,16 +955,15 @@ if (homePage) {
           
           if (!alreadyCloned) {
             // Create a new clone for this month, at today's date
-            var newTxn = {
-              id: String(Date.now()) + Math.floor(Math.random() * 1000),
+            await supabase.from('transactions').insert({
+              user_id: session.user.id,
               type: txn.type,
               description: txn.description,
               amount: txn.amount,
               date: now.toISOString().split("T")[0],
               category: txn.category,
               recurring: true // Keep it recurring for future months
-            };
-            list.push(newTxn);
+            });
             hasNew = true;
           }
         }
@@ -965,12 +971,13 @@ if (homePage) {
     }
     
     if (hasNew) {
-      saveTransactions(list);
+      await window.fetchTransactionsFromDB();
     }
   }
 
   // --- Initial load ---
-  processRecurringTransactions();
+  await window.fetchTransactionsFromDB();
+  await processRecurringTransactions();
   refreshUI();
 
   })();
@@ -1098,12 +1105,17 @@ if (settingsPage) {
   };
 
   // Reset All Data
-  window.resetAllData = function () {
+  window.resetAllData = async function () {
     var confirmed = confirm("Are you sure? This will delete ALL your transactions and cannot be undone.");
 
     if (confirmed) {
-      localStorage.removeItem(STORAGE.TRANSACTIONS);
-      alert("All data has been reset.");
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        await supabase.from('transactions').delete().eq('user_id', session.user.id);
+        await window.fetchTransactionsFromDB();
+        if (typeof refreshUI === 'function') refreshUI();
+        alert("All data has been reset.");
+      }
     }
   };
 
@@ -1132,8 +1144,7 @@ if (settingsPage) {
 //  EXPORT DATA TO CSV
 // ==========================================
 window.exportToCSV = function () {
-  var saved = localStorage.getItem(STORAGE.TRANSACTIONS);
-  var list = saved ? JSON.parse(saved) : [];
+  var list = typeof loadTransactions === 'function' ? loadTransactions() : [];
 
   if (list.length === 0) {
     alert("No transactions to export.");
