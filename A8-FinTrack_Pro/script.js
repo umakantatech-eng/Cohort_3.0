@@ -1196,8 +1196,7 @@ if (settingsPage) {
     if (nameInput && session && session.user) {
       nameInput.value = session.user.user_metadata?.full_name || session.user.email;
     }
-
-    var budgetInput = document.querySelector("#monthlyBudget");
+    var budgetInput = document.querySelector("#monthlyBudget");
     var savedBudget = localStorage.getItem("fintrack_budget");
     if (budgetInput && savedBudget) budgetInput.value = savedBudget;
   });
@@ -1210,21 +1209,6 @@ if (settingsPage) {
       localStorage.setItem(STORAGE.THEME, "dark");
     } else {
       localStorage.setItem(STORAGE.THEME, "light");
-    }
-  };
-
-  // Reset All Data
-  window.resetAllData = async function () {
-    var confirmed = confirm("Are you sure? This will delete ALL your transactions and cannot be undone.");
-
-    if (confirmed) {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        await supabase.from('transactions').delete().eq('user_id', session.user.id);
-        await window.fetchTransactionsFromDB();
-        if (typeof refreshUI === 'function') refreshUI();
-        alert("All data has been reset.");
-      }
     }
   };
 
@@ -1250,32 +1234,80 @@ if (settingsPage) {
 } // end if(settingsPage)
 
 // ==========================================
+//  GLOBAL DATA UTILITIES
+// ==========================================
+
+// Reset All Data
+window.resetAllData = async function () {
+  var confirmed = confirm("Are you sure? This will delete ALL your transactions and cannot be undone.");
+
+  if (confirmed) {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { error } = await supabase.from('transactions').delete().eq('user_id', session.user.id);
+        if (error) throw error;
+        
+        if (typeof window.fetchTransactionsFromDB === 'function') {
+          await window.fetchTransactionsFromDB();
+        }
+        if (typeof refreshUI === 'function') {
+          refreshUI();
+        }
+        alert("All data has been reset.");
+      }
+    } catch (err) {
+      console.error("Reset Error:", err);
+      alert("Failed to reset data: " + err.message);
+    }
+  }
+};
+
+// ==========================================
 //  EXPORT DATA TO CSV
 // ==========================================
-window.exportToCSV = function () {
-  var list = typeof loadTransactions === 'function' ? loadTransactions() : [];
+window.exportToCSV = async function () {
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      alert("Please login to export data.");
+      return;
+    }
+    
+    const { data: list, error } = await supabase
+      .from('transactions')
+      .select('*')
+      .eq('user_id', session.user.id)
+      .order('date', { ascending: true });
+      
+    if (error) throw error;
 
-  if (list.length === 0) {
-    alert("No transactions to export.");
-    return;
+    if (!list || list.length === 0) {
+      alert("No transactions to export.");
+      return;
+    }
+
+    var csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Date,Description,Category,Type,Amount\n";
+
+    list.forEach(function (txn) {
+      // Escape commas in description or category
+      var desc = '"' + txn.description.replace(/"/g, '""') + '"';
+      var cat = '"' + txn.category.replace(/"/g, '""') + '"';
+      var row = [txn.date, desc, cat, txn.type, txn.amount].join(",");
+      csvContent += row + "\n";
+    });
+
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "FinTrack_Pro_Transactions.csv");
+    document.body.appendChild(link);
+
+    link.click();
+    document.body.removeChild(link);
+  } catch (err) {
+    console.error("Export Error:", err);
+    alert("Failed to export data: " + err.message);
   }
-
-  var csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += "Date,Description,Category,Type,Amount\n";
-
-  list.forEach(function (txn) {
-    // Escape commas in description or category
-    var desc = '"' + txn.description.replace(/"/g, '""') + '"';
-    var cat = '"' + txn.category.replace(/"/g, '""') + '"';
-    var row = [txn.date, desc, cat, txn.type, txn.amount].join(",");
-    csvContent += row + "\n";
-  });
-
-  var encodedUri = encodeURI(csvContent);
-  var link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", "fintrack_transactions.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
 };
