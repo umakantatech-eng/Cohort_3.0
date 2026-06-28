@@ -1,4 +1,5 @@
 import { supabase } from './supabaseClient.js';
+import { getFinancialInsights } from './services/gemini.js';
 
 // ==========================================
 //  STORAGE KEYS (Legacy / Local)
@@ -1012,6 +1013,67 @@ if (homePage) {
     await processRecurringTransactions();
     refreshUI(); // Re-render once data arrives
   })();
+
+  // ==========================================
+  //  AI ASSISTANT (Injected dynamically)
+  // ==========================================
+  function injectAIUI() {
+    // Inject floating AI button
+    const aiBtn = document.createElement('button');
+    aiBtn.id = 'aiAssistantBtn';
+    aiBtn.innerHTML = '<i class="fa-solid fa-sparkles"></i> AI Insights';
+    aiBtn.style.cssText = 'position: fixed; bottom: 85px; right: 20px; background: linear-gradient(135deg, #8b5cf6, #3b82f6); color: white; border: none; border-radius: 20px; padding: 10px 16px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4); z-index: 100; display: flex; gap: 8px; align-items: center; transition: transform 0.2s;';
+    
+    // Inject AI Modal
+    const aiModal = document.createElement('div');
+    aiModal.id = 'aiModal';
+    aiModal.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); opacity: 0; pointer-events: none; width: 90%; max-width: 500px; max-height: 85vh; background: var(--card-bg); border-radius: var(--radius-lg); z-index: 500; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow-y: auto; transition: all 0.3s ease; color: var(--text-dark);';
+    aiModal.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px;">
+        <h2 style="font-size: 18px; color: var(--text-dark); margin:0;"><i class="fa-solid fa-sparkles" style="color: #8b5cf6;"></i> AI Financial Insights</h2>
+        <button id="closeAiModalBtn" style="background: none; border: none; font-size: 20px; color: var(--text-light); cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="aiContent" style="font-size: 14px; line-height: 1.6;">
+        <p style="text-align: center; color: var(--text-light); padding: 20px 0;"><i class="fa-solid fa-spinner fa-spin"></i> Generating your personalized insights...</p>
+      </div>
+    `;
+
+    document.body.appendChild(aiBtn);
+    document.body.appendChild(aiModal);
+
+    const overlay = document.getElementById('modalOverlay');
+
+    aiBtn.addEventListener('click', async () => {
+      // Show modal
+      overlay.classList.add('show');
+      aiModal.style.opacity = '1';
+      aiModal.style.pointerEvents = 'auto';
+      aiModal.style.transform = 'translate(-50%, -50%) scale(1)';
+      
+      const contentDiv = document.getElementById('aiContent');
+      contentDiv.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 40px 0; font-size: 16px;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 24px; color: var(--primary); margin-bottom: 12px; display: block;"></i> Analyzing your finances...</p>';
+      
+      try {
+        const list = typeof loadTransactions === 'function' ? loadTransactions() : [];
+        const insights = await getFinancialInsights(list);
+        contentDiv.innerHTML = insights;
+      } catch (err) {
+        contentDiv.innerHTML = \`<div style="background: #fee2e2; color: #ef4444; padding: 16px; border-radius: 8px;">
+          <p style="margin:0; font-weight: 600;">Oops! Something went wrong.</p>
+          <p style="margin: 4px 0 0 0; font-size: 13px;">\${err.message}</p>
+        </div>\`;
+      }
+    });
+
+    document.getElementById('closeAiModalBtn').addEventListener('click', () => {
+      overlay.classList.remove('show');
+      aiModal.style.opacity = '0';
+      aiModal.style.pointerEvents = 'none';
+      aiModal.style.transform = 'translate(-50%, -50%) scale(0.9)';
+    });
+  }
+
+  injectAIUI();
 
   })();
 } // end if(homePage)
