@@ -802,11 +802,11 @@ if (homePage) {
   // Open modal
   if (addBtn) {
     addBtn.addEventListener("click", function () {
-      openModal();
+      if (typeof window.openModal === "function") window.openModal();
     });
   }
 
-  function openModal() {
+  window.openModal = function() {
     modal.classList.add("show");
     overlay.classList.add("show");
 
@@ -822,8 +822,8 @@ if (homePage) {
     document.querySelector("#formMessage").textContent = "";
 
     // Reset type selection to income
-    selectType("income");
-  }
+    if (typeof window.selectType === "function") window.selectType("income");
+  };
 
   window.closeModal = function () {
     modal.classList.remove("show");
