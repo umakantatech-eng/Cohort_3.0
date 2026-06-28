@@ -389,7 +389,7 @@ main {
 }
 
 body.dark .header {
-  background: var(--card-bg-dark);
+  background: var(--nav-bg);
   box-shadow: 0 2px 12px rgba(0,0,0,0.2);
 }
 
@@ -419,7 +419,7 @@ body.dark .header {
 }
 
 body.dark .icon-btn {
-  background: var(--card-bg-dark);
+  background: var(--nav-bg);
   border-color: #334155;
   color: #f1f5f9;
 }
@@ -943,7 +943,7 @@ body.dark .fab {
 }
 
 body.dark .bottom-nav {
-  background: var(--card-bg-dark);
+  background: var(--nav-bg);
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
 }
 
