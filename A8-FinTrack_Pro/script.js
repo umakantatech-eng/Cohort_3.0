@@ -1,30 +1,42 @@
+import { supabase } from './supabaseClient.js';
+
 // ==========================================
-//  STORAGE KEYS
+//  STORAGE KEYS (Legacy / Local)
 // ==========================================
 var STORAGE = {
-  USER: "fintrack_user",
-  SESSION: "fintrack_session",
+  USER: "fintrack_user", // Legacy
+  SESSION: "fintrack_session", // Legacy
   TRANSACTIONS: "fintrack_transactions",
   THEME: "fintrack_theme",
   CURRENCY: "fintrack_currency"
 };
 
 // ==========================================
-//  SPLASH SCREEN
+//  SPLASH SCREEN & AUTH STATE
 // ==========================================
 var splashPage = document.querySelector(".splash-page");
 
 if (splashPage) {
-  setTimeout(function () {
-    var isLoggedIn = localStorage.getItem(STORAGE.SESSION);
+  setTimeout(async function () {
+    const { data: { session } } = await supabase.auth.getSession();
 
-    if (isLoggedIn === "true") {
+    if (session) {
       window.location.href = "home.html";
     } else {
       window.location.href = "login.html";
     }
   }, 2000);
 }
+
+// Global Auth State Listener
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_OUT' || event === 'USER_DELETED') {
+    // Redirect to login if signed out
+    if (!window.location.href.includes("login.html") && !window.location.href.includes("register.html") && !window.location.href.includes("index.html")) {
+      window.location.href = "login.html";
+    }
+  }
+});
 
 // ==========================================
 //  PASSWORD TOGGLE (Register & Login)
@@ -52,56 +64,62 @@ passwordToggles.forEach(function (toggle) {
 var registerform = document.querySelector("#registerform");
 
 if (registerform) {
-  registerform.addEventListener("submit", function (e) {
+  registerform.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     var fullName = document.querySelector("#fullName").value.trim();
+    var email = document.querySelector("#email").value.trim();
     var password = document.querySelector("#password").value.trim();
     var confirmPassword = document.querySelector("#confirmPassword").value.trim();
     var message = document.querySelector("#registerMessage");
 
     message.className = "message";
 
-    // Check empty fields
-    if (!fullName || !password || !confirmPassword) {
+    if (!fullName || !email || !password || !confirmPassword) {
       message.textContent = "Please fill all fields.";
       message.classList.add("error");
       return;
     }
 
-    // Check password length
     if (password.length < 6) {
       message.textContent = "Password must be at least 6 characters.";
       message.classList.add("error");
       return;
     }
 
-    // Check passwords match
     if (password !== confirmPassword) {
       message.textContent = "Passwords do not match.";
       message.classList.add("error");
       return;
     }
 
-    // Build user object
-    var user = {
-      id: Date.now(),
-      fullName: fullName,
-      password: password,
-      createdAt: new Date().toISOString()
-    };
-
-    // Save user to localStorage
-    localStorage.setItem(STORAGE.USER, JSON.stringify(user));
-
-    message.textContent = "Account created successfully!";
+    message.textContent = "Creating account...";
     message.classList.add("success");
 
-    registerform.reset();
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          full_name: fullName
+        }
+      }
+    });
 
-    setTimeout(function () {
-      window.location.href = "login.html";
-    }, 800);
+    if (error) {
+      message.textContent = error.message;
+      message.classList.remove("success");
+      message.classList.add("error");
+    } else {
+      message.textContent = "Account created! Please verify your email to log in.";
+      message.classList.remove("error");
+      message.classList.add("success");
+      registerform.reset();
+      
+      setTimeout(function () {
+        window.location.href = "login.html";
+      }, 3000);
+    }
   });
 }
 
@@ -111,48 +129,42 @@ if (registerform) {
 var loginForm = document.querySelector("#loginForm");
 
 if (loginForm) {
-  loginForm.addEventListener("submit", function (e) {
+  loginForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    var loginName = document.querySelector("#loginName").value.trim();
+    var loginEmail = document.querySelector("#loginEmail").value.trim();
     var loginPassword = document.querySelector("#loginPassword").value.trim();
     var message = document.querySelector("#loginMessage");
 
     message.className = "message";
 
-    // Check empty fields
-    if (!loginName || !loginPassword) {
+    if (!loginEmail || !loginPassword) {
       message.textContent = "Please fill all fields.";
       message.classList.add("error");
       return;
     }
 
-    // Get saved user
-    var user = JSON.parse(localStorage.getItem(STORAGE.USER));
-
-    // No account found
-    if (!user) {
-      message.textContent = "No account found. Please register first.";
-      message.classList.add("error");
-      return;
-    }
-
-    // Check credentials
-    if (loginName !== user.fullName || loginPassword !== user.password) {
-      message.textContent = "Invalid name or password.";
-      message.classList.add("error");
-      return;
-    }
-
-    // Create session
-    localStorage.setItem(STORAGE.SESSION, "true");
-
-    message.textContent = "Login successful!";
+    message.textContent = "Logging in...";
     message.classList.add("success");
 
-    setTimeout(function () {
-      window.location.href = "home.html";
-    }, 600);
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: loginEmail,
+      password: loginPassword,
+    });
+
+    if (error) {
+      message.textContent = error.message;
+      message.classList.remove("success");
+      message.classList.add("error");
+    } else {
+      message.textContent = "Login successful!";
+      message.classList.remove("error");
+      message.classList.add("success");
+
+      setTimeout(function () {
+        window.location.href = "home.html";
+      }, 600);
+    }
   });
 }
 
@@ -162,6 +174,7 @@ if (loginForm) {
 var homePage = document.querySelector("#transactionModal");
 
 if (homePage) {
+  (async function() {
 
   // --- Variables ---
   var cashFlowChart = null;      // will hold the Chart.js instance
@@ -171,11 +184,12 @@ if (homePage) {
   // --- Load user name ---
   var userNameEl = document.querySelector("#userName");
   var desktopUserNameEl = document.querySelector("#desktopUserName");
-  var user = JSON.parse(localStorage.getItem(STORAGE.USER));
-
-  if (user) {
-    if (userNameEl) userNameEl.textContent = user.fullName;
-    if (desktopUserNameEl) desktopUserNameEl.textContent = user.fullName;
+  
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session && session.user) {
+    const fullName = session.user.user_metadata?.full_name || session.user.email;
+    if (userNameEl) userNameEl.textContent = fullName;
+    if (desktopUserNameEl) desktopUserNameEl.textContent = fullName;
   }
 
   // --- Apply saved theme on page load ---
@@ -959,6 +973,7 @@ if (homePage) {
   processRecurringTransactions();
   refreshUI();
 
+  })();
 } // end if(homePage)
 
 // ==========================================
@@ -1050,7 +1065,7 @@ if (settingsPage) {
   };
 
   // Load settings on page load
-  window.addEventListener("DOMContentLoaded", function () {
+  window.addEventListener("DOMContentLoaded", async function () {
     var currInput = document.querySelector("#currencySelect");
     if (currInput) currInput.value = getCurrency();
     
@@ -1061,8 +1076,10 @@ if (settingsPage) {
     }
     
     var nameInput = document.querySelector("#settingsName");
-    var user = JSON.parse(localStorage.getItem(STORAGE.USER));
-    if (nameInput && user) nameInput.value = user.fullName;
+    const { data: { session } } = await supabase.auth.getSession();
+    if (nameInput && session && session.user) {
+      nameInput.value = session.user.user_metadata?.full_name || session.user.email;
+    }
 
     var budgetInput = document.querySelector("#monthlyBudget");
     var savedBudget = localStorage.getItem("fintrack_budget");
@@ -1091,11 +1108,11 @@ if (settingsPage) {
   };
 
   // Logout
-  window.logoutUser = function () {
+  window.logoutUser = async function () {
     var confirmed = confirm("Are you sure you want to logout?");
 
     if (confirmed) {
-      localStorage.removeItem(STORAGE.SESSION);
+      await supabase.auth.signOut();
       window.location.href = "login.html";
     }
   };

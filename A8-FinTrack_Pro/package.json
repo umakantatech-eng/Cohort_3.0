@@ -1,21 +1,23 @@
 {
-  "name": "a8-fintrack_pro",
+  "name": "a8-fintrack-pro",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
-  "main": "script.js",
+  "type": "module",
+  "description": "FinTrack Pro - Personal Finance Tracker",
+  "author": "Umakanta Sahoo",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@supabase/supabase-js": "^2.108.2",
-    "chart.js": "^4.5.1",
+    "chart.js": "^4.5.1"
+  },
+  "devDependencies": {
     "vite": "^8.1.0"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
