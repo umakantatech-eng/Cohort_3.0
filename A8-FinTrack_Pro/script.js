@@ -983,10 +983,14 @@ if (homePage) {
     }
   }
 
-  // --- Initial load ---
-  await window.fetchTransactionsFromDB();
-  await processRecurringTransactions();
-  refreshUI();
+  // --- Initial load (Non-blocking) ---
+  refreshUI(); // Render instantly with cache/empty state
+  
+  (async function initDB() {
+    await window.fetchTransactionsFromDB();
+    await processRecurringTransactions();
+    refreshUI(); // Re-render once data arrives
+  })();
 
   })();
 } // end if(homePage)
