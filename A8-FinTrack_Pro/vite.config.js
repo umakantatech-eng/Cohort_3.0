@@ -13,7 +13,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
-      includeAssets: ['favicon.ico', 'assets/wallet.png'],
+      includeAssets: ['favicon.ico', 'wallet.png'],
       manifest: {
         name: 'FinTrack Pro',
         short_name: 'FinTrack',
@@ -23,19 +23,23 @@ export default defineConfig({
         display: 'standalone',
         icons: [
           {
-            src: 'assets/wallet.png',
+            src: 'wallet.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'assets/wallet.png',
+            src: 'wallet.png',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any maskable'
           }
         ]
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+      },
+      devOptions: {
+        enabled: true
       }
     })
   ],

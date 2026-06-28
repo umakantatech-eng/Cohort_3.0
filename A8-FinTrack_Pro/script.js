@@ -673,6 +673,7 @@ if (homePage) {
     renderChart();
     renderDesktopChart();
   }
+  window.refreshUI = refreshUI;
 
   // ==========================================
   //  RENDER DESKTOP CHART
