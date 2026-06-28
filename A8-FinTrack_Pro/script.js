@@ -1038,6 +1038,20 @@ if (homePage) {
       </div>
     `;
 
+    // Inject AI Modal Styles
+    const aiStyles = document.createElement('style');
+    aiStyles.innerHTML = `
+      #aiContent { font-family: var(--font-family); color: var(--text-dark); }
+      #aiContent p { font-size: 14.5px; color: var(--text-muted); margin: 0 0 16px 0; line-height: 1.6; }
+      #aiContent ul { margin: 0 0 16px 0; padding-left: 20px; color: var(--text-muted); }
+      #aiContent li { margin-bottom: 12px; font-size: 14.5px; line-height: 1.6; }
+      #aiContent strong { color: var(--text-dark); font-weight: 700; }
+      body.dark #aiContent { color: var(--text-light); }
+      body.dark #aiContent p, body.dark #aiContent ul { color: #a1a1aa; }
+      body.dark #aiContent strong { color: #f4f4f5; }
+    `;
+    document.head.appendChild(aiStyles);
+
     document.body.appendChild(aiBtn);
     document.body.appendChild(aiModal);
 

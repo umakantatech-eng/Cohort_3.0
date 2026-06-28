@@ -7,7 +7,7 @@ if (apiKey) {
     ai = new GoogleGenAI({ apiKey: apiKey });
 }
 
-const CACHE_KEY = "fintrack_ai_insights_cache";
+const CACHE_KEY = "fintrack_ai_insights_cache_v2";
 const CACHE_EXPIRY_MS = 60 * 60 * 1000; // 1 hour
 
 export async function getFinancialInsights(transactions) {
@@ -54,7 +54,16 @@ Analyze the following user transaction data:
 - Expenses by Category: ${JSON.stringify(categories)}
 - Total Transactions: ${transactions.length}
 
-Generate short, clean, and highly readable HTML content (use <h3>, <p>, <ul>, <li>, <strong>) containing:
+Generate short, clean, and highly readable HTML content.
+You MUST wrap your entire response in a <ul> list, with each insight as a separate <li> element. Use <strong> for the headings of each point.
+Do not use raw paragraphs for the main points, use the list structure.
+Example format:
+<ul>
+  <li><strong>Spending summary:</strong> Your text here.</li>
+  <li><strong>Saving suggestions:</strong> Your text here.</li>
+</ul>
+
+Required points to cover:
 1. Spending summary
 2. Monthly saving suggestions
 3. Highest expense category
