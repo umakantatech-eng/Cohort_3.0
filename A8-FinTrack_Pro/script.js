@@ -190,6 +190,17 @@ if (homePage) {
     });
   };
 
+  // --- Load user name & greeting ---
+  var greetingEl = document.querySelector('#greetingText');
+  if (greetingEl) {
+    var hour = new Date().getHours();
+    var greeting = 'Welcome 👋';
+    if (hour < 12) greeting = 'Good Morning ☀️';
+    else if (hour < 17) greeting = 'Good Afternoon 🌤️';
+    else greeting = 'Good Evening 🌙';
+    greetingEl.textContent = greeting;
+  }
+
   // --- Load user name ---
   var userNameEl = document.querySelector("#userName");
   var desktopUserNameEl = document.querySelector("#desktopUserName");
