@@ -1167,7 +1167,7 @@ if (settingsPage) {
   }
 
   // Save Name
-  window.saveName = function () {
+  window.saveName = async function () {
     var nameInput = document.querySelector("#settingsName").value.trim();
 
     if (!nameInput) {
@@ -1175,14 +1175,30 @@ if (settingsPage) {
       return;
     }
 
-    // Update the user object in localStorage
-    var currentUser = JSON.parse(localStorage.getItem(STORAGE.USER));
-    if (currentUser) {
-      currentUser.fullName = nameInput;
-      localStorage.setItem(STORAGE.USER, JSON.stringify(currentUser));
-    }
+    try {
+      const { data, error } = await supabase.auth.updateUser({
+        data: { full_name: nameInput }
+      });
 
-    alert("Name saved successfully!");
+      if (error) throw error;
+
+      // Update the user object in localStorage
+      var currentUser = JSON.parse(localStorage.getItem(STORAGE.USER));
+      if (currentUser) {
+        currentUser.fullName = nameInput;
+        localStorage.setItem(STORAGE.USER, JSON.stringify(currentUser));
+      }
+
+      // Automatically update DOM element so the user doesn't need to refresh to see the change
+      var userNameEl = document.querySelector("#userName");
+      if (userNameEl) userNameEl.textContent = nameInput;
+      var desktopUserNameEl = document.querySelector("#desktopUserName");
+      if (desktopUserNameEl) desktopUserNameEl.textContent = nameInput;
+
+      alert("Name saved successfully!");
+    } catch (err) {
+      alert("Error saving name: " + err.message);
+    }
   };
 
   // Save Currency
