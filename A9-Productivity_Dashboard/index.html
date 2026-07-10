@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productivity Dashboard</title>
+    <!-- FontAwesome icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body data-theme="dark">
+    <!-- Background Layer -->
+    <div id="bg-layer"></div>
+
+    <!-- Glowing Cursor Effect -->
+    <div id="cursor-glow"></div>
+
+    <!-- Main App Layout -->
+    <div class="app-layout">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar glass-panel">
+        <div class="brand">
+          <div class="brand-icon"><i class="fa-solid fa-check-square"></i></div>
+          <div class="brand-text">Productivity<br />Dashboard</div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="nav-menu">
+          <a href="#" class="nav-item active" data-target="dashboard"
+            ><i class="fa-solid fa-house"></i> Dashboard</a
+          >
+          <a href="#" class="nav-item" data-target="todo-section"
+            ><i class="fa-regular fa-circle-check"></i> Todo List</a
+          >
+          <a href="#" class="nav-item" data-target="planner-section"
+            ><i class="fa-regular fa-calendar"></i> Daily Planner</a
+          >
+          <a href="#" class="nav-item" data-target="goals-section"
+            ><i class="fa-solid fa-bullseye"></i> Daily Goals</a
+          >
+          <a href="#" class="nav-item" data-target="pomodoro-section"
+            ><i class="fa-solid fa-stopwatch"></i> Pomodoro Timer</a
+          >
+          <a href="#" class="nav-item" data-target="quote-section"
+            ><i class="fa-solid fa-quote-left"></i> Motivation Quote</a
+          >
+        </nav>
+
+        <!-- Theme Toggle -->
+        <div class="sidebar-bottom">
+          <div class="theme-switch-wrapper">
+            <i class="fa-regular fa-sun"></i> Light Mode
+            <label class="switch">
+              <input type="checkbox" id="theme-toggle" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="sync-status">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <p>
+              All data is <span style="color: #4ade80">saved locally</span
+              ><br />and is safe on this device.
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <!-- Top Header -->
+        <header class="top-header">
+          <div class="greeting-box">
+            <h1 id="greeting">Good Afternoon, Umakant! 👋</h1>
+            <p>Stay productive and keep pushing forward.</p>
+          </div>
+
+          <div class="top-widgets">
+            <div class="widget-box glass-panel">
+              <i class="fa-regular fa-clock widget-icon"></i>
+              <div>
+                <h2 id="clock">03:00 PM</h2>
+                <p id="date">Wed, Jul 9, 2026</p>
+              </div>
+            </div>
+            <div class="widget-box glass-panel">
+              <i class="fa-solid fa-cloud-sun widget-icon text-yellow"></i>
+              <div>
+                <h2 id="weather-temp">32°C</h2>
+                <p id="weather-desc">Bhubaneswar, India</p>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Dashboard Grid View -->
+        <div id="dashboard-view">
+          <div class="summary-grid">
+            <!-- Todo Summary -->
+            <div class="summary-card glass-panel" data-target="todo-section">
+              <div class="icon-box purple">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <div class="details">
+                <h2 id="todo-stats">12</h2>
+                <p>Tasks Pending</p>
+                <small class="trend-up"
+                  ><i class="fa-solid fa-arrow-up"></i> 2 from yesterday</small
+                >
+              </div>
+            </div>
+
+            <!-- Planner Summary -->
+            <div class="summary-card glass-panel" data-target="planner-section">
+              <div class="icon-box blue">
+                <i class="fa-regular fa-calendar-check"></i>
+              </div>
+              <div class="details">
+                <h2 id="planner-stats">0</h2>
+                <p>Events Today</p>
+                <small class="link-text"
+                  >View schedule <i class="fa-solid fa-arrow-right"></i
+                ></small>
+              </div>
+            </div>
+
+            <!-- Goals Summary -->
+            <div class="summary-card glass-panel" data-target="goals-section">
+              <div class="icon-box green">
+                <i class="fa-solid fa-bullseye"></i>
+              </div>
+              <div class="details">
+                <h2 id="goal-fraction">3 / 5</h2>
+                <p>Goals Completed</p>
+                <div class="mini-progress-bar">
+                  <div
+                    class="fill"
+                    id="goal-progress-fill"
+                    style="width: 60%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pomodoro Summary -->
+            <div
+              class="summary-card glass-panel"
+              data-target="pomodoro-section"
+            >
+              <div class="icon-box orange">
+                <i class="fa-solid fa-stopwatch"></i>
+              </div>
+              <div class="details">
+                <h2 id="timer-summary">25:00</h2>
+                <p>Pomodoro Ready</p>
+                <small class="link-text text-orange"
+                  >Start session <i class="fa-solid fa-arrow-right"></i
+                ></small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Access Grid -->
+          <div class="quick-access-section">
+            <h3>Quick Access</h3>
+            <div class="quick-grid">
+              <div class="quick-btn glass-panel" data-target="todo-section">
+                <div class="q-icon green-bg">
+                  <i class="fa-solid fa-check"></i>
+                </div>
+                <p>Todo List</p>
+              </div>
+              <div class="quick-btn glass-panel" data-target="planner-section">
+                <div class="q-icon blue-bg">
+                  <i class="fa-regular fa-calendar"></i>
+                </div>
+                <p>Daily Planner</p>
+              </div>
+              <div class="quick-btn glass-panel" data-target="goals-section">
+                <div class="q-icon purple-bg">
+                  <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <p>Daily Goals</p>
+              </div>
+              <div class="quick-btn glass-panel" data-target="pomodoro-section">
+                <div class="q-icon orange-bg">
+                  <i class="fa-solid fa-stopwatch"></i>
+                </div>
+                <p>Pomodoro</p>
+              </div>
+              <div class="quick-btn glass-panel" data-target="quote-section">
+                <div class="q-icon pink-bg">
+                  <i class="fa-solid fa-quote-left"></i>
+                </div>
+                <p>Quote</p>
+              </div>
+              <div class="quick-btn glass-panel" id="weather-change-btn">
+                <div class="q-icon blue-light-bg">
+                  <i class="fa-solid fa-cloud-sun"></i>
+                </div>
+                <p>Weather</p>
+              </div>
+              <div class="quick-btn glass-panel">
+                <div class="q-icon yellow-bg">
+                  <i class="fa-regular fa-clock"></i>
+                </div>
+                <p>Date & Time</p>
+              </div>
+              <div class="quick-btn glass-panel" id="bg-change-btn">
+                <div class="q-icon pink-dark-bg">
+                  <i class="fa-regular fa-image"></i>
+                </div>
+                <p>Background</p>
+              </div>
+              <div class="quick-btn glass-panel" id="theme-change-btn">
+                <div class="q-icon blue-dark-bg">
+                  <i class="fa-regular fa-moon"></i>
+                </div>
+                <p>Theme</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modals Overlay Area -->
+
+        <!-- Todo Modal -->
+        <div id="todo-section" class="feature-modal glass-panel hidden">
+          <div class="modal-header">
+            <div class="modal-title">
+              <div class="q-icon green-bg small">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <h2>Todo List</h2>
+            </div>
+            <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="input-group">
+            <input
+              type="text"
+              id="todo-input"
+              placeholder="Enter your task..."
+            />
+            <button id="add-todo-btn" class="btn primary-btn">Add Task</button>
+          </div>
+          <ul id="todo-list" class="list custom-scrollbar"></ul>
+        </div>
+
+        <!-- Planner Modal -->
+        <div id="planner-section" class="feature-modal glass-panel hidden">
+          <div class="modal-header">
+            <div class="modal-title">
+              <div class="q-icon blue-bg small">
+                <i class="fa-regular fa-calendar"></i>
+              </div>
+              <h2>Daily Planner</h2>
+            </div>
+            <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div id="planner-slots" class="list custom-scrollbar"></div>
+        </div>
+
+        <!-- Pomodoro Modal -->
+        <div id="pomodoro-section" class="feature-modal glass-panel hidden">
+          <div class="modal-header">
+            <div class="modal-title">
+              <div class="q-icon orange-bg small">
+                <i class="fa-solid fa-stopwatch"></i>
+              </div>
+              <h2>Pomodoro Timer</h2>
+            </div>
+            <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="timer-center">
+            <div
+              class="input-group"
+              style="
+                justify-content: center;
+                width: 80%;
+                margin: 0 auto 20px;
+                align-items: center;
+              "
+            >
+              <label
+                for="pomodoro-minutes"
+                style="
+                  font-size: 14px;
+                  font-weight: 500;
+                  color: var(--text-muted);
+                "
+                >Set Minutes:</label
+              >
+              <input
+                type="number"
+                id="pomodoro-minutes"
+                value="25"
+                min="1"
+                max="120"
+                style="
+                  text-align: center;
+                  padding: 8px;
+                  flex: none;
+                  width: 80px;
+                "
+              />
+              <button
+                id="set-timer-btn"
+                class="btn outline-btn"
+                style="padding: 8px 15px"
+              >
+                Set Time
+              </button>
+            </div>
+
+            <h1 id="timer">25:00</h1>
+            <p id="timer-status">Work Session Ready</p>
+            <div class="timer-controls">
+              <button id="start-timer" class="btn primary-btn">Start</button>
+              <button id="pause-timer" class="btn outline-btn">Pause</button>
+              <button id="reset-timer" class="btn outline-btn">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quotes Modal -->
+        <div id="quote-section" class="feature-modal glass-panel hidden">
+          <div class="modal-header">
+            <div class="modal-title">
+              <div class="q-icon pink-bg small">
+                <i class="fa-solid fa-quote-left"></i>
+              </div>
+              <h2>Motivation</h2>
+            </div>
+            <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="quote-center">
+            <blockquote id="quote-text">"Loading..."</blockquote>
+            <p id="quote-author">-</p>
+            <button id="new-quote-btn" class="btn primary-btn">
+              New Quote
+            </button>
+          </div>
+        </div>
+
+        <!-- Goals Modal -->
+        <div id="goals-section" class="feature-modal glass-panel hidden">
+          <div class="modal-header">
+            <div class="modal-title">
+              <div class="q-icon purple-bg small">
+                <i class="fa-solid fa-bullseye"></i>
+              </div>
+              <h2>Daily Goals</h2>
+            </div>
+            <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="input-group">
+            <input
+              type="text"
+              id="goal-input"
+              placeholder="Enter a daily goal..."
+            />
+            <button id="add-goal-btn" class="btn primary-btn">Add Goal</button>
+          </div>
+          <ul id="goal-list" class="list custom-scrollbar"></ul>
+        </div>
+
+        <!-- Pomodoro Alarm Pop-up -->
+        <div
+          id="alarm-overlay"
+          class="hidden"
+          style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <div
+            class="glass-panel"
+            style="padding: 40px; text-align: center; min-width: 300px"
+          >
+            <i
+              class="fa-solid fa-bell fa-shake"
+              style="
+                font-size: 60px;
+                color: var(--accent-orange);
+                margin-bottom: 20px;
+              "
+            ></i>
+            <h2 style="font-size: 24px; margin-bottom: 10px">Time is up!</h2>
+            <p style="margin-bottom: 25px; color: var(--text-muted)">
+              Great work session. Take a break.
+            </p>
+            <button
+              id="stop-alarm-btn"
+              class="btn primary-btn"
+              style="width: 100%; font-size: 16px"
+            >
+              Stop Alarm
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+  </body>
+</html>
